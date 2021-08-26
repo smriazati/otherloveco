@@ -4,7 +4,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'otherlovev1',
+    title: 'Otherlove',
     htmlAttrs: {
       lang: 'en'
     },
@@ -62,5 +62,9 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-  }
+    extractCSS: true,
+    loaders: {
+      limit: 0,
+    }
+  },
 }

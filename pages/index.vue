@@ -33,21 +33,23 @@
       </div>
     </section>
 
-    <section class="capability-list">
+    <section ref="capabilityList" class="capability-list">
       <div ref="highlightImage" class="highlight-image">
-        <img src="/placeholder.png" alt="" />
-        <span v-if="capListHoverImage">
-          <img :src="capListHoverImage" alt="" />
-        </span>
+        <img :src="capListHoverImage" alt="" />
       </div>
       <ul>
-        <li @mouseenter="capListHover" @mouseleave="capListUnhover">
-          Brand Strategy
-        </li>
-        <li @mouseenter="capListHover" @mouseleave="capListUnhover">Naming</li>
-        <li @mouseenter="capListHover" @mouseleave="capListUnhover">
-          Brand Identity
-        </li>
+        <li data-order="1">Brand Strategy</li>
+        <li data-order="2">Naming</li>
+        <li data-order="3">Brand Identity</li>
+        <li data-order="4">Brand Strategy</li>
+        <li data-order="1">Naming</li>
+        <li data-order="2">Brand Identity</li>
+        <li data-order="3">Brand Strategy</li>
+        <li data-order="4">Naming</li>
+        <li data-order="1">Brand Identity</li>
+        <li data-order="2">Brand Strategy</li>
+        <li data-order="3">Naming</li>
+        <li data-order="4">Brand Identity</li>
       </ul>
     </section>
   </div>
@@ -55,6 +57,8 @@
 
 
 <script>
+import { debounce } from "~/helpers.js";
+
 export default {
   data() {
     return {
@@ -63,8 +67,7 @@ export default {
       textHeight: 0,
       textBuffer: 80,
       imageBuffer: 1.3,
-      capListHoverImage: null,
-      isCapListHoverActive: false,
+      capListHoverImage: "/placeholder.png",
     };
   },
   mounted() {
@@ -80,31 +83,61 @@ export default {
       this.$nextTick(function () {
         this.setFixedLayout();
         this.setAnimations();
+        this.setCapabilityList();
       });
     },
   },
   methods: {
+    setCapabilityList() {
+      const capListContainer = this.$refs.capabilityList;
+      if (!capListContainer) {
+        return;
+      }
+      const capList = capListContainer.querySelector("ul");
+      if (!capList) {
+        return;
+      }
+      const capListItems = capList.querySelectorAll("li");
+      if (!capListItems) {
+        return;
+      }
+      capListItems.forEach((item) => {
+        item.addEventListener("mouseenter", this.capListHover);
+        item.addEventListener("mouseleave", this.capListUnhover);
+      });
+    },
     capListHover(e) {
-      // if (!this.isCapListHoverActive) {
-      //   console.log("mouse enter");
-      //   this.isCapListHoverActive = true;
-      //   const theTarget = e.target;
-      //   // console.log(theTarget);
-      //   theTarget.style.zIndex = "110";
-      //   this.capListHoverImage = "/placeholder.png";
-      //   this.$refs.highlightImage.style.display = "flex";
-      // }
+      if (!e.target) {
+        return;
+      }
+      debounce(this.capListShowImage(e.target, e.target.dataset.order), 500);
     },
     capListUnhover(e) {
-      // if (this.isCapListHoverActive) {
-      //   console.log("mouse leave");
-      //   this.isCapListHoverActive = false;
-      //   const theTarget = e.target;
-      //   theTarget.style.zIndex = "101";
-      //   this.capListHoverImage = null;
-      //   this.$refs.highlightImage.style.display = "none";
-      //   this.$refs.highlightImage.style.padding = 0;
-      // }
+      if (!e.target) {
+        return;
+      }
+      debounce(this.capListHideImage(e.target, e.target.dataset.order), 500);
+    },
+    capListShowImage(target, index) {
+      target.style.zIndex = "110";
+      this.capListHoverImage = "/placeholder.png";
+      const img = this.$refs.highlightImage;
+      img.style.opacity = "1";
+      img.style.height = "100%";
+
+      if (parseInt(index) % 2 == 0) {
+        img.style.paddingLeft = "40%";
+      } else {
+        img.style.paddingRight = "40%";
+      }
+    },
+    capListHideImage(target, index) {
+      target.style.zIndex = "101";
+      this.capListHoverImage = null;
+      const img = this.$refs.highlightImage;
+      img.style.opacity = "0";
+      img.style.padding = "0";
+      img.style.height = "0";
     },
     setFixedLayout() {
       if (!this.$refs.textWrapper) {
