@@ -3,35 +3,12 @@
     <section class="basic-row">
       <div class="text-wrapper">
         <h1>Get in touch</h1>
-        <p>
-          We work with clients small and large, local and global, new and
-          established. Interested in working together, or have a question? Say
-          hi below.
-        </p>
+        <p>Thanks for submitting your message!</p>
+        <button><nuxt-link to="/contact">Send another?</nuxt-link></button>
       </div>
     </section>
     <section class="basic-row">
-      <div class="contact-form">
-        <form name="contact" method="POST" data-netlify="true">
-          <div class="form-group">
-            <label for="name" class="visually-hidden">Name</label>
-            <input type="text" name="name" placeholder="Your name" />
-          </div>
-          <div class="form-group">
-            <label for="email" class="visually-hidden">Email</label>
-            <input type="text" name="emai" placeholder="Your email" />
-          </div>
-
-          <div class="form-group">
-            <label for="message">Your message</label>
-            <textarea name="message" id="message"></textarea>
-          </div>
-
-          <div class="form-group">
-            <button type="submit">Send</button>
-          </div>
-        </form>
-      </div>
+      <div class="contact-form"></div>
       <div class="contact-info">
         <div class="text-wrapper">
           <h2>General</h2>

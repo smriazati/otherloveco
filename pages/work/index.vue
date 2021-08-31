@@ -1,27 +1,21 @@
 <template>
   <div class="container">
     <section class="work-grid">
-      <div class="work-grid-item">
-        <nuxt-link to="/work/project1">
-          <div class="text-wrapper"></div>
-          <div class="image-wrapper">
+      <div v-for="item in projects" :key="item.id" class="work-grid-item">
+        <nuxt-link :to="`/work/${item.slug.current}`">
+          <div v-if="item.projectcover" class="image-wrapper">
+            <SanityImage
+              :asset-id="item.projectcover.asset._ref"
+              auto="format"
+            />
+          </div>
+          <div v-if="!item.projectcover" class="image-wrapper">
             <img src="/placeholder.png" alt="" />
           </div>
-        </nuxt-link>
-      </div>
-      <div class="work-grid-item">
-        <nuxt-link to="/work/project1">
-          <div class="text-wrapper"></div>
-          <div class="image-wrapper">
-            <img src="/placeholder.png" alt="" />
-          </div>
-        </nuxt-link>
-      </div>
-      <div class="work-grid-item">
-        <nuxt-link to="/work/project1">
-          <div class="text-wrapper"></div>
-          <div class="image-wrapper">
-            <img src="/placeholder.png" alt="" />
+          <div class="text-wrapper">
+            <div v-if="item.projectname" class="project-title">
+              <h2>{{ item.projectname }}</h2>
+            </div>
           </div>
         </nuxt-link>
       </div>
@@ -30,11 +24,12 @@
 </template>
 
 <script>
+import { groq } from "@nuxtjs/sanity";
 export default {
-  data() {
-    return {
-      backgroundColor: "#eaeaea",
-    };
+  async asyncData({ $sanity }) {
+    const query = groq`*[_type == "projects"]`;
+    const projects = await $sanity.fetch(query).then((res) => res);
+    return { projects };
   },
 };
 </script>

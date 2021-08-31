@@ -160,7 +160,7 @@ $headerHeight: 150px;
                 margin-bottom: 10px;
             }
 
-            h2 {
+            h2, h3 {
                 font-size: 14px;
                 text-transform: uppercase;
             }
@@ -423,4 +423,24 @@ button.flat {
   a {
     font-size: 16px;
   }
+}
+
+
+.button, button {
+  border-radius: 0;
+  outline: none; 
+  border: 0;
+  background: transparent;
+}
+.button, button {
+  text-align: left;
+  a, span {
+    background: black;
+    color: white;
+    display: inline-block;
+    padding: $spacer;
+  }
+}
+p.small {
+  font-size: 0.8em;
 }
