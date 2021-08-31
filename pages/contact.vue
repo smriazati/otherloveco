@@ -12,7 +12,7 @@
     </section>
     <section class="basic-row">
       <div class="contact-form">
-        <form>
+        <form name="contact" method="POST" data-netlify="true">
           <div class="form-group">
             <label for="name" class="visually-hidden">Name</label>
             <input type="text" name="name" placeholder="Your name" />
@@ -25,6 +25,10 @@
           <div class="form-group">
             <label for="message">Your message</label>
             <textarea name="message" id="message"></textarea>
+          </div>
+
+          <div class="form-group">
+            <button type="submit">Send</button>
           </div>
         </form>
       </div>
