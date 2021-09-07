@@ -17,7 +17,10 @@
           method="POST"
           data-netlify="true"
           action="/contact/success"
+          enctype="application/x-www-form-urlencoded"
         >
+          <input type="hidden" name="form-name" value="contact" />
+
           <div class="form-group">
             <label for="name" class="visually-hidden">Name</label>
             <input type="text" name="name" placeholder="Your name" />

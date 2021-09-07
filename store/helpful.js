@@ -4,7 +4,8 @@
 export const state = () => ({
     windowHeight: null,
     windowWidth: null,
-    bodyBg: '#fff'
+    bodyBg: '#fff',
+    baseBg: '#fff'
 })
 
 export const mutations = {
@@ -15,6 +16,8 @@ export const mutations = {
     },
     setBodyBg(state, payload) {
         state.bodyBg = payload;
-
+    },
+    resetBodyBg(state) {
+        state.bodyBg = state.baseBg;
     }
 }
