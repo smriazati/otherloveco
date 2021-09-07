@@ -426,6 +426,7 @@ button.flat {
 }
 
 
+
 .button, button {
   border-radius: 0;
   outline: none; 
@@ -439,6 +440,12 @@ button.flat {
     color: white;
     display: inline-block;
     padding: $spacer;
+  }
+
+  &:disabled {
+    a, span {
+      background: gray;
+    }
   }
 }
 p.small {

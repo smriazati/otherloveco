@@ -12,40 +12,12 @@
     </section>
     <section class="basic-row">
       <div class="contact-form">
-        <form
-          name="contact"
-          method="POST"
-          data-netlify="true"
-          action="/contact/success"
-          enctype="application/x-www-form-urlencoded"
-        >
-          <input type="hidden" name="form-name" value="contact" />
-
-          <div class="form-group">
-            <label for="name" class="visually-hidden">Name</label>
-            <input type="text" name="name" placeholder="Your name" />
-          </div>
-          <div class="form-group">
-            <label for="email" class="visually-hidden">Email</label>
-            <input type="text" name="emai" placeholder="Your email" />
-          </div>
-
-          <div class="form-group">
-            <label for="message">Your message</label>
-            <textarea name="message" id="message"></textarea>
-          </div>
-
-          <div class="form-group">
-            <label
-              >Attach files: <input class="button" type="file" name="files"
-            /></label>
-            <p class="small">Limit 1 file</p>
-          </div>
-
-          <div class="form-group">
-            <button class="button" type="submit"><span>Send</span></button>
-          </div>
-        </form>
+        <ContactFormNetlify
+          :email="true"
+          :name="true"
+          :message="true"
+          :file="true"
+        />
       </div>
       <div class="contact-info">
         <div class="text-wrapper">

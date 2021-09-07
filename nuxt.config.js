@@ -23,22 +23,9 @@ export default {
       },
 
     ],
-    // link: [
-    //   { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-    //   {
-    //     rel: 'preconnect',
-    //     src: "https://fonts.googleapis.com",
-    //   },
-    //   {
-    //     rel: 'preconnect',
-    //     src: "https://fonts.gstatic.com",
-    //   },
-    //   {
-    //     rel: 'stylesheet',
-    //     src: "https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,400;0,700;1,400&display=swap",
-    //     as: "style"
-    //   },
-    // ]
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' },
+    ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
