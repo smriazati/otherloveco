@@ -17,6 +17,7 @@
           :name="true"
           :message="true"
           :file="true"
+          :successRoute="`/contact/success`"
         />
       </div>
       <div class="contact-info">

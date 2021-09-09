@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header class="site-header">
     <div class="logo">
       <nuxt-link to="/">
         <img src="/Otherlove-Logo-lighter.png" alt="" />

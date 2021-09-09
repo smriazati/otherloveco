@@ -3,7 +3,7 @@
     name="contact"
     method="POST"
     data-netlify="true"
-    action="/contact/success"
+    :action="successRoute"
     enctype="application/x-www-form-urlencoded"
   >
     <input type="hidden" name="form-name" value="contact" />
@@ -73,6 +73,10 @@ export default {
     },
     fileUpload: {
       type: Boolean,
+    },
+    successRoute: {
+      type: String,
+      required: true,
     },
   },
   data() {

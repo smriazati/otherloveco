@@ -39,9 +39,18 @@ export default {
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: ['@nuxtjs/sanity/module'],
-
-
+  buildModules: ['@nuxtjs/sanity/module', '@nuxtjs/google-fonts'],
+  googleFonts: {
+    families: {
+      'DM Sans': {
+        wght: [400, 700],
+        ital: [400]
+      },
+    },
+    display: 'swap',
+    prefetch: true,
+    preconnect: true
+  },
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
