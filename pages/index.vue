@@ -38,69 +38,51 @@ export default {
   methods: {
     setAnimations() {
       if (!gsap) {
-        console.log("cancelling animation, no gsap");
+        console.log("Cancelling animation, no gsap");
         return;
       }
-      console.log("animation start");
-      const header = this.$refs.header;
-      if (header) {
-        const logo = header.querySelector(".logo");
-        const par = header.querySelector("p");
-        const footer = this.$refs.footer;
-        const igLink = this.$refs.igLink;
-        // // console.log(logo, par);
 
-        gsap.set(logo, {
-          opacity: 0,
-          scale: 0.8,
-        });
-        gsap.set(par, {
-          opacity: 0,
-          scale: 0.8,
-        });
-        gsap.set(footer, {
-          opacity: 0,
-        });
-        gsap.set(igLink, {
-          opacity: 0,
-        });
-        if (logo && par && footer && igLink) {
-          var tl = new TimelineMax();
-          tl.to(logo, 1.5, {
-            scale: 1,
-            opacity: 1,
+      // console.log("animation start");
+      const header = this.$refs.header;
+      const footer = this.$refs.footer;
+      const igLink = this.$refs.igLink;
+      const logo = header.querySelector(".logo");
+      const par = header.querySelector("p");
+
+      var tl = new TimelineMax();
+      tl.from(logo, 1.5, {
+        scale: 0.8,
+        opacity: 0,
+        ease: Circ.easeOut,
+      })
+        .from(
+          par,
+          1.5,
+          {
+            scale: 0.8,
+            opacity: 0,
             ease: Circ.easeOut,
-          })
-            .to(
-              par,
-              1.5,
-              {
-                scale: 1,
-                opacity: 1,
-                ease: Circ.easeOut,
-              },
-              1.5
-            )
-            .to(
-              footer,
-              2,
-              {
-                opacity: 1,
-                ease: Circ.easeOut,
-              },
-              2
-            )
-            .to(
-              igLink,
-              2,
-              {
-                opacity: 1,
-                ease: Circ.easeOut,
-              },
-              2
-            );
-        }
-      }
+          },
+          1.5
+        )
+        .from(
+          footer,
+          2,
+          {
+            opacity: 0,
+            ease: Circ.easeOut,
+          },
+          2
+        )
+        .from(
+          igLink,
+          2,
+          {
+            opacity: 0,
+            ease: Circ.easeOut,
+          },
+          2
+        );
     },
   },
 };
