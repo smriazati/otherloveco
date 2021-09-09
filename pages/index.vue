@@ -8,13 +8,17 @@
       </button>
     </div>
     <header ref="header">
-      <h1 class="visually-hidden">Otherlove</h1>
-      <div class="logo">
-        <img src="/Otherlove-Logo-white.png" alt="Otherlove logo" />
+      <div class="header-wrapper">
+        <h1 class="visually-hidden">Otherlove</h1>
+        <div class="logo">
+          <img src="/Otherlove-Logo-white.png" alt="Otherlove logo" />
+        </div>
+        <div class="sub-text">
+          <p class="small">
+            Say hi at <a href="mailto:hello@otherlove.co">hello@otherlove.co</a>
+          </p>
+        </div>
       </div>
-      <p class="small">
-        Say hi at <a href="mailto:hello@otherlove.co">hello@otherlove.co</a>
-      </p>
     </header>
     <footer ref="footer">
       <p>
@@ -142,5 +146,20 @@ footer {
       width: 90%;
     }
   }
+}
+
+a {
+  font-size: 100%;
+  transition: 0.3s ease all;
+}
+a:hover {
+  font-size: 110%;
+}
+
+.header-wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: min-content 80px;
+  text-align: center;
 }
 </style>
