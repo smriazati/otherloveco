@@ -152,6 +152,7 @@ footer {
 a {
   font-size: 100%;
   transition: 0.3s ease all;
+  color: white;
 }
 a:hover {
   font-size: 110%;
