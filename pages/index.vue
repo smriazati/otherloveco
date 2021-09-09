@@ -129,6 +129,7 @@ header {
   flex-direction: column;
   align-items: center;
   p {
+    color: white;
     margin-top: 10px;
     font-size: 16px;
   }
