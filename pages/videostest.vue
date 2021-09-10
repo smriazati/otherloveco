@@ -3,11 +3,11 @@
     <div class="intro"></div>
     <div class="video-scroller" v-if="project">
       <div class="video-scroller-bg">
-        <div class="video-wrapper">
+        <div ref="vidWrapper" class="video-wrapper">
           <div>
             <SanityFile :asset-id="project.bgvideo.asset._ref">
               <template #default="{ src }">
-                <video :src="src" autoplay loop></video>
+                <video :src="src" loop></video>
               </template>
             </SanityFile>
           </div>
@@ -81,6 +81,10 @@ export default {
   mounted() {
     this.$nextTick(function () {
       this.setAnimations();
+
+      const vidWrapper = this.$refs.vidWrapper;
+      const vid = vidWrapper.querySelector("video");
+      vid.play();
     });
   },
   methods: {
