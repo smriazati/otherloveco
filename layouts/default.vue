@@ -1,6 +1,6 @@
 <template>
   <div class="layout-container" :style="`background-color: ${bodyBg}`">
-    <SiteNav />
+    <!-- <SiteNav /> -->
     <nuxt />
   </div>
 </template>

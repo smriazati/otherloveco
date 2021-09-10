@@ -32,8 +32,27 @@
 
 
 <script>
+import { groq } from "@nuxtjs/sanity";
+
 export default {
+  async asyncData({ $sanity }) {
+    const query = groq`*[_type == "siteSettings"]`;
+    const siteSettings = await $sanity.fetch(query).then((res) => res);
+    return { siteSettings };
+  },
   layout: "landing",
+  head() {
+    return {
+      title: this.siteSettings[0].siteTitle,
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content: this.siteSettings[0].siteDesc,
+        },
+      ],
+    };
+  },
   mounted() {
     this.$nextTick(function () {
       this.setAnimations();
