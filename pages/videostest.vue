@@ -7,7 +7,7 @@
           <div>
             <SanityFile :asset-id="project.bgvideo.asset._ref">
               <template #default="{ src }">
-                <video :src="src" autoplay loop playsinline></video>
+                <video :src="src" autoplay loop></video>
               </template>
             </SanityFile>
           </div>
