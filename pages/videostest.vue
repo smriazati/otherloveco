@@ -7,7 +7,7 @@
           <div>
             <SanityFile :asset-id="project.bgvideo.asset._ref">
               <template #default="{ src }">
-                <video :src="src" loop></video>
+                <video :src="src" autoplay muted loop></video>
               </template>
             </SanityFile>
           </div>
@@ -82,9 +82,9 @@ export default {
     this.$nextTick(function () {
       this.setAnimations();
 
-      const vidWrapper = this.$refs.vidWrapper;
-      const vid = vidWrapper.querySelector("video");
-      vid.play();
+      //   const vidWrapper = this.$refs.vidWrapper;
+      //   const vid = vidWrapper.querySelector("video");
+      //   vid.play();
     });
   },
   methods: {
