@@ -182,4 +182,10 @@ export default {
     object-fit: contain;
   }
 }
+
+.video-scroller .video-scroller-bg video {
+    min-width: 100%;
+    object-fit: cover;
+    min-height: 100%;
+}
 </style>
