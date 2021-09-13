@@ -33,7 +33,7 @@ export default {
 
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~/plugins/route', '~/plugins/init_gtag'],
+  plugins: ['~/plugins/route', '~/plugins/init_gtag.client'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -54,7 +54,13 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
   ],
-
+  // Modules: https://go.nuxtjs.dev/config-modules
+  env: {
+    gtagId: process.env.GTAG_ID,
+  },
+  privateRuntimeConfig: {
+    gtagId: process.env.GTAG_ID
+  },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     extractCSS: true,

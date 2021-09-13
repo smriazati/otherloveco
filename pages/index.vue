@@ -158,6 +158,7 @@ footer {
   justify-self: flex-end;
   text-align: center;
   width: 100%;
+  padding: 15px 0;
   p {
     width: 710px;
     margin: 0 auto;
