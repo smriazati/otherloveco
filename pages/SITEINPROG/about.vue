@@ -4,7 +4,7 @@
       <h1 class="visually-hidden">About</h1>
       <div class="about-grid grid-parent">
         <section class="introduction">
-          <div class="grid-wrapper grid-fixed">
+          <div class="grid-wrapper grid-fixed" v-if="aboutPage">
             <div class="grid-template">
               <div class="grid-column">
                 <p>
@@ -39,10 +39,10 @@
             </div>
           </div>
         </section>
-        <section class="floating-text">
+        <section id="brandsThatFeel" class="floating-text">
           <div class="grid-wrapper grid-fixed">
             <div class="grid-template">
-              <div class="grid-column col-start-8">
+              <div class="grid-column">
                 <h3>Brands that make you <em>feel</em></h3>
                 <p>
                   We are a collective of whole-hearted brand lovers fueled by
@@ -53,6 +53,24 @@
                   fresh concepts and creating meaningful experiences that go
                   beyond what is seen.
                 </p>
+              </div>
+              <div class="grid-column">
+                <div class="video-wrapper">
+                  <SanityFile :asset-id="aboutPage[0].aboutVid1.asset._ref">
+                    <template #default="{ src }">
+                      <video :src="src" autoplay muted loop></video>
+                    </template>
+                  </SanityFile>
+                </div>
+              </div>
+              <div class="grid-column">
+                <div class="video-wrapper">
+                  <SanityFile :asset-id="aboutPage[0].aboutVid2.asset._ref">
+                    <template #default="{ src }">
+                      <video :src="src" autoplay muted loop></video>
+                    </template>
+                  </SanityFile>
+                </div>
               </div>
             </div>
           </div>
@@ -141,6 +159,33 @@
 </template>
 
 <script>
-export default {};
+
+import { groq } from "@nuxtjs/sanity";
+
+export default {
+  async asyncData({ $sanity }) {
+    const query1 = groq`*[_type == "aboutPage"]`;
+    const query2 = groq`*[_type == "siteSettings"]`;
+    const aboutPage = await $sanity.fetch(query1).then((res) => res);
+    const siteSettings = await $sanity.fetch(query2).then((res) => res);
+    return { aboutPage, siteSettings };
+  },
+  name: 'About',
+  head() {
+    return {
+      title: `About | ${this.siteSettings[0].siteTitle}`,
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content: this.siteSettings[0].siteDesc,
+        },
+      ],
+    };
+  },
+  mounted() {
+    console.log(this);
+  }
+};
 </script>
 
