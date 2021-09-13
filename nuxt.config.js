@@ -33,7 +33,7 @@ export default {
 
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~/plugins/route'],
+  plugins: ['~/plugins/route', '~/plugins/init_gtag'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -51,7 +51,6 @@ export default {
     prefetch: true,
     preconnect: true
   },
-
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
   ],
