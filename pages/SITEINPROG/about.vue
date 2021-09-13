@@ -54,7 +54,7 @@
                   beyond what is seen.
                 </p>
               </div>
-              <div class="grid-column">
+              <div class="grid-column" v-if="aboutPage[0].aboutVid1">
                 <div class="video-wrapper">
                   <SanityFile :asset-id="aboutPage[0].aboutVid1.asset._ref">
                     <template #default="{ src }">
@@ -63,7 +63,7 @@
                   </SanityFile>
                 </div>
               </div>
-              <div class="grid-column">
+              <div class="grid-column" v-if="aboutPage[0].aboutVid2">
                 <div class="video-wrapper">
                   <SanityFile :asset-id="aboutPage[0].aboutVid2.asset._ref">
                     <template #default="{ src }">
