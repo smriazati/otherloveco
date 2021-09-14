@@ -19,14 +19,16 @@
     </div>
     <div class="sub-footer">
       <p>&copy; 2021. Made with Otherlove, LLC.</p>
-      <!-- <div v-if="siteSettings" class="submark">
+      <div v-if="siteSettings[0]" class="submark">
         <div v-if="siteSettings[0].favicon" class="image-wrapper">
+            <nuxt-link to="/">
             <SanityImage
               :asset-id="siteSettings[0].favicon.asset._ref"
               auto="format"
             />
+            </nuxt-link>
         </div>
-      </div> -->
+      </div>
     </div>
   </footer>
 </template>
