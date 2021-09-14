@@ -46,6 +46,9 @@ export default {
         wght: [400, 700],
         ital: [400]
       },
+      'DM Mono': {
+        wght: [400],
+      }
     },
     display: 'swap',
     prefetch: true,

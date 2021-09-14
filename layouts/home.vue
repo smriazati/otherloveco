@@ -1,8 +1,7 @@
 <template>
-  <div class="layout-container layout-default" :style="`background-color: ${bodyBg}`">
+  <div class="layout-container layout-home">
     <SiteNav />
     <nuxt />
-    <SiteFooter />
   </div>
 </template>
 
@@ -14,11 +13,6 @@ export default {
       width: window.innerWidth,
     };
     this.$store.commit("helpful/setWindow", windowDim);
-  },
-  computed: {
-    bodyBg() {
-      return this.$store.state.helpful.bodyBg;
-    },
-  },
+  }
 };
 </script>

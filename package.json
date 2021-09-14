@@ -19,6 +19,5 @@
     "sass": "^1.29.0",
     "sass-loader": "^10.1.0",
     "vue-gtag": "^1.16.1"
-  },
-  "devDependencies": {}
+  }
 }

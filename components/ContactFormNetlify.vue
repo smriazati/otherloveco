@@ -9,28 +9,23 @@
     <input type="hidden" name="form-name" value="contact" />
 
     <div v-if="name" class="form-group">
-      <label for="name" class="visually-hidden">Name</label>
+      <label for="name" class="visually-hidden">Name *</label>
       <input
         type="text"
         name="name"
-        placeholder="Your name"
+        placeholder="Your name *"
         v-model="nameInput"
       />
     </div>
 
     <div v-if="email" class="form-group">
-      <label for="email" class="visually-hidden">Email</label>
+      <label for="email" class="visually-hidden">Email *</label>
       <input
         type="text"
         name="email"
-        placeholder="Your email"
+        placeholder="Your email *"
         v-model="emailInput"
       />
-    </div>
-
-    <div v-if="message" class="form-group">
-      <label for="message">Your message</label>
-      <textarea name="message" id="message" v-model="messageInput"></textarea>
     </div>
 
     <div v-if="fileUpload" class="form-group">
@@ -40,12 +35,27 @@
       <p class="small">Limit 1 file</p>
     </div>
 
+    <div v-if="message" class="form-group">
+      <label for="message" class="visually-hidden">Tell us about your project *</label>
+      <input name="message" id="message" placeholder="Tell us about your project *" v-model="messageInput" />
+    </div>
+
+    <div class="form-group">
+      <label for="link" class="visually-hidden">Website address and/or social link</label>
+      <input name="link" id="link" placeholder="Website address and/or social link" />
+    </div>
+
+    <div class="form-group">
+      <label for="referral" class="visually-hidden">How did you hear about us?</label>
+      <input name="referral" id="referral" placeholder="How did you hear about us?" />
+    </div>
+
     <div class="form-group" @click="onSubmitClick">
       <button :disabled="!isFormValid" class="button" type="submit">
         <span>Send</span>
       </button>
     </div>
-    <div v-if="hasError" class="form-group">
+    <div v-if="hasError" class="form-group error-group">
       <div v-if="!isNameValid">
         <p>Please include your name.</p>
       </div>
@@ -139,6 +149,7 @@ export default {
   },
   methods: {
     onSubmitClick() {
+      // console.log('hi')
       if (!this.isFormValid) {
         this.hasError = true;
       }
