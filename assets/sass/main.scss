@@ -536,8 +536,8 @@ p.small {
 
 .container {
   @include gridFixed;
-  margin-top: 30px;
-  margin-bottom: 60px;
+  margin-top: 60px;
+  margin-bottom: 80px;
 }
 
 /* TYPOGRAPHY */
@@ -571,6 +571,7 @@ body {
   }
 }
 .container-home {
+  place-content: end;
   grid-auto-rows: auto;
   padding-bottom: 30px;
   section {
