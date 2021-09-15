@@ -128,64 +128,64 @@ export default {
 
 
 <style lang="scss">
-.container {
-  position: relative;
-  display: flex;
-}
-.intro {
-  position: relative;
-  z-index: 100;
-  height: 90vh;
-  background: white;
-}
-.video-scroller {
-  position: relative;
-  .video-scroller-bg {
-    width: 100vw;
-    position: static;
-    pointer-events: none;
-    .video-wrapper {
-      visibility: visible;
-      position: fixed;
-      top: 0;
-      right: 0;
-      height: 100vh;
-      left: 0;
-      pointer-events: none;
-      div {
-        display: flex;
-        width: 100vw;
-        height: 100vh;
-        overflow: hidden;
-      }
-    }
-  }
-  .video-scroller-content {
-    position: relative;
-    padding-top: 50vh;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-}
+// .container {
+//   position: relative;
+//   display: flex;
+// }
+// .intro {
+//   position: relative;
+//   z-index: 100;
+//   height: 90vh;
+//   background: white;
+// }
+// .video-scroller {
+//   position: relative;
+//   .video-scroller-bg {
+//     width: 100vw;
+//     position: static;
+//     pointer-events: none;
+//     .video-wrapper {
+//       visibility: visible;
+//       position: fixed;
+//       top: 0;
+//       right: 0;
+//       height: 100vh;
+//       left: 0;
+//       pointer-events: none;
+//       div {
+//         display: flex;
+//         width: 100vw;
+//         height: 100vh;
+//         overflow: hidden;
+//       }
+//     }
+//   }
+//   .video-scroller-content {
+//     position: relative;
+//     padding-top: 50vh;
+//     width: 100%;
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//   }
+// }
 
-.video-scroller-content .project-cover {
-  max-height: 600px;
-  max-width: 600px;
-  margin: 100px auto;
-  text-align: center;
-  overflow: hidden;
-  img {
-    min-height: 100%;
-    width: 100%;
-    object-fit: contain;
-  }
-}
+// .video-scroller-content .project-cover {
+//   max-height: 600px;
+//   max-width: 600px;
+//   margin: 100px auto;
+//   text-align: center;
+//   overflow: hidden;
+//   img {
+//     min-height: 100%;
+//     width: 100%;
+//     object-fit: contain;
+//   }
+// }
 
-.video-scroller .video-scroller-bg video {
-    min-width: 100%;
-    object-fit: cover;
-    min-height: 100%;
-}
+// .video-scroller .video-scroller-bg video {
+//     min-width: 100%;
+//     object-fit: cover;
+//     min-height: 100%;
+// }
 </style>

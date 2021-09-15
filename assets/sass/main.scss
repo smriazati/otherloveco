@@ -248,7 +248,7 @@ form {
 section.capability-list {
   background: rgba(191, 191, 191, 1);
   padding: 15vh 0;
-  z-index: 100;
+  z-index: 10;
   width: 100%;
   height: 100%;
   position: relative;
@@ -895,9 +895,10 @@ textarea {
 // about page
 .page-about {
   position: relative;
+  overflow: hidden;
   > * {
     background: #fff;
-    z-index: 100;
+    z-index: 10;
     position: relative;
   }
 
@@ -973,9 +974,6 @@ textarea {
     }
   }
   .image-text-row {
-    @media (max-width: 1500px) {
-      overflow-x: hidden;
-    }
     @media (max-width: $mobile-bp) {
       display: flex;
       flex-direction: column;
@@ -1044,7 +1042,7 @@ textarea {
     }
   }
   .cta {
-    background: #C4C4C4;
+    background: transparent;
 
     > *, a, span {
       color: #fff;
@@ -1132,3 +1130,65 @@ button.underlined {
     border-bottom: 1px solid #fff;
   }
 }
+
+.video-scroller {
+  position: relative;
+  > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    &.video-scroller-content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+// // video scroller 
+// .page-about.container {
+//   > * {
+//     position: relative;
+//     z-index: 11;
+//   }
+// }
+// .video-scroller {
+//   position: relative;
+//   z-index: 9 !important;
+//   .video-scroller-bg {
+//     width: 100vw;
+//     position: static;
+//     pointer-events: none;
+//     .video-wrapper {
+//       visibility: visible;
+//       position: fixed;
+//       top: 50;
+//       right: 0;
+//       height: 50vh;
+//       left: 0;
+//       pointer-events: none;
+//       div {
+//         display: flex;
+//         width: 100vw;
+//         height: 100vh;
+//         overflow: hidden;
+//       }
+//     }
+//   }
+//   .video-scroller-content {
+//     position: relative;
+//     width: 100%;
+//     padding-top: 50vh;
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//   }
+// }
+
+// .video-scroller .video-scroller-bg video {
+//     min-width: 100%;
+//     object-fit: cover;
+//     min-height: 100%;
+// }

@@ -98,8 +98,19 @@
         </div>
       </section>
       
-      <section class="cta full-row" v-if="aboutPage[0].cta">
-        <div class="text-wrapper">
+      <section class="cta full-row video-scroller" v-if="aboutPage[0].cta">
+        <div class="video-scroller-bg">
+          <div ref="vidWrapper" class="video-wrapper">
+            <div>
+              <SanityFile :asset-id="aboutPage[0].cta.bgvideo.asset._ref">
+                <template #default="{ src }">
+                  <video :src="src" autoplay muted loop></video>
+                </template>
+              </SanityFile>
+            </div>
+          </div>
+        </div>
+        <div class="text-wrapper video-scroller-content">
           <h2 v-if="aboutPage[0].cta.text">{{ aboutPage[0].cta.text }}</h2>
           <button class="flat underlined"><nuxt-link to="/contact">Get in touch</nuxt-link></button>
         </div>
