@@ -10,7 +10,7 @@
       </div>
      
       <div class="col footer-column-block" v-if="siteFooter[0].footerCol3">
-        <SanityContent :blocks="siteFooter[0].footerCol3" />
+        <SanityContent :blocks="siteFooter[0].footerCol3"  :serializers="serializers" />
       </div>
     
       <div id="backToTop" class="col">
@@ -30,6 +30,7 @@
         </div>
       </div>
     </div>
+
   </footer>
 </template>
 
@@ -43,17 +44,35 @@ export default {
       this.siteFooter = await this.$sanity.fetch(query).then((res) => res);
       this.siteSettings = await this.$sanity.fetch(query2).then((res) => res);
   },
+  // created() {
+  //   this.serializers = {
+  //       marks: {
+  //         internalLink: ({ children, mark }) => (
+  //           <a href={mark.slug.current}>{children}</a>
+  //         ),
+  //         link: ({ children, mark }) =>
+  //           mark.blank ? (
+  //             <a href={mark.href} target="_blank" rel="noopener noreferer">
+  //               {children}
+  //             </a>
+  //           ) : (
+  //             <a href={mark.href}>{children}</a>
+  //           )
+  //       }
+  //     }
+  // },
   data() {
     return {
       siteFooter: [],
-      siteSettings: []
+      siteSettings: [],
+      serializers: {}
     }
   },
   methods: {
     backToTop() {
       window.scrollTo(0,0);
     }
-  },
+  }
 }
 
 </script>
