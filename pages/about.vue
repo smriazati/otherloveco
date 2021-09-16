@@ -1,10 +1,12 @@
 <template>
-  <div>
-    <div  class="container container-no-grid page-about" v-if="aboutPage[0]">
-      <section v-if="aboutPage[0].section1" class="section1">
-        <div class="text-wrapper">
-          <h2 v-if="aboutPage[0].section1.headline"> {{ aboutPage[0].section1.headline }}</h2>
-          <p v-if="aboutPage[0].section1.subheadline" class="subheadline">{{ aboutPage[0].section1.subheadline }}</p>
+  <div class="about-wrapper">
+    <div ref="container" class="container container-no-grid page-about" v-if="aboutPage[0]">
+      <section ref="topFixed" v-if="aboutPage[0].section1" class="section1 fixed">
+        <div class="fixed-content">
+          <div class="text-wrapper">
+            <h2 v-if="aboutPage[0].section1.headline"> {{ aboutPage[0].section1.headline }}</h2>
+            <p v-if="aboutPage[0].section1.subheadline" class="subheadline">{{ aboutPage[0].section1.subheadline }}</p>
+          </div>
         </div>
       </section>
       <section v-if="aboutPage[0].capabilities" class="capabilities full-row">
@@ -28,7 +30,7 @@
       <section v-if="aboutPage[0].beliefBanner" class="belief-banner full-row">
         <div class="text-wrapper">
           <h2 v-if="aboutPage[0].beliefBanner.title"> {{ aboutPage[0].beliefBanner.title }}</h2>
-          <ol>
+          <ol ref="ticker">
             <li v-for="item in aboutPage[0].beliefBanner.beliefs" :key="item._id">{{ item }}</li>
           </ol>
         </div>
@@ -97,25 +99,28 @@
           </div>
         </div>
       </section>
-      
-      <section class="cta full-row video-scroller" v-if="aboutPage[0].cta">
-        <div class="video-scroller-bg">
-          <div ref="vidWrapper" class="video-wrapper">
-            <div>
-              <SanityFile :asset-id="aboutPage[0].cta.bgvideo.asset._ref">
-                <template #default="{ src }">
-                  <video :src="src" autoplay muted loop></video>
-                </template>
-              </SanityFile>
-            </div>
-          </div>
-        </div>
-        <div class="text-wrapper video-scroller-content">
+
+    </div>
+
+      <section class="full-row cta">                
+        <div class="text-wrapper" v-if="aboutPage[0].cta">
           <h2 v-if="aboutPage[0].cta.text">{{ aboutPage[0].cta.text }}</h2>
           <button class="flat underlined"><nuxt-link to="/contact">Get in touch</nuxt-link></button>
         </div>
-      </section>
-    </div>
+    </section>
+
+    <section class="video-scroller-bg" ref="fixedVid">
+      <div ref="vidWrapper" class="video-wrapper">
+        <div>
+          <SanityFile :asset-id="aboutPage[0].cta.bgvideo.asset._ref">
+            <template #default="{ src }">
+              <video :src="src" autoplay muted loop></video>
+            </template>
+          </SanityFile>
+        </div>
+      </div>
+
+    </section>
   </div>
 </template>
 
@@ -145,7 +150,93 @@ export default {
   //   };
   // },
   mounted() {
-    console.log(this);
+    this.setFixedPos(this.$refs.topFixed);
+    this.$nextTick(function() {
+      this.setTickerAnimation();
+      this.setFixedTextFadeOut();
+      this.setVidFadeIn();
+    })
+    window.addEventListener('resize', () => {
+      this.setFixedPos(this.$refs.topFixed);
+      this.setTickerAnimation();
+      this.setFixedTextFadeOut();
+      this.setVidFadeIn();
+    })
+  },
+  methods: {
+    setFixedPos(ref) {
+      const fixedSection = ref;
+      if (fixedSection) {
+        const height = fixedSection.offsetHeight;
+        const next = fixedSection.nextElementSibling;
+        fixedSection.style.position = 'fixed';
+        next.style.marginTop = `${height + 60}px`
+      }
+    },
+    setFixedTextFadeOut() {
+      const ref = this.$refs.topFixed;
+      const scrollHeight = window.innerHeight;
+
+      if (!ref || !gsap) {
+        return
+      }
+      gsap.to(ref, {
+        opacity: 0,
+        scrollTrigger: {
+          trigger: ref,
+          start: scrollHeight,
+          end: "+=50",
+          scrub: true,
+          toggleActions: "play pause resume reset",
+        }
+      })
+    },
+    setVidFadeIn() {
+      const ref = this.$refs.fixedVid;
+      const scrollHeight = window.innerHeight;
+      if (!ref || !gsap) {
+        return
+      }
+      gsap.set(ref, {
+        opacity: 0,
+      })
+      gsap.to(ref, {
+        opacity: 1,
+        scrollTrigger: {
+          trigger: ref,
+          start: scrollHeight,
+          end: "+=50",
+          scrub: true,
+          toggleActions: "play pause resume reset",
+        }
+      })
+    },
+    setTickerAnimation() {
+      const ref = this.$refs.ticker;
+      if (!ref || !gsap) {
+        return
+      }
+      let tickerStart;
+      let speed;
+      if (window.innerWidth > 768) {
+        tickerStart = ref.offsetWidth;
+        speed = 30;
+      } else {
+        tickerStart = window.innerWidth / 2;
+        speed = 15;
+      }
+
+      
+      gsap.set(ref, {
+        x: tickerStart - 80
+      })
+      gsap.to(ref, {
+        x: -ref.offsetWidth,
+        repeat: -1,
+        ease: 'linear',
+        duration: speed,
+      })
+    }
   }
 };
 </script>

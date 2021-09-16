@@ -1,3 +1,4 @@
+// require('dotenv').config()
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
@@ -33,7 +34,8 @@ export default {
 
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~/plugins/route', '~/plugins/init_gtag.client'],
+  plugins: ['~/plugins/route', '~/plugins/init_gtag.client', '~/plugins/insta.js',  '~/plugins/axios.js',
+],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -55,14 +57,15 @@ export default {
     preconnect: true
   },
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [
-  ],
+  modules: ['@nuxtjs/axios'],
   // Modules: https://go.nuxtjs.dev/config-modules
   env: {
     gtagId: process.env.GTAG_ID,
+    igToken: process.env.INSTAGRAM_ACCESS_TOKEN
   },
   privateRuntimeConfig: {
-    gtagId: process.env.GTAG_ID
+    gtagId: process.env.GTAG_ID,
+    igToken: process.env.INSTAGRAM_ACCESS_TOKEN
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

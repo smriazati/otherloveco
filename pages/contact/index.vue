@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div  class="container page-contact" v-if="contactPage[0]">
+    <div  class="container page-contact" v-if="contactPage">
       <section class="contact-form">
         <div class="text-wrapper">
           <h1 v-if="contactPage[0].pageTitle">{{contactPage[0].pageTitle }}</h1>
@@ -29,11 +29,22 @@
 import { groq } from "@nuxtjs/sanity";
 
 export default {
-    async asyncData({ $sanity }) {
+
+    async asyncData({ $sanity, $instaApi, $axios, error }) {
       const query1 = groq`*[_type == "contactPage"]`;
       const contactPage = await $sanity.fetch(query1).then((res) => res);
       return { contactPage };
-    },
+
+      // const responses = await Promise.all([$instaApi.getFeed(15)]);
+      // const badResponse = responses.find((response) => !response.ok);
+      // if (badResponse) {
+      //   const instaError = badResponse
+      //   return { instaError, contactPage };
+      // }
+      // const insta = responses[0].json;
+      // return { insta, contactPage };
+  
+    }
 };
 </script>
 
