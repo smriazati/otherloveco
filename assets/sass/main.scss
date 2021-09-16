@@ -793,7 +793,7 @@ textarea {
 
 .page-team {
   > * {
-    grid-column: 2 / span 11;
+    grid-column: 1 / span 11;
     &:not(:last-child) {
       margin-bottom: 150px;
     }
@@ -801,7 +801,7 @@ textarea {
   .person {
     @include gridFixedNested();
     .image-wrapper {
-      grid-column: span 4;
+      grid-column: 2 / span 4;
       padding-right: 25%;
       img {
         filter: blur(0px);
@@ -815,6 +815,7 @@ textarea {
     }
     .text-wrapper {
       grid-column: span 6;
+    
       @media (max-width: $mobile-bp) {
         grid-column: span 8;
       }
@@ -822,10 +823,17 @@ textarea {
         padding-right: 5%;
       }
       &.announcement {
-        grid-column: 7 / span 4;
+        grid-column: 9 / span 4;
         @media (max-width: $mobile-bp) {
           grid-column: 9 / span 2;
         }
+      }
+    }
+    &.has-announcement .bio.text-wrapper {
+      grid-column: 2 / span 6;
+      padding-right: 0;
+      p {
+        max-width: unset;
       }
     }
 
@@ -1303,15 +1311,6 @@ header.site-header {
   }
 }
 
-.layout-darkbg {
-  background: #000;
-  *, a {
-    color: #fff;
-  }
-  &.layout-default header.site-header .logo img {
-    filter: grayscale(1) invert(0);
-  }
-}
 
 .container-work {
   .work-grid {
@@ -1334,3 +1333,13 @@ header.site-header {
   }
 }
 
+
+.layout-default.work {
+    background: #000;
+    *, a {
+      color: #fff;
+    }
+    header.site-header .logo img {
+      filter: grayscale(1) invert(0);
+    }
+}

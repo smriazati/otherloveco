@@ -1,7 +1,7 @@
 <template>
   <div>
     <div  class="container page-team" v-if="people">
-      <div v-for="item in people" :key="item._id" class="person">
+      <div v-for="item in people" :key="item._id" class="person" :class="item.announcement ? 'has-announcement' : '' ">
         <div class="image-wrapper" v-if="item.profile">
          <SanityImage
             :asset-id="item.profile.asset._ref"

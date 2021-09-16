@@ -30,8 +30,7 @@ export default {
     const query = groq`*[_type == "projects"]`;
     const projects = await $sanity.fetch(query).then((res) => res);
     return { projects };
-  },
-  layout: "darkBg"
+  }
 };
 </script>
 
