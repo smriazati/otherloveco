@@ -1,4 +1,6 @@
 <template>
+<div class="fixed-header">
+  
   <header class="site-header">
     <div v-if="siteSettings" class="logo">
       <div v-if="siteSettings[0].siteLogo" class="logo-wrapper">
@@ -18,12 +20,14 @@
       </button>
       <ul ref="menu">
         <li><nuxt-link to="/about">About</nuxt-link></li>
-        <!-- <li><nuxt-link to="/work">Work</nuxt-link></li> -->
+        <li><nuxt-link to="/work">Work</nuxt-link></li>
         <li><nuxt-link to="/team">Team</nuxt-link></li>
         <li><nuxt-link to="/contact">Contact</nuxt-link></li>
       </ul>
     </nav>
   </header>
+
+</div>
 </template>
 
 

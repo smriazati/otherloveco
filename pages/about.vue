@@ -166,7 +166,9 @@ export default {
   methods: {
     setFixedPos(ref) {
       const fixedSection = ref;
-      if (fixedSection) {
+      if (fixedSection && window.innerWidth > 600) {
+
+        // if .fixed-content is taller than window
         const height = fixedSection.offsetHeight;
         const next = fixedSection.nextElementSibling;
         fixedSection.style.position = 'fixed';

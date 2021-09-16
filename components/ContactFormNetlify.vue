@@ -5,6 +5,7 @@
     data-netlify="true"
     :action="successRoute"
     enctype="application/x-www-form-urlencoded"
+    :class="hasError ? 'has-error' : 'no-error'"
   >
     <input type="hidden" name="form-name" value="contact" />
 
@@ -15,6 +16,7 @@
         name="name"
         placeholder="Your name *"
         v-model="nameInput"
+        :class="isNameValid ? 'is-valid' : 'is-not-valid'"
       />
     </div>
 
@@ -24,6 +26,7 @@
         type="text"
         name="email"
         placeholder="Your email *"
+        :class="isEmailValid ? 'is-valid' : 'is-not-valid'"
         v-model="emailInput"
       />
     </div>
@@ -37,7 +40,8 @@
 
     <div v-if="message" class="form-group">
       <label for="message" class="visually-hidden">Tell us about your project *</label>
-      <input name="message" id="message" placeholder="Tell us about your project *" v-model="messageInput" />
+      <input name="message" id="message" placeholder="Tell us about your project *" v-model="messageInput"         :class="isMessageValid ? 'is-valid' : 'is-not-valid'"
+ />
     </div>
 
     <div class="form-group">

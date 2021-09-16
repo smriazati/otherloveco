@@ -1,29 +1,36 @@
 <template>
-  <div class="container grid-fixed container-home">
-    <section>
-      <!-- <div
-      v-if="siteSettings"
-        class="text-wrapper"
-        ref="textWrapper"
-        :style="` margin-top: ${
-          $store.state.helpful.windowHeight - textHeight
-        }px`"
-      > -->
-      <div
-      v-if="homePage"
-        class="text-wrapper"
-        ref="textWrapper"
-      >
-        <h2 v-if="homePage[0].bannerText">
-          {{ homePage[0].bannerText }}
-        </h2>
-        <p v-if="homePage[0].subText">
-          {{ homePage[0].subText }}
-        </p>
-      </div>
-    </section>
-     
+<div class="container-home">
+  <div class="fixed-container">
+    <div class="fixed-wrapper grid-fixed">
+      <section>
+        <div
+        v-if="homePage"
+          class="text-wrapper"
+          ref="textWrapper"
+        >
+          <h2 v-if="homePage[0].bannerText">
+            {{ homePage[0].bannerText }}
+          </h2>
+          <p v-if="homePage[0].subText">
+            {{ homePage[0].subText }}
+          </p>
+        </div>
+      </section>
+    </div>
   </div>
+
+    <section class="logo-scroller grid-fixed" v-if="homePage[0].logos">
+      <div ref="scrollerWrapper" class="scroller-wrapper">
+        <div v-for="item in homePage[0].logos" :key="item._id" class="logo">
+            <SanityImage
+                :asset-id="item.asset._ref"
+                auto="format"
+              />
+        </div>
+      </div>
+     
+    </section>
+</div>
 </template>
 
 
@@ -48,6 +55,9 @@ export default {
   },
   mounted() {
     this.isMounted = true;
+    this.$nextTick(function() {
+      this.setAnimations();
+    })
   },
 
   watch: {
@@ -56,7 +66,7 @@ export default {
         return false;
       }
       this.$nextTick(function () {
-        this.setFixedLayout();
+        // this.setFixedLayout();
         // this.setAnimations();
         // this.setCapabilityList();
       });
@@ -126,12 +136,52 @@ export default {
     registerPlugins() {
       gsap.registerPlugin(ScrollTrigger);
     },
-    setAnimations() {
-      this.registerPlugins();
-      if (!gsap || !ScrollTrigger) {
-        console.log("cancelling animation, no library");
+setAnimations() {
+      if (!gsap) {
+        return;
       }
-    },
+      const imageWrapper = this.$refs.scrollerWrapper;
+      if (imageWrapper) {
+        const refs = gsap.utils.toArray(
+          imageWrapper.querySelectorAll(".logo")
+        );
+        if (refs) {
+          refs.forEach((ref) => {
+            gsap.set(ref, {
+              filter: "blur(30px)",
+              scale: 0.5
+            });
+            gsap.to(ref, {
+              filter: "blur(0px)",
+              scale: 1,
+              scrollTrigger: {
+                trigger: ref,
+                start: "top+=50px bottom",
+                // markers: true,
+                end: "+=250",
+                scrub: true,
+                // onLeave: (self) => { console.log(self); self.trigger.classList.add('on-exit') } ,
+                toggleActions: "play pause resume reset",
+              },
+            });
+
+            gsap.to(ref, {
+              opacity: 0,
+              filter: "blur(30px)",
+              scrollTrigger: {
+                trigger: ref,
+                start: "top top+=50px",
+                // markers: true,
+                end: "+=100",
+                scrub: true,
+                // onLeave: (self) => { console.log(self); self.trigger.classList.add('on-exit') } ,
+                toggleActions: "play pause resume reset",
+              },
+            });
+          });
+        }
+      }
+    }
   },
 };
 </script>
