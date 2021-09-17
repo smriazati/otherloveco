@@ -61,7 +61,7 @@ export default {
   },
   mounted() {
     this.$nextTick(function() {
-      this.setAnimations();
+      this.onImageLoad();
     })
   },
   beforeMount () {
@@ -78,45 +78,56 @@ export default {
         }
       }
     },
-    setBodyBg() {
-      this.$store.commit("helpful/setBodyBg", this.bgColor);
-    },
-    registerPlugins() {
+   registerPlugins() {
       gsap.registerPlugin(ScrollTrigger);
     },
-    setAnimations() {
+    setTimeline(ref) {
       this.registerPlugins();
         if (!gsap) {
+          console.log('error, no gsap')
           return;
         }
+        console.log('setting timeline on', ref)
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: ref,
+            // markers: true,
+            start: "top bottom", 
+            end: "bottom top",
+            scrub: true
+          }
+        });
+        tl
+          .from(ref, {scale: 0.3, '-webkit-filter': 'blur(30px)', filter: 'blur(30px)', duration: 1})
+          .to(ref, {'-webkit-filter': 'blur(0px)', filter: 'blur(0px)',  duration: 1})
+          .to(ref, {scale: 1, duration: 5})
+          .to(ref, {'-webkit-filter': 'blur(30px)', filter: 'blur(30px)',  duration: 1})
+    },
+    onImageLoad() {
         const imageWrapper = this.$refs.scrollerWrapper;
         if (imageWrapper) {
-
           const refs = gsap.utils.toArray(
             imageWrapper.querySelectorAll(".logo")
           );
           if (refs) {
             refs.forEach((ref) => {
- 
-              const tl = gsap.timeline({
-                scrollTrigger: {
-                  trigger: ref,
-                  // markers: true,
-                  start: "top bottom", 
-                  end: "bottom top",
-                  scrub: true
-                }
-              });
-
-              tl
-                .from(ref, {scale: 0.3, '-webkit-filter': 'blur(30px)', filter: 'blur(30px)', duration: 1})
-                .to(ref, {'-webkit-filter': 'blur(0px)', filter: 'blur(0px)',  duration: 1})
-                .to(ref, {scale: 1, duration: 5})
-                .to(ref, {'-webkit-filter': 'blur(30px)', filter: 'blur(30px)',  duration: 1})
+              const img = ref.querySelector('img');
+              if (img.complete) {
+                this.setTimeline(ref);
+              } else {
+                img.addEventListener('load', () => {
+                    this.setTimeline(ref);
+                })
+                img.addEventListener('error', () => {
+                    console.log('error, no image loaded, no animation set')
+                })
+              }
             });
           }
         }
     }
+   
   },
 };
 </script>
