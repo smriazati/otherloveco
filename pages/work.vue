@@ -69,49 +69,23 @@ export default {
           if (refs) {
             refs.forEach( ref => {
 
-
-             gsap.set(ref, {
-                filter: "blur(30px)",
-                scale: 0.5
-              });
-
-
-              gsap.to(ref, {
-                scale: 0.5,
-                filter: "blur(0px)",
+              const tl = gsap.timeline({
                 scrollTrigger: {
                   trigger: ref,
-                  start: "top+=50px bottom",
                   // markers: true,
-                  end: "top top+=80%",
-                  scrub: true,
-                  toggleActions: "play pause resume reset",
-                },
+                  start: "top bottom", 
+                  end: "bottom top",
+                  scrub: true
+                }
               });
 
-             gsap.to(ref, {
-                scale: 1,
-                scrollTrigger: {
-                  trigger: ref,
-                  start: "top top+=80%",
-                  // markers: true,
-                  end: "top center",
-                  scrub: true,
-                  toggleActions: "play pause resume reset",
-                },
-              });
+              tl
+                .from(ref, {scale: 0.3, filter: 'blur(30px)', duration: 1})
+                .to(ref, {filter: 'blur(0px)', duration: 1})
+                .to(ref, {scale: 1, duration: 5})
+                .to(ref, {filter: 'blur(30px)', duration: 1})
+                  
 
-              gsap.to(ref, {
-                opacity: 0,
-                scrollTrigger: {
-                  trigger: ref,
-                  start: "top top+=50px",
-                  // markers: true,
-                  end: "top top-=100",
-                  scrub: true,
-                  toggleActions: "play pause resume reset",
-                },
-              });
             })
           }
 
