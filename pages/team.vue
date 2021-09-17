@@ -6,6 +6,7 @@
          <SanityImage
             :asset-id="item.profile.asset._ref"
             auto="format"
+            :alt="item.profile.alt"
           />
         </div>
         <div class="text-wrapper bio">

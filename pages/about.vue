@@ -1,5 +1,5 @@
 <template>
-  <div class="about-wrapper">
+  <div class="about-wrapper" ref="page">
     <div ref="container" class="container container-no-grid page-about" v-if="aboutPage[0]">
       <section ref="topFixed" v-if="aboutPage[0].section1" class="section1 fixed">
         <div class="fixed-content">
@@ -14,6 +14,7 @@
             <SanityImage
                 :asset-id="aboutPage[0].capabilities.image.asset._ref"
                 auto="format"
+                :alt="aboutPage[0].capabilities.image.alt"
               />
           </div>
           <div class="text-wrapper">
@@ -39,6 +40,10 @@
         
         <div class="image-wrapper overflow" v-if="aboutPage[0].section2">
           <div v-if="aboutPage[0].section2.video" class="video-wrapper">
+            <SanityImage
+                :asset-id="aboutPage[0].section2.video.poster.asset._ref"
+                auto="format"
+              /> 
             <SanityFile :asset-id="aboutPage[0].section2.video.asset._ref">
               <template #default="{ src }">
                 <video :src="src" autoplay muted loop></video>
@@ -49,6 +54,7 @@
             <SanityImage
                 :asset-id="aboutPage[0].section2.image.asset._ref"
                 auto="format"
+                :alt="aboutPage[0].section2.image.alt"
               />  
            </div>
           
@@ -66,6 +72,8 @@
           <SanityImage
                 :asset-id="aboutPage[0].section3.image.asset._ref"
                 auto="format"
+                :alt="aboutPage[0].section3.image.alt"
+
               />
         </div>
         <div class="text-wrapper">
@@ -82,12 +90,14 @@
             <SanityImage
                 :asset-id="aboutPage[0].section4.image1.asset._ref"
                 auto="format"
+                :alt="aboutPage[0].section4.image1.alt"
               />  
            </div>
            <div v-if="aboutPage[0].section4.image2">
             <SanityImage
                 :asset-id="aboutPage[0].section4.image2.asset._ref"
                 auto="format"
+                :alt="aboutPage[0].section4.image2.alt"
               />  
            </div>
           
@@ -110,7 +120,7 @@
     </section>
 
     <section class="video-scroller-bg" ref="fixedVid">
-      <div ref="vidWrapper" class="video-wrapper">
+      <div class="video-wrapper">
         <div>
           <SanityFile :asset-id="aboutPage[0].cta.bgvideo.asset._ref">
             <template #default="{ src }">
@@ -149,6 +159,7 @@ export default {
   mounted() {
     this.setFixedPos(this.$refs.topFixed);
     this.$nextTick(function() {
+      this.setPosterImages();
       this.setTickerAnimation();
       this.setFixedTextFadeOut();
       this.setVidFadeIn();
@@ -161,6 +172,24 @@ export default {
     })
   },
   methods: {
+    setPosterImages() {
+      // get all images
+      // get video
+      // if video is playing, hide image
+      const page = this.$refs.page;
+      const wrappers = page.querySelectorAll('.video-wrapper')
+      wrappers.forEach(wrapper => {
+        // check for image
+        const hasImg = wrapper.getElementsByTagName('img').length > 0;
+        if (hasImg) {
+          const img = wrapper.querySelector('img');
+          const src = img.src;
+          const vid = wrapper.querySelector('video');
+          vid.poster = src;
+          img.remove();
+        }
+      })
+    },
     setFixedPos(ref) {
       const fixedSection = ref;
       if (fixedSection && window.innerWidth > 600) {

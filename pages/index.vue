@@ -25,6 +25,7 @@
             <SanityImage
                 :asset-id="item.asset._ref"
                 auto="format"
+                :alt="item.alt"
               />
         </div>
                 

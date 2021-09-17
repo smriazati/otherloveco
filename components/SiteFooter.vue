@@ -25,6 +25,7 @@
             <SanityImage
               :asset-id="siteSettings[0].favicon.asset._ref"
               auto="format"
+              :alt="siteSettings[0].favicon.alt"
             />
             </nuxt-link>
         </div>

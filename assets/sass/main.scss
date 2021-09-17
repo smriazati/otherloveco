@@ -132,7 +132,7 @@ nav ul {
   z-index: 134;
 }
 .home, .work {
-  .fixed-header {
+  .fixed-header:not(.menu-expanded) {
     mix-blend-mode: difference;
   }
 }
@@ -540,13 +540,13 @@ p.small {
 // page containers with grid
 .container {
   width: 100%;
-  margin-top: 150px;
+  margin-top: 200px;
 }
 .container:not(.container-no-grid) {
   @include gridFixed;
   &:not(.container-home) {
-    margin-top: 150px;
-    margin-bottom: 80px;
+    margin-top: 200px;
+    margin-bottom: 100px;
   }
 }
 
@@ -588,7 +588,7 @@ body {
     padding-bottom: 60px;
     grid-column: 1 / span 4;
     @media (max-width: 1000px) {
-      grid-column: 1 / span 6;
+      grid-column: 1 / span 10;
       padding-right: 10px;
     }
     h2 {
@@ -597,6 +597,9 @@ body {
       font-weight: 400;
       font-size: 44px;
       line-height: 55px;
+      @media (max-width: $mobile-bp) {
+        line-height: 50px;
+      }
     }
     p {
       font-size: 14px;
@@ -714,6 +717,13 @@ footer.site-footer {
       grid-column: span 2 / 13;
       grid-row: 1 / 2;
       text-align: right;
+      @media (max-width: $mobile-bp) {
+        grid-column: 1 / span 5;
+        grid-row: 4 / 5;
+        text-align: left;
+        margin-top: 111px;
+        margin-bottom: 0;
+      }
     }
     .col {
       grid-column: span 3;
@@ -754,6 +764,9 @@ footer.site-footer {
     @include contained;
     display: flex;
     padding: 80px 0 40px 0;
+    @media (max-width: $mobile-bp) {
+      padding: 0;
+    }
     width: 100%;
     justify-content: space-between;
     align-items: center;
@@ -813,6 +826,9 @@ textarea {
     @include gridFixedNested();
     .image-wrapper {
       grid-column: 2 / span 4;
+      @media (max-width: $mobile-bp) {
+        grid-column: 2 / span 3;
+      }
       padding-right: 25%;
       img {
         filter: blur(0px);
@@ -885,18 +901,35 @@ textarea {
 // mobile menu
 
 @media (min-width: $nav-bp) {
-  header.site-header nav > button {
+  header.site-header nav > button,
+  .mobile-bonus-nav {
     display: none;
   }
 }
 
+
 @media (max-width: $nav-bp) {
-  header.site-header nav > ul {
+  header.site-header nav .collapsible {
     display: none;
   }
   header.site-header nav {
     display: flex;
     justify-content: flex-end;
+  }
+
+  header.site-header .logo {
+    max-width: 200px;
+  }
+
+  header.site-header nav:not(.expanded) {
+    .mobile-bonus-nav {
+      display: none;
+    }
+  }
+
+  .submark img {
+    max-width: 35px;
+    filter: grayscale(1) invert(1);
   }
 
   header.site-header nav.expanded {
@@ -907,28 +940,58 @@ textarea {
       color: white;
     }
   }
-  header.site-header nav.expanded > ul {
+
+  header.site-header nav.expanded .collapsible {
     position: fixed;
     z-index: 99;
     top: 0;
     right: 0;
-    padding-top: 70px;
-    padding-right: 5%;
+    padding: 5%;
     text-align: right;
     width: 70%;
     height: 100%;
     display: flex;
-    background:$charcoal;
-    > * {
-      color: white;
-    }
-    > li {
-      padding: 0;
-      padding-top: 30px;
-    }
     flex-direction: column;
-    align-items: flex-end;
-    justify-content: flex-start;
+    align-items: center;
+    // justify-content: center;
+    background:#000;
+    box-shadow: -12px 0px 30px #EE7B7B;
+    > ul {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      > * {
+        color: white;
+      }
+      > li {
+        padding: 0;
+        padding-top: 30px;
+      }
+    }
+    .mobile-bonus-nav {
+      flex: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      ul {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+        li {
+          padding: 5px;
+          font-size: 14px;
+          line-height: 20px;
+          a {
+            color: #fff;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -1016,8 +1079,11 @@ textarea {
         line-height: 48px;
       }
       .sub-list p {
-        font-size: 18px;
-        line-height: 26px;
+        font-size: 15px;
+        line-height: 17px;
+        + p {
+          margin-top: 6px;
+        }
       }
     }
   }
@@ -1357,4 +1423,26 @@ footer {
     header.site-header .logo img {
       filter: grayscale(1) invert(0);
     }
+}
+
+.page-about {
+  .video-wrapper {
+    position: relative;
+    > * {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    img {
+      z-index: 9;
+      opacity: 1;
+      transition: .3s ease all;
+      &.fade-out {
+        opacity: 0;
+      }
+    }
+    video {
+      z-index: 8;
+    }
+  }
 }
