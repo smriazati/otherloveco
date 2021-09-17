@@ -78,9 +78,11 @@ $charcoal: rgba(24, 24, 24, 1);
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'DM Sans', sans-serif;
 }
-
+body.home {
+  background: #000;
+}
 a {
   text-decoration: none;
   color: inherit;
@@ -1398,6 +1400,7 @@ footer {
     grid-row-gap: 50px;
     .work-grid-item {
       margin: 0;
+      overflow: hidden;
       &:nth-child(3n+1) {  
         grid-column: 1 / span 5;
         place-self: start;

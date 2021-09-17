@@ -49,6 +49,9 @@ export default {
   head() {
     return {
       title: this.title,
+      bodyAttrs: {
+        class: this.title.toLowerCase()
+      }
     }
   },
   data() {
@@ -61,8 +64,20 @@ export default {
       this.setAnimations();
     })
   },
-
+  beforeMount () {
+    window.addEventListener('scroll', this.handleScroll);
+  },
   methods: {
+    handleScroll() {
+      const isHomePage = document.querySelector('body.home');
+      if (isHomePage) {
+        const windowH = window.innerHeight + window.scrollY;
+        const bodyH = document.body.offsetHeight - 10
+        if (windowH >= bodyH) {
+          window.scrollTo(0,0);
+        }
+      }
+    },
     setBodyBg() {
       this.$store.commit("helpful/setBodyBg", this.bgColor);
     },
@@ -76,6 +91,7 @@ export default {
         }
         const imageWrapper = this.$refs.scrollerWrapper;
         if (imageWrapper) {
+
           const refs = gsap.utils.toArray(
             imageWrapper.querySelectorAll(".logo")
           );
@@ -93,11 +109,10 @@ export default {
               });
 
               tl
-                .from(ref, {scale: 0.3, filter: 'blur(30px)', duration: 1})
-                .to(ref, {filter: 'blur(0px)', duration: 1})
+                .from(ref, {scale: 0.3, '-webkit-filter': 'blur(30px)', filter: 'blur(30px)', duration: 1})
+                .to(ref, {'-webkit-filter': 'blur(0px)', filter: 'blur(0px)',  duration: 1})
                 .to(ref, {scale: 1, duration: 5})
-                .to(ref, {filter: 'blur(30px)', duration: 1})
-                          
+                .to(ref, {'-webkit-filter': 'blur(30px)', filter: 'blur(30px)',  duration: 1})
             });
           }
         }

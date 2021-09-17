@@ -80,13 +80,11 @@ export default {
               });
 
               tl
-                .from(ref, {scale: 0.3, filter: 'blur(30px)', duration: 1})
-                .to(ref, {filter: 'blur(0px)', duration: 1})
+                .from(ref, {scale: 0.3, '-webkit-filter': 'blur(30px)', filter: 'blur(30px)', duration: 1})
+                .to(ref, {'-webkit-filter': 'blur(0px)', filter: 'blur(0px)',  duration: 1})
                 .to(ref, {scale: 1, duration: 5})
-                .to(ref, {filter: 'blur(30px)', duration: 1})
-                  
-
-            })
+                .to(ref, {'-webkit-filter': 'blur(30px)', filter: 'blur(30px)',  duration: 1})
+            });
           }
 
         }
