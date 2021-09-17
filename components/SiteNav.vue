@@ -22,8 +22,8 @@
       <div class="collapsible">
 <ul ref="menu">
         <li><nuxt-link to="/about">About</nuxt-link></li>
-        <li><nuxt-link to="/work">Work</nuxt-link></li>
         <li><nuxt-link to="/team">Team</nuxt-link></li>
+        <li><nuxt-link to="/work">Work</nuxt-link></li>
         <li><nuxt-link to="/contact">Contact</nuxt-link></li>
       </ul>
 
