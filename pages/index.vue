@@ -19,14 +19,15 @@
     </div>
   </div>
 
-    <section class="logo-scroller grid-fixed" v-if="homePage[0].logos">
-      <div ref="scrollerWrapper" class="scroller-wrapper">
+    <section class="logo-scroller grid-fixed" v-if="homePage">
+      <div ref="scrollerWrapper" class="scroller-wrapper" v-if="homePage[0].logos">
         <div v-for="item in homePage[0].logos" :key="item._id" class="logo">
             <SanityImage
                 :asset-id="item.asset._ref"
                 auto="format"
               />
         </div>
+                
       </div>
      
     </section>
@@ -44,143 +45,112 @@ export default {
       return { homePage };
     },
   layout: "home",
+  head() {
+    return {
+      title: this.title,
+    }
+  },
   data() {
     return {
-      isMounted: false,
-      textHeight: 0,
-      textBuffer: 80,
-      imageBuffer: 1.3,
-      capListHoverImage: "/placeholder.png",
+      title: 'Home',
     };
   },
   mounted() {
-    this.isMounted = true;
     this.$nextTick(function() {
       this.setAnimations();
     })
   },
 
-  watch: {
-    isMounted() {
-      if (!this.isMounted) {
-        return false;
-      }
-      this.$nextTick(function () {
-        // this.setFixedLayout();
-        // this.setAnimations();
-        // this.setCapabilityList();
-      });
-    },
-  },
   methods: {
-    // setCapabilityList() {
-    //   const capListContainer = this.$refs.capabilityList;
-    //   if (!capListContainer) {
-    //     return;
-    //   }
-    //   const capList = capListContainer.querySelector("ul");
-    //   if (!capList) {
-    //     return;
-    //   }
-    //   const capListItems = capList.querySelectorAll("li");
-    //   if (!capListItems) {
-    //     return;
-    //   }
-    //   capListItems.forEach((item) => {
-    //     item.addEventListener("mouseenter", this.capListHover);
-    //     item.addEventListener("mouseleave", this.capListUnhover);
-    //   });
-    // },
-    // capListHover(e) {
-    //   if (!e.target) {
-    //     return;
-    //   }
-    //   debounce(this.capListShowImage(e.target, e.target.dataset.order), 500);
-    // },
-    // capListUnhover(e) {
-    //   if (!e.target) {
-    //     return;
-    //   }
-    //   debounce(this.capListHideImage(e.target, e.target.dataset.order), 500);
-    // },
-    // capListShowImage(target, index) {
-    //   target.style.zIndex = "110";
-    //   this.capListHoverImage = "/placeholder.png";
-    //   const img = this.$refs.highlightImage;
-    //   img.style.opacity = "1";
-    //   img.style.height = "100%";
-
-    //   if (parseInt(index) % 2 == 0) {
-    //     img.style.paddingLeft = "40%";
-    //   } else {
-    //     img.style.paddingRight = "40%";
-    //   }
-    // },
-    // capListHideImage(target, index) {
-    //   target.style.zIndex = "101";
-    //   this.capListHoverImage = null;
-    //   const img = this.$refs.highlightImage;
-    //   img.style.opacity = "0";
-    //   img.style.padding = "0";
-    //   img.style.height = "0";
-    // },
-    setFixedLayout() {
-      if (!this.$refs.textWrapper) {
-        return;
-      }
-      this.textHeight = this.$refs.textWrapper.offsetHeight + this.textBuffer;
-    },
     setBodyBg() {
       this.$store.commit("helpful/setBodyBg", this.bgColor);
     },
     registerPlugins() {
       gsap.registerPlugin(ScrollTrigger);
     },
-setAnimations() {
-      if (!gsap) {
-        return;
-      }
-      const imageWrapper = this.$refs.scrollerWrapper;
-      if (imageWrapper) {
-        const refs = gsap.utils.toArray(
-          imageWrapper.querySelectorAll(".logo")
-        );
-        if (refs) {
-          refs.forEach((ref) => {
-            gsap.set(ref, {
-              filter: "blur(30px)",
-              scale: 0.5
-            });
-            gsap.to(ref, {
-              filter: "blur(0px)",
-              scale: 1,
-              scrollTrigger: {
-                trigger: ref,
-                start: "top+=50px bottom",
-                // markers: true,
-                end: "+=250",
-                scrub: true,
-                // onLeave: (self) => { console.log(self); self.trigger.classList.add('on-exit') } ,
-                toggleActions: "play pause resume reset",
-              },
-            });
-
-            gsap.to(ref, {
-              opacity: 0,
-              filter: "blur(30px)",
-              scrollTrigger: {
-                trigger: ref,
-                start: "top top+=50px",
-                // markers: true,
-                end: "+=100",
-                scrub: true,
-                // onLeave: (self) => { console.log(self); self.trigger.classList.add('on-exit') } ,
-                toggleActions: "play pause resume reset",
-              },
-            });
-          });
+    setAnimations() {
+      this.registerPlugins();
+        if (!gsap) {
+          return;
         }
-      }
+        const imageWrapper = this.$refs.scrollerWrapper;
+        if (imageWrapper) {
+          const refs = gsap.utils.toArray(
+            imageWrapper.querySelectorAll(".logo")
+          );
+          if (refs) {
+            refs.forEach((ref) => {
+ 
+//               const tl = gsap.timeline({
+//                 // yes, we can add it to an entire timeline!
+//                 scrollTrigger: {
+//                   trigger: ref,
+//                   markers: true,
+//                   start: "top bottom", // when the top of the trigger hits the top of the viewport
+//                   end: window.innerHeight, // end after scrolling 500px beyond the start
+//                   scrub: 1, // smooth scrubbing, takes 1 second to "catch up" to the scrollbar
+//                   // snap: {
+//                   //   snapTo: "labels", // snap to the closest label in the timeline
+//                   //   duration: {min: 0.2, max: 3}, // the snap animation should be at least 0.2 seconds, but no more than 3 seconds (determined by velocity)
+//                   //   delay: 0.2, // wait 0.2 seconds from the last scroll event before doing the snapping
+//                   //   ease: "power1.inOut" // the ease of the snap animation ("power3" by default)
+//                   // }
+//                 }
+//               });
+
+// // add animations and labels to the timeline
+
+// tl
+//   .from(ref, {scale: 0.3, filter: 'blur(30px)', autoAlpha: 1, duration: 1})
+//   .to(ref, {filter: 'blur(0px)', duration: 1})
+//   .to(ref, {scale: 1, duration: 5})
+//   .to(ref, { autoAlpha: 0, duration: 0.2})
+             
+             gsap.set(ref, {
+                filter: "blur(30px)",
+                scale: 0.5
+              });
+
+
+              gsap.to(ref, {
+                scale: 0.5,
+                filter: "blur(0px)",
+                scrollTrigger: {
+                  trigger: ref,
+                  start: "top+=50px bottom",
+                  // markers: true,
+                  end: "top top+=80%",
+                  scrub: true,
+                  toggleActions: "play pause resume reset",
+                },
+              });
+
+             gsap.to(ref, {
+                scale: 1,
+                scrollTrigger: {
+                  trigger: ref,
+                  start: "top top+=80%",
+                  // markers: true,
+                  end: "top center",
+                  scrub: true,
+                  toggleActions: "play pause resume reset",
+                },
+              });
+
+              gsap.to(ref, {
+                opacity: 0,
+                scrollTrigger: {
+                  trigger: ref,
+                  start: "top top+=50px",
+                  // markers: true,
+                  end: "top top-=100",
+                  scrub: true,
+                  toggleActions: "play pause resume reset",
+                },
+              });
+            });
+          }
+        }
     }
   },
 };

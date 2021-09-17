@@ -136,19 +136,16 @@ export default {
     // const siteSettings = await $sanity.fetch(query2).then((res) => res);
     return { aboutPage };
   },
-  name: 'About',
-  // head() {
-  //   return {
-  //     title: `About | ${this.siteSettings[0].siteTitle}`,
-  //     meta: [
-  //       {
-  //         hid: "description",
-  //         name: "description",
-  //         content: this.siteSettings[0].siteDesc,
-  //       },
-  //     ],
-  //   };
-  // },
+  data() {
+    return {
+      title: 'About'
+    }
+  },
+  head() {
+    return {
+      title: this.title,
+    }
+  },
   mounted() {
     this.setFixedPos(this.$refs.topFixed);
     this.$nextTick(function() {

@@ -36,6 +36,16 @@ export default {
     people.sort((a, b) => (a.order > b.order) ? 1 : -1)
     return { people };
   },
+  data() {
+    return {
+      title: 'Team'
+    }
+  },
+  head() {
+    return {
+      title: this.title,
+    }
+  }
 };
 </script>
 

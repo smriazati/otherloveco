@@ -27,5 +27,15 @@ export default {
       const contactPage = await $sanity.fetch(query1).then((res) => res);
       return { contactPage };
     },
+    data() {
+      return {
+        title: 'Contact'
+      }
+    },
+    head() {
+      return {
+        title: this.title,
+      }
+    }
 };
 </script>

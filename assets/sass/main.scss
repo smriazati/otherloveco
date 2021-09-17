@@ -129,7 +129,17 @@ nav ul {
 .fixed-header {
   position: fixed;
   width: 100%;
-  z-index: 13;
+  z-index: 134;
+}
+.home, .work {
+  .fixed-header {
+    mix-blend-mode: difference;
+  }
+}
+
+.fixed-header + * {
+  position: relative;
+  z-index: 12;
 }
 
 header.site-header {
@@ -693,7 +703,8 @@ footer.site-footer {
   width: 100%;
   background: #000;
   padding: 60px 0 30px 0;
-
+  position: relative;
+  z-index: 13;
   * { 
     color: #fff;
   }
@@ -1269,10 +1280,10 @@ footer {
   }
 }
 
-header.site-header {
-  position: relative;
-  z-index: 20;
-}
+// header.site-header {
+//   position: relative;
+//   z-index: 20;
+// }
 
 .fixed-container {
   position: fixed;
@@ -1284,10 +1295,14 @@ header.site-header {
 
 .container-home .logo-scroller {
   padding-top: 100vh;
+  padding-bottom: 100vh;
 }
 .logo-scroller {
   // has grid
   .scroller-wrapper {
+    // img {
+    //   filter: brightness(100);
+    // }
     grid-column: 7 / span 6;
     display: grid;
     grid-template-columns: repeat(6, 1fr);

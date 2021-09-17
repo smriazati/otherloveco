@@ -1,7 +1,7 @@
 <template>
   <div class="container-work container container-no-grid">
-    <section class="work-grid grid-fixed" v-if="projects">
-      <div v-for="item in projects" :key="item.id" class="work-grid-item">
+    <section class="work-grid grid-fixed" v-if="workPage">
+      <div v-for="item in workGrid" :key="item.id" class="work-grid-item">
         <!-- <nuxt-link :to="`/work/${item.slug.current}`"> -->
           <div v-if="item.projectcover" class="image-wrapper">
             <SanityImage
@@ -27,10 +27,39 @@
 import { groq } from "@nuxtjs/sanity";
 export default {
   async asyncData({ $sanity }) {
-    const query = groq`*[_type == "projects"]`;
-    const projects = await $sanity.fetch(query).then((res) => res);
-    return { projects };
+      const query1 = groq`*[_type == "workPage"]`;
+      const query2 = groq`*[_type == "projects"]`;
+      const workPage = await $sanity.fetch(query1).then((res) => res);
+      const projects = await $sanity.fetch(query2).then((res) => res);
+
+      return { workPage, projects };
+  },
+  data() {
+    return {
+      title: 'Work'
+    }
+  },
+  head() {
+    return {
+      title: this.title,
+    }
+  },
+  computed: {
+    workGrid() {
+      if (!this.workPage || !this.projects) {
+        return null
+      }
+      const gridReferences = this.workPage[0].workGrid;
+      const projects = this.projects;
+      let workGrid = [];
+      gridReferences.forEach( ref => {
+        const match = projects.filter(project => project._id === ref._ref);
+        workGrid.push(match[0])
+      })
+      return workGrid;
+    }
   }
+  
 };
 </script>
 

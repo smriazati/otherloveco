@@ -44,6 +44,16 @@ export default {
       // const insta = responses[0].json;
       // return { insta, contactPage };
   
+    },
+    data() {
+      return {
+        title: 'Contact'
+      }
+    },
+    head() {
+      return {
+        title: this.title,
+      }
     }
 };
 </script>
