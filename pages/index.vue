@@ -87,7 +87,7 @@ export default {
           console.log('error, no gsap')
           return;
         }
-        console.log('setting timeline on', ref)
+        // console.log('setting timeline on', ref)
 
         const tl = gsap.timeline({
           scrollTrigger: {

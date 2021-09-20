@@ -169,13 +169,19 @@ header.site-header {
 
       li {
         padding: 30px;
-        font-size: 20px;
-        line-height: 20px;
+        font-size: 12px;
+        line-height: 16px;
+        @media (max-width: $mobile-bp) {
+          font-size: 20px;
+        }
+        transition: .3s ease all;
         &:last-child {
           padding-right: 0;
         }
+        &:hover {
+          font-size: 20px;
+        }
         a {
-          &:hover,
           &.nuxt-link-active {
             border-bottom: 1px solid black;
           }
@@ -543,12 +549,18 @@ p.small {
 .container {
   width: 100%;
   margin-top: 200px;
+  @media (max-width: $mobile-bp) {
+    margin-top: 150px;
+  }
 }
 .container:not(.container-no-grid) {
   @include gridFixed;
   &:not(.container-home) {
     margin-top: 200px;
     margin-bottom: 100px;
+    @media (max-width: $mobile-bp) {
+      // margin-top: 150px;
+    }
   }
 }
 
@@ -615,12 +627,18 @@ body {
 
 
 .page-contact {
-
+  .contact-intro {
+    grid-column: 2 / span 5;
+    margin-bottom: 30px;
+    @media (max-width: $mobile-bp) {
+      grid-column: 1 / span 12;
+    }
+  }
   .contact-form {
     grid-column: 2 / span 5;
     @media (max-width: $mobile-bp) {
       grid-column: 1 / span 12;
-      grid-row: 1 / 2;
+      grid-row: 2 / 3;
       margin-bottom: 30px;
     }
   }
@@ -628,7 +646,7 @@ body {
     grid-column: 8 / 13;
     @media (max-width: $mobile-bp) {
       grid-column: 1 / span 12;
-      grid-row: 2 / 3;
+      grid-row: 3 / 4;
     }
   }
   
@@ -649,7 +667,8 @@ body {
       margin-bottom: 70px;
     }
   }
-  .contact-form {
+
+  .contact-intro {
     h1 {
       font-size: 32px;
       line-height: 44px;
@@ -662,7 +681,6 @@ body {
   .contact-info {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     h2 {
       font-size: 22px;
       line-height: 29px;
@@ -818,20 +836,30 @@ textarea {
 // team page
 
 .page-team {
+  @media (max-width: $mobile-bp) {
+    display: flex !important;
+    flex-direction: column;
+  }
   > * {
     grid-column: 1 / span 11;
     &:not(:last-child) {
       margin-bottom: 150px;
+      @media (max-width: $mobile-bp) {
+        margin-bottom: 50px;
+      }
     }
   }
   .person {
     @include gridFixedNested();
     .image-wrapper {
       grid-column: 2 / span 4;
-      @media (max-width: $mobile-bp) {
-        grid-column: 2 / span 3;
-      }
       padding-right: 25%;
+      @media (max-width: $mobile-bp) {
+        grid-column: span 8 / 13;
+        padding-left: 30px;
+        padding-right: 0;
+        margin-bottom: 30px;
+      }
       img {
         filter: blur(0px);
         transition: .5s ease all;
@@ -846,7 +874,7 @@ textarea {
       grid-column: span 6;
     
       @media (max-width: $mobile-bp) {
-        grid-column: span 8;
+        grid-column: 1 / span 12;
       }
       &.bio {
         padding-right: 5%;
@@ -861,6 +889,9 @@ textarea {
     &.has-announcement .bio.text-wrapper {
       grid-column: 2 / span 6;
       padding-right: 0;
+      @media (max-width: $mobile-bp) {
+        grid-column: 1 / span 7;
+      }
       p {
         max-width: unset;
       }
@@ -1388,7 +1419,7 @@ footer {
       }
       &:nth-child(3n+3) {  
         // border:10px solid red;
-        grid-column: 2 / span 3;
+        grid-column: 2 / span 2;
       }
     }
   }

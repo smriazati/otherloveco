@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div  class="container page-contact" v-if="contactPage">
-      <section class="contact-form">
+    <div class="container page-contact" v-if="contactPage">
+      <section class="contact-intro">
         <div class="text-wrapper">
           <h1 v-if="contactPage[0].pageTitle">{{contactPage[0].pageTitle }}</h1>
           <h1 v-else>Get in touch</h1>
@@ -9,6 +9,8 @@
             {{ contactPage[0].formMessage }}
           </p>
         </div>
+      </section>
+      <section class="contact-form">
         <div class="contact-form">
           <ContactFormNetlify
             :email="true"
