@@ -9,9 +9,6 @@
               :alt="item.projectcover.alt"
             />
           </div>
-          <div v-if="!item.projectcover" class="image-wrapper">
-            <img src="/placeholder.png" alt="" />
-          </div>
       </div>
     </section>
   </div>
@@ -74,15 +71,15 @@ export default {
           scrollTrigger: {
             trigger: ref,
             // markers: true,
-            start: "top bottom", 
+            start: `top-=${ref.offsetHeight}px bottom`, 
             end: "bottom top",
-            scrub: true
+            scrub: 0.1
           }
         });
-        tl
-          .from(ref, {scale: 0.3, '-webkit-filter': 'blur(30px)', filter: 'blur(30px)', duration: 1})
-          .to(ref, {'-webkit-filter': 'blur(0px)', filter: 'blur(0px)',  duration: 1})
-          .to(ref, {scale: 1, duration: 5})
+         tl
+          .to(ref, {scale: 0, '-webkit-filter': 'blur(30px)', filter: 'blur(30px)', duration: 1})
+          .to(ref, {scale: 0.3, '-webkit-filter': 'blur(0px)', filter: 'blur(0px)',  duration: 2})
+          .to(ref, {scale: 1, '-webkit-filter': 'blur(0px)', filter: 'blur(0px)', duration: 6})
           .to(ref, {'-webkit-filter': 'blur(30px)', filter: 'blur(30px)',  duration: 1})
     },
     onImageLoad() {
@@ -95,9 +92,12 @@ export default {
             refs.forEach((ref) => {
               const img = ref.querySelector('img');
               if (img.complete) {
+                console.log('img complete already', img)
                 this.setTimeline(ref);
               } else {
+                console.log('adding listener')
                 img.addEventListener('load', () => {
+                    console.log('img loaded success', img)
                     this.setTimeline(ref);
                 })
                 img.addEventListener('error', () => {

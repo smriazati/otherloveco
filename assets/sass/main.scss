@@ -1033,7 +1033,7 @@ textarea {
   position: relative;
   overflow: hidden;
   > * {
-    background: #fff;
+   //  background: #fff;
     z-index: 10;
     position: relative;
   }
@@ -1048,7 +1048,8 @@ textarea {
     .fixed-content {
       @include gridFixed;
       @media (min-width: $mobile-bp) {
-        padding: 150px 0 180px 0;
+        // padding: 150px 0 180px 0;
+        // padding-bottom: 180px;
       }
 
     }
@@ -1249,14 +1250,24 @@ textarea {
     z-index: 9;
     background: rgba(0,0,0,0.2);
     width: 100%;
-    > *, a, span {
-      color: #fff;
-    }
     display: flex;
     flex-direction: column;
     justify-content: center;
     text-align: center;
+    overflow: hidden;
+    > *, a, span {
+      color: #fff;
+    }
+    > .bg-video-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 9;
+    }
     .text-wrapper {
+      position: relative;
+      z-index: 10;
       padding: 200px 0;
     }
     h2 {
@@ -1339,7 +1350,7 @@ footer {
     @media (max-width: $mobile-bp) {
       padding-top: 60px;
     }
-    background: white;
+    // background: white;
     position: relative;
     z-index: 9;
   }
@@ -1479,4 +1490,20 @@ footer {
       z-index: 8;
     }
   }
+}
+
+
+// fixes for pinning on about page
+
+.page-about .section4 {
+  padding-bottom: 180px !important;
+}
+.page-about .section1 .text-wrapper {
+  padding: 200px 0 180px 0 !important;
+}
+
+.page-about.container {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  background: transparent !important;
 }
