@@ -93,16 +93,17 @@ export default {
           scrollTrigger: {
             trigger: ref,
             // markers: true,
-            start: "top bottom", 
-            end: "bottom top",
-            scrub: true
-          }
-        });
-        tl
-          .from(ref, {scale: 0.3, '-webkit-filter': 'blur(30px)', filter: 'blur(30px)', duration: 1})
-          .to(ref, {'-webkit-filter': 'blur(0px)', filter: 'blur(0px)',  duration: 1})
-          .to(ref, {scale: 1, duration: 5})
-          .to(ref, {'-webkit-filter': 'blur(30px)', filter: 'blur(30px)',  duration: 1})
+                start: `top-=${ref.offsetHeight}px bottom`, 
+              end: "bottom top",
+              scrub: 0.1
+            }
+          });
+        
+         tl
+          .to(ref, {scale: 0, '-webkit-filter': 'blur(30px)', filter: 'blur(30px)', duration: 1})
+          .to(ref, {scale: 0.3, '-webkit-filter': 'blur(0px)', filter: 'blur(0px)',  duration: 2})
+          .to(ref, {scale: 1, '-webkit-filter': 'blur(0px)', filter: 'blur(0px)', duration: 6})
+          .to(ref, {'-webkit-filter': 'blur(30px)', filter: 'blur(30px)',  duration: 1});
     },
     onImageLoad() {
         const imageWrapper = this.$refs.scrollerWrapper;

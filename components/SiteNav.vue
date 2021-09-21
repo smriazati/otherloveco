@@ -69,6 +69,7 @@ export default {
   },
   mounted() {
     this.$nextTick(function () {
+      this.setAnimation();
       const menu = this.$refs.menu;
       if (menu) {
         const navLinks = menu.querySelectorAll('li');
@@ -86,6 +87,9 @@ export default {
     },
     closeMenu() {
       this.isMenuExpanded = false
+    },
+    setAnimation() {
+      
     }
   }
 }

@@ -68,19 +68,7 @@ export default {
         }
         // console.log('setting timeline on', ref)
 
-        let tl;
-        if (index === 7) {
-          tl = gsap.timeline({
-            scrollTrigger: {
-              trigger: ref,
-              markers: true,
-              start: `top-=${ref.offsetHeight}px bottom`, 
-              end: "bottom top",
-              scrub: 0.1
-            }
-          });
-        } else {
-          tl = gsap.timeline({
+        const tl = gsap.timeline({
             scrollTrigger: {
               trigger: ref,
               // markers: true,
@@ -89,8 +77,7 @@ export default {
               scrub: 0.1
             }
           });
-        }
-
+        
          tl
           .to(ref, {scale: 0, '-webkit-filter': 'blur(30px)', filter: 'blur(30px)', duration: 1})
           .to(ref, {scale: 0.3, '-webkit-filter': 'blur(0px)', filter: 'blur(0px)',  duration: 2})

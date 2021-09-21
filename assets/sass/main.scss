@@ -169,7 +169,7 @@ header.site-header {
 
       li {
         padding: 30px;
-        font-size: 12px;
+        font-size: 18px;
         line-height: 16px;
         @media (max-width: $mobile-bp) {
           font-size: 20px;
@@ -1440,6 +1440,7 @@ footer {
 .container-work {
   .work-grid {
     grid-row-gap: 50px;
+
     .work-grid-item {
       margin: 0;
       overflow: hidden;
@@ -1454,6 +1455,19 @@ footer {
       &:nth-child(3n+3) {  
         grid-column: 6 / span 3;
         place-self: center;
+      }
+
+      @media (max-width: $mobile-bp) {
+        grid-row-gap: 50px;
+
+        &:nth-child(even) {  
+          grid-column: 5 / 13;
+          place-self: start;
+        }
+        &:nth-child(odd) {  
+          grid-column: 2 / 10;
+          place-self: center;
+        }
       }
     }
   }
