@@ -1,16 +1,16 @@
 <template>
   <footer class="site-footer">
-    <div v-if="siteFooter[0]" class="primary-footer row">
-      <div class="col footer-column-block" v-if="siteFooter[0].footerCol1">
-        <SanityContent :blocks="siteFooter[0].footerCol1" />
+    <div class="primary-footer row">
+      <div class="col footer-column-block" v-if="footerCol1">
+        <SanityContent :blocks="footerCol1" />
       </div>
 
-      <div class="col footer-column-block" v-if="siteFooter[0].footerCol2">
-        <SanityContent :blocks="siteFooter[0].footerCol2" />
+      <div class="col footer-column-block" v-if="footerCol2">
+        <SanityContent :blocks="footerCol2" />
       </div>
      
-      <div class="col footer-column-block" v-if="siteFooter[0].footerCol3">
-        <SanityContent :blocks="siteFooter[0].footerCol3"  :serializers="serializers" />
+      <div class="col no-p-margin footer-column-block" v-if="footerCol3">
+        <SanityContent :blocks="footerCol3" :serializers="serializers" />
       </div>
     
       <div id="backToTop" class="col">
@@ -19,13 +19,13 @@
     </div>
     <div class="sub-footer">
       <p>&copy; 2021. Made with Otherlove, LLC.</p>
-      <div v-if="siteSettings[0]" class="submark">
-        <div v-if="siteSettings[0].favicon" class="image-wrapper">
+      <div v-if="submark" class="submark">
+        <div class="image-wrapper">
             <nuxt-link to="/">
             <SanityImage
-              :asset-id="siteSettings[0].favicon.asset._ref"
+              :asset-id="submark.asset._ref"
               auto="format"
-              :alt="siteSettings[0].favicon.alt"
+              :alt="submark.alt"
             />
             </nuxt-link>
         </div>
@@ -36,39 +36,41 @@
 </template>
 
 <script>
-import { groq } from "@nuxtjs/sanity";
+import { mapState } from 'vuex'
+
+import Links from '@/components/ExternalLink.vue'
+const serializers = {
+  types: {},
+  marks: {
+      link: Links
+  }
+}
+
 
 export default {
-  async fetch() {
-      const query = groq`*[_type == "siteFooter"]`;
-      const query2 = groq`*[_type == "siteSettings"]`;
-      this.siteFooter = await this.$sanity.fetch(query).then((res) => res);
-      this.siteSettings = await this.$sanity.fetch(query2).then((res) => res);
+
+  created() {
+    // this.serializers = {
+    //   marks: {
+    //     link: Links,
+    //   },
+    // }
   },
-  // created() {
-  //   this.serializers = {
-  //       marks: {
-  //         internalLink: ({ children, mark }) => (
-  //           <a href={mark.slug.current}>{children}</a>
-  //         ),
-  //         link: ({ children, mark }) =>
-  //           mark.blank ? (
-  //             <a href={mark.href} target="_blank" rel="noopener noreferer">
-  //               {children}
-  //             </a>
-  //           ) : (
-  //             <a href={mark.href}>{children}</a>
-  //           )
-  //       }
-  //     }
-  // },
   data() {
     return {
-      siteFooter: [],
-      siteSettings: [],
-      serializers: {}
+      serializers: serializers
     }
   },
+computed: {
+  ...mapState('siteFooter', {
+    footerCol1: state => state.footerCol1,
+    footerCol2: state => state.footerCol2,
+    footerCol3: state => state.footerCol3,
+  }),
+  ...mapState('siteSettings', {
+    submark: state => state.favicon,
+  })
+},
   methods: {
     backToTop() {
       window.scrollTo(0,0);

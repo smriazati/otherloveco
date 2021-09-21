@@ -209,6 +209,7 @@ export default {
     setPinAnimation() {
         const fixedTop = this.$refs.fixedTop;
         if (fixedTop) {
+          if (window.innerWidth > 768) {
             gsap.to(fixedTop, {
                 scrollTrigger: {
                     trigger: fixedTop,
@@ -218,6 +219,17 @@ export default {
                     pinSpacing: false 
                 }
             })
+          } else {
+            gsap.to(fixedTop, {
+                scrollTrigger: {
+                    trigger: fixedTop,
+                    start: "bottom bottom", 
+                    pin: true, 
+                    pinSpacing: false 
+                }
+            })
+          }
+            
         }
 
         const fixedVid = this.$refs.fixedVid;

@@ -40,11 +40,27 @@
 import { groq } from "@nuxtjs/sanity";
 
 export default {
-    async asyncData({ $sanity }) {
-      const query = groq`*[_type == "homePage"]`;
-      const homePage = await $sanity.fetch(query).then((res) => res);
-      return { homePage };
-    },
+  // async fetch ({store}) {
+  //     const query = groq`*[_type == "siteFooter"]`;
+  //     const query2 = groq`*[_type == "siteSettings"]`;
+  //     this.siteFooter = await this.$sanity.fetch(query).then((res) => {store.commit('siteFooter/setData', res)});
+  //     this.siteSettings = await this.$sanity.fetch(query2).then((res) => {store.commit('siteSettings/setData', res)});
+  // },
+  // async fetch() {
+  //   const query = groq`*[_type == "siteFooter"]`;
+  //   const query2 = groq`*[_type == "siteSettings"]`;
+  //   if (!this.$store.state.siteFooter.isLoaded) {
+  //     this.siteFooter = await this.$sanity.fetch(query).then((res) => this.$store.commit('siteFooter/setData', res[0]));
+  //   }
+  //   if (!this.$store.state.siteSettings.isLoaded) {
+  //     this.siteSettings = await this.$sanity.fetch(query2).then((res) => this.$store.commit('siteSettings/setData', res[0]));
+  //   }
+  // },
+  async asyncData({ $sanity }) {
+    const query = groq`*[_type == "homePage"]`;
+    const homePage = await $sanity.fetch(query).then((res) => res);
+    return { homePage };
+  },
   layout: "home",
   head() {
     return {
@@ -56,6 +72,8 @@ export default {
   },
   data() {
     return {
+      siteFooter: [],
+      siteSettings: [],
       title: 'Home',
     };
   },
