@@ -59,7 +59,8 @@ export default {
     registerPlugins() {
       gsap.registerPlugin(ScrollTrigger);
     },
-    setTimeline(ref) {
+    setTimeline(ref, index) {
+      console.log(index);
       this.registerPlugins();
         if (!gsap) {
           console.log('error, no gsap')
@@ -67,15 +68,29 @@ export default {
         }
         // console.log('setting timeline on', ref)
 
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: ref,
-            // markers: true,
-            start: `top-=${ref.offsetHeight}px bottom`, 
-            end: "bottom top",
-            scrub: 0.1
-          }
-        });
+        let tl;
+        if (index === 7) {
+          tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: ref,
+              markers: true,
+              start: `top-=${ref.offsetHeight}px bottom`, 
+              end: "bottom top",
+              scrub: 0.1
+            }
+          });
+        } else {
+          tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: ref,
+              // markers: true,
+              start: `top-=${ref.offsetHeight}px bottom`, 
+              end: "bottom top",
+              scrub: 0.1
+            }
+          });
+        }
+
          tl
           .to(ref, {scale: 0, '-webkit-filter': 'blur(30px)', filter: 'blur(30px)', duration: 1})
           .to(ref, {scale: 0.3, '-webkit-filter': 'blur(0px)', filter: 'blur(0px)',  duration: 2})
@@ -89,16 +104,16 @@ export default {
             imageWrapper.querySelectorAll(".work-grid-item")
           );
           if (refs) {
-            refs.forEach((ref) => {
+            refs.forEach((ref, index) => {
               const img = ref.querySelector('img');
               if (img.complete) {
-                console.log('img complete already', img)
-                this.setTimeline(ref);
+                // console.log('img complete already', img)
+                this.setTimeline(ref, index);
               } else {
                 console.log('adding listener')
                 img.addEventListener('load', () => {
-                    console.log('img loaded success', img)
-                    this.setTimeline(ref);
+                    // console.log('img loaded success', img)
+                    this.setTimeline(ref, index);
                 })
                 img.addEventListener('error', () => {
                     console.log('error, no image loaded, no animation set')

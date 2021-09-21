@@ -178,10 +178,12 @@ export default {
   mounted() {
     this.setPosterImages();
     this.$nextTick(function() {
-      this.setAnimation();
+      this.setPinAnimation();
+      this.setTickerAnimation();
     })
     window.addEventListener('resize', () => {
-        this.setAnimation();
+        this.setPinAnimation();
+        this.setTickerAnimation();
     })
   },
   methods: {
@@ -204,7 +206,7 @@ export default {
       })
     },
     
-    setAnimation() {
+    setPinAnimation() {
         const fixedTop = this.$refs.fixedTop;
         if (fixedTop) {
             gsap.to(fixedTop, {
@@ -221,7 +223,7 @@ export default {
         const fixedVid = this.$refs.fixedVid;
         const container = this.$refs.container;
         if (fixedVid && container) {
-            this.setGridTemplateRows();
+            this.setGridTemplateRowHeights();
             gsap.to(fixedVid, {
                 scrollTrigger: {
                     trigger: fixedVid,
@@ -233,12 +235,12 @@ export default {
             })
         }
     },
-    setGridTemplateRows() {
+    setGridTemplateRowHeights() {
         const rows = document.querySelectorAll('.image-text-row');
         if (rows) {
             rows.forEach(row => {
                 let height = 0;
-                let extra = 200;
+                let extra = 400;
                 const heightChildren = row.querySelectorAll('.text-wrapper > *');
                 heightChildren.forEach(child => {
                     if (child.offsetHeight > 0) {
@@ -249,7 +251,32 @@ export default {
                 row.style.gridTemplateRows = `${height + extra}px`;
             })
         }
+    },
+    setTickerAnimation() {
+      const ref = this.$refs.ticker;
+      if (!ref || !gsap) {
+        return
+      }
+      let tickerStart;
+      let speed;
+      if (window.innerWidth > 768) {
+        tickerStart = ref.offsetWidth;
+        speed = 30;
+      } else {
+        tickerStart = window.innerWidth / 2;
+        speed = 15;
+      }
+      gsap.set(ref, {
+        x: tickerStart - 80
+      })
+      gsap.to(ref, {
+        x: -ref.offsetWidth,
+        repeat: -1,
+        ease: 'linear',
+        duration: speed,
+      })
     }
+
   }
 };
 </script>
