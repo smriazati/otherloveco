@@ -1,7 +1,7 @@
 <template>
-  <div class="about-wrapper" ref="aboutWrapper">
-    <div class="container container-no-grid page-about" v-if="aboutPage">
-      <section ref="fixedTop" v-if="aboutPage[0].section1" class="section1 fixed">
+  <div class="about-wrapper" ref="page">
+    <div ref="container" class="container container-no-grid page-about" v-if="aboutPage[0]">
+      <section ref="topFixed" v-if="aboutPage[0].section1" class="section1 fixed">
         <div class="fixed-content">
           <div class="text-wrapper">
             <h2 v-if="aboutPage[0].section1.headline"> {{ aboutPage[0].section1.headline }}</h2>
@@ -9,16 +9,6 @@
           </div>
         </div>
       </section>
-    </div>
-    <div ref="container" class="container container-no-grid page-about" v-if="aboutPage">
-      <!-- <section ref="fixedTop" v-if="aboutPage[0].section1" class="section1 fixed">
-        <div class="fixed-content">
-          <div class="text-wrapper">
-            <h2 v-if="aboutPage[0].section1.headline"> {{ aboutPage[0].section1.headline }}</h2>
-            <p v-if="aboutPage[0].section1.subheadline" class="subheadline">{{ aboutPage[0].section1.subheadline }}</p>
-          </div>
-        </div>
-      </section> -->
       <section v-if="aboutPage[0].capabilities" class="capabilities full-row">
         <div class="image-wrapper" v-if="aboutPage[0].capabilities.image">
             <SanityImage
@@ -122,23 +112,14 @@
 
     </div>
 
-      <section class="full-row cta" ref="fixedVid">       
-        <div class="bg-video-wrapper">
-            <div>
-            <SanityFile :asset-id="aboutPage[0].cta.bgvideo.asset._ref">
-                <template #default="{ src }">
-                <video :src="src" autoplay muted loop></video>
-                </template>
-            </SanityFile>
-            </div>
-        </div>         
+      <section class="full-row cta">                
         <div class="text-wrapper" v-if="aboutPage[0].cta">
           <h2 v-if="aboutPage[0].cta.text">{{ aboutPage[0].cta.text }}</h2>
           <button class="flat underlined"><nuxt-link to="/contact">Get in touch</nuxt-link></button>
         </div>
     </section>
 
-    <!-- <section class="video-scroller-bg" ref="fixedVid">
+    <section class="video-scroller-bg" ref="fixedVid">
       <div class="video-wrapper">
         <div>
           <SanityFile :asset-id="aboutPage[0].cta.bgvideo.asset._ref">
@@ -149,7 +130,7 @@
         </div>
       </div>
 
-    </section> -->
+    </section>
   </div>
 </template>
 
@@ -176,12 +157,18 @@ export default {
     }
   },
   mounted() {
-    this.setPosterImages();
+    this.setFixedPos(this.$refs.topFixed);
     this.$nextTick(function() {
-      this.setAnimation();
+      this.setPosterImages();
+      this.setTickerAnimation();
+      this.setFixedTextFadeOut();
+      this.setVidFadeIn();
     })
     window.addEventListener('resize', () => {
-        this.setAnimation();
+      this.setFixedPos(this.$refs.topFixed);
+      this.setTickerAnimation();
+      this.setFixedTextFadeOut();
+      this.setVidFadeIn();
     })
   },
   methods: {
@@ -189,7 +176,7 @@ export default {
       // get all images
       // get video
       // if video is playing, hide image
-      const page = this.$refs.aboutWrapper;
+      const page = this.$refs.page;
       const wrappers = page.querySelectorAll('.video-wrapper')
       wrappers.forEach(wrapper => {
         // check for image
@@ -203,52 +190,80 @@ export default {
         }
       })
     },
-    
-    setAnimation() {
-        const fixedTop = this.$refs.fixedTop;
-        if (fixedTop) {
-            gsap.to(fixedTop, {
-                scrollTrigger: {
-                    trigger: fixedTop,
-                    start: "top top", 
-                    pin: true, 
-                    // markers: true,
-                    pinSpacing: false 
-                }
-            })
-        }
+    setFixedPos(ref) {
+      const fixedSection = ref;
+      if (fixedSection && window.innerWidth > 600) {
 
-        const fixedVid = this.$refs.fixedVid;
-        const container = this.$refs.container;
-        if (fixedVid && container) {
-            this.setGridTemplateRows();
-            gsap.to(fixedVid, {
-                scrollTrigger: {
-                    trigger: fixedVid,
-                    start: "top bottom",
-                    // markers: true, 
-                    pin: container, 
-                    pinSpacing: false 
-                }
-            })
-        }
+        // if .fixed-content is taller than window
+        const height = fixedSection.offsetHeight;
+        const next = fixedSection.nextElementSibling;
+        fixedSection.style.position = 'fixed';
+        next.style.marginTop = `${height + 60}px`
+      }
     },
-    setGridTemplateRows() {
-        const rows = document.querySelectorAll('.image-text-row');
-        if (rows) {
-            rows.forEach(row => {
-                let height = 0;
-                let extra = 200;
-                const heightChildren = row.querySelectorAll('.text-wrapper > *');
-                heightChildren.forEach(child => {
-                    if (child.offsetHeight > 0) {
-                        height = height + child.offsetHeight
-                    }
-                })
-                console.log(height);
-                row.style.gridTemplateRows = `${height + extra}px`;
-            })
+    setFixedTextFadeOut() {
+      const ref = this.$refs.topFixed;
+      const scrollHeight = window.innerHeight;
+
+      if (!ref || !gsap) {
+        return
+      }
+      gsap.to(ref, {
+        opacity: 0,
+        scrollTrigger: {
+          trigger: ref,
+          start: scrollHeight,
+          end: "+=50",
+          scrub: true,
+          toggleActions: "play pause resume reset",
         }
+      })
+    },
+    setVidFadeIn() {
+      const ref = this.$refs.fixedVid;
+      const scrollHeight = window.innerHeight;
+      if (!ref || !gsap) {
+        return
+      }
+      gsap.set(ref, {
+        opacity: 0,
+      })
+      gsap.to(ref, {
+        opacity: 1,
+        scrollTrigger: {
+          trigger: ref,
+          start: scrollHeight,
+          end: "+=50",
+          scrub: true,
+          toggleActions: "play pause resume reset",
+        }
+      })
+    },
+    setTickerAnimation() {
+      const ref = this.$refs.ticker;
+      if (!ref || !gsap) {
+        return
+      }
+      let tickerStart;
+      let speed;
+      if (window.innerWidth > 768) {
+        tickerStart = ref.offsetWidth;
+        speed = 30;
+      } else {
+        tickerStart = window.innerWidth / 2;
+        speed = 15;
+      }
+
+      
+      gsap.set(ref, {
+        x: tickerStart - 80
+      })
+      gsap.to(ref, {
+        x: -ref.offsetWidth,
+        repeat: -1,
+        ease: 'linear',
+        duration: speed,
+      })
     }
   }
 };
