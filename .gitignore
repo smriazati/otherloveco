@@ -89,5 +89,5 @@ sw.*
 # Vim swap files
 *.swp
 
-/admin
-/OLD
+pages/admin
+pages/OLD
