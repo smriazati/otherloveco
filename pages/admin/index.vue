@@ -2,9 +2,9 @@
     <div class="admin-home">
         <nav>
             <h2>Admin pages</h2>
-            <ul>
+            <!-- <ul>
                 <li><nuxt-link to="/admin/instagram-token/">Renew Instagram token</nuxt-link></li>
-            </ul>
+            </ul> -->
         </nav>
     </div>
 </template>
