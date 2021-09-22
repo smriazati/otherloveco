@@ -62,7 +62,10 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   env: {
     gtagId: process.env.GTAG_ID,
-    igToken: process.env.INSTAGRAM_ACCESS_TOKEN
+    igToken: process.env.INSTAGRAM_ACCESS_TOKEN,
+    igAppId: process.env.IG_APP_ID,
+    igAppSecret: process.env.IG_APP_SECRET,
+    igAppRedirect: process.env.IG_APP_REDIRECT
   },
   privateRuntimeConfig: {
     gtagId: process.env.GTAG_ID,

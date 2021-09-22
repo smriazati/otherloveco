@@ -1553,3 +1553,11 @@ footer {
 .no-p-margin p {
   margin: 0 !important;
 }
+
+.text-wrapper {
+  ul, ol {
+    ul, ol {
+      padding-left: 30px;
+    }
+  }
+}

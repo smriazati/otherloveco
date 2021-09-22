@@ -1,7 +1,7 @@
 export default function (context, inject ) {
-    const accessToken = context.$config.igToken;
-   
-    // console.log(accessToken);
+    // const accessToken = context.$config.igToken;
+    const accessToken = context.env.igToken;
+
     inject('instaApi', {
         getFeed
     })
@@ -10,12 +10,14 @@ export default function (context, inject ) {
         try {
             return unWrap(await fetch(`https://graph.instagram.com/me/media?access_token=${accessToken}&fields=media_url,media_type&limit=${count}`))
         } catch (error) {
+            // console.log(error);
             return getErrorResponse(error)
         }
     }
 
     async function unWrap(response) {
         const json = await response.json();
+        console.log(json)
         const { ok, status, statusText } = response
         return {
             json,
