@@ -62,7 +62,7 @@ export default {
       const clone2 = wrapper.querySelector('.feed-clone-2');
 
       wrapper.style.width = `${feedW * wrapper.childElementCount}px`;
-      duration = 45;
+      duration = 65;
 
       // gsap.to(feed, {
       //   x: feedW * -1 - buffer,
