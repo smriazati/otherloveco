@@ -35,7 +35,7 @@ export default {
 
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~/plugins/route', '~/plugins/init_gtag.client', '~/plugins/insta.js',  '~/plugins/axios.js',
+  plugins: ['~/plugins/route', '~/plugins/init_gtag.client', '~/plugins/insta.js',
 ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -58,7 +58,25 @@ export default {
     preconnect: true
   },
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['@nuxtjs/axios'],
+  modules: ['@nuxtjs/robots'],
+  robots: [
+    {
+      UserAgent: '*',
+      Disallow: '/admin'
+    },
+    {
+      UserAgent: '*',
+      Disallow: '/demo'
+    },
+    {
+      UserAgent: '*',
+      Disallow: '/siteinprog'
+    },
+    {
+      UserAgent: '*',
+      Disallow: '/old'
+    }
+  ],
   // Modules: https://go.nuxtjs.dev/config-modules
   env: {
     gtagId: process.env.GTAG_ID,
@@ -72,6 +90,7 @@ export default {
     igToken: process.env.INSTAGRAM_ACCESS_TOKEN
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
+  generate: { fallback: '404.html' },
   build: {
     extractCSS: true,
     loaders: {

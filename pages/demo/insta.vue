@@ -32,5 +32,6 @@ export default {
       insta: responses[0].json,
     };
   }, 
+  layout: 'demo'
 }
 </script>

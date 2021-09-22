@@ -32,7 +32,7 @@ import { groq } from "@nuxtjs/sanity";
 
 export default {
 
-    async asyncData({ $sanity, $instaApi, $axios, error }) {
+    async asyncData({ $sanity, $instaApi, error }) {
       const query1 = groq`*[_type == "contactPage"]`;
       const contactPage = await $sanity.fetch(query1).then((res) => res);
       return { contactPage };
