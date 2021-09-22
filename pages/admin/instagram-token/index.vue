@@ -7,7 +7,7 @@
                     <h2>You have received an authorization code</h2>
                     <p>Click this button.. the email is all ready for you!</p>
                     <button>
-                        <a :href="`:mailto='hello@otherlove.co?subject=Instagram%20Auth%20Code&body=${authCode}`">Email the admin</a>
+                        <a :href="`mailto:hello@otherlove.co?subject=Instagram%20Auth%20Code&body=${authCode}`">Email the admin</a>
                     </button>
                     <p>Or, copy / paste the authorization code and email to your site admin:</p>
                     <code>{{ authCode }}</code>
