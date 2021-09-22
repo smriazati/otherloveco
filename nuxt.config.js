@@ -35,7 +35,7 @@ export default {
 
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~/plugins/route', '~/plugins/init_gtag.client', '~/plugins/insta.js',
+  plugins: ['~/plugins/route', '~/plugins/init_gtag.client', '~/plugins/insta.js', '~/plugins/sanity-image-builder.js',
 ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

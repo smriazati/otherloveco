@@ -24,6 +24,13 @@
         :contactInfo="contactPage[0].contactInfo"
         :landAcknowledgment="contactPage[0].landAcknowledgment" />
       </div>
+      <div class="insta-feed-parent" v-if="insta">
+        <div class="text-wrapper">
+          <h2>Follow along</h2>
+          <button class="flat"><a href="https://www.instagram.com/otherlove.co/">@Otherlove.co</a></button>
+        </div>
+        <Instafeed :insta="insta.data" :count="15" />
+      </div>
   </div>
 </template>
 
@@ -32,20 +39,26 @@ import { groq } from "@nuxtjs/sanity";
 
 export default {
 
-    async asyncData({ $sanity, $instaApi, error }) {
+    async asyncData({ $sanity, $instaApi }) {
       const query1 = groq`*[_type == "contactPage"]`;
       const contactPage = await $sanity.fetch(query1).then((res) => res);
-      return { contactPage };
+      // return { contactPage };
 
-      // const responses = await Promise.all([$instaApi.getFeed(15)]);
-      // const badResponse = responses.find((response) => !response.ok);
-      // if (badResponse) {
-      //   const instaError = badResponse
-      //   return { instaError, contactPage };
-      // }
-      // const insta = responses[0].json;
-      // return { insta, contactPage };
-  
+      const responses = await Promise.all([$instaApi.getFeed(15)]);
+      const badResponse = responses.find((response) => !response.ok);
+      
+      if (badResponse) {
+        const error = {
+          statusCode: badResponse.status,
+          message: badResponse.statusText,
+        };
+        return { contactPage, error };
+      }
+
+      return {
+        insta: responses[0].json, contactPage
+      };
+
     },
     data() {
       return {

@@ -18,7 +18,6 @@
       </section>
     </div>
   </div>
-
     <section class="logo-scroller grid-fixed" v-if="homePage">
       <div ref="scrollerWrapper" class="scroller-wrapper" v-if="homePage[0].logos">
         <div v-for="item in homePage[0].logos" :key="item._id" class="logo">

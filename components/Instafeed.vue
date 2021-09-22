@@ -21,17 +21,21 @@
 
 <script>
 export default {
-  props: ['insta'],
+  props: ['insta', 'count'],
   mounted() {
     this.$nextTick(function () {
       this.setAnimation();
     });
+    window.addEventListener('resize', () => {
+      this.setAnimation();
+
+    })
   },
   methods: {
     setAnimation() {
       const feed = this.$refs.feed;
       const wrapper = this.$refs.wrapper;
-      const count = 15;
+      const count = this.count;
       let duration = 10;
       const repeat = -1;
       // const repeat = null;
@@ -40,44 +44,51 @@ export default {
       }
       
       // set widths
-      const igItemW = feed.querySelector('.ig-item').offsetWidth;
-      const feedW = igItemW * count;
+      const igItemFirst = feed.querySelector('.ig-item');
+      const igItemW = igItemFirst.offsetWidth;
+      const igItemMargin = parseFloat(window.getComputedStyle(igItemFirst).marginRight);
+      // console.log(igItemMargin)
+      const feedW = igItemW * count + igItemMargin * count;
       feed.style.width = `${feedW}px`
 
       for (let i = 0; i < 2; i++) {
         var newFeed = feed.cloneNode(true);
         wrapper.appendChild(newFeed);
+        newFeed.classList.add(`feed-clone`);
         newFeed.classList.add(`feed-clone-${i + 1}`);
       }
+      feed.remove();
       const clone1 = wrapper.querySelector('.feed-clone-1');
       const clone2 = wrapper.querySelector('.feed-clone-2');
-      const feedMargin = 5;
 
-      // wrapper.style.width = `${feedW * wrapper.childElementCount}px`;
-      duration = (feedW / window.innerWidth) * count;
+      wrapper.style.width = `${feedW * wrapper.childElementCount}px`;
+      duration = 45;
 
-// duration = 3;
-
-      gsap.to(feed, {
-        x: feedW * -1,
-        duration: duration,
-        ease: 'linear',
-      })
+      // gsap.to(feed, {
+      //   x: feedW * -1 - buffer,
+      //   duration: duration,
+      //   ease: 'linear',
+      //   onComplete: () => {
+      //     feed.remove();
+      //   }
+      // })
 
       if (clone1) {
+        // clone1.style.background = 'rgba(0, 255, 0, 0.8)';
         gsap.to(clone1, {
-          x: '-400vw',
-          duration: duration + (duration * 1 / 3),
-          delay: duration * 2/3,
+          x: '-600vw',
+          duration: duration,
+          // delay: duration * 3,
           repeat: repeat,
           ease: 'linear'
         })
       }
       if (clone2) {
+        // clone2.style.background = 'rgba(255, 0, 0, 0.8)';
         gsap.to(clone2, {
-          x: '-400vw',
-          duration: duration + (duration * 1 / 3),
-          delay: duration * 2/3 + duration,
+          x: '-600vw',
+          duration: duration,
+          delay: duration * 1 / 2,
           repeat: repeat,
           ease: 'linear'
         })
@@ -93,22 +104,28 @@ export default {
   overflow: hidden;
   width: 100%;
 }
+
 .instagram-container {
   // display: flex;
   position: relative;
  .feed {
    display: flex;
   //  height: 300px;
-   height: 20vw;
-   max-height: 20vw;
-   float: left;
-   > * {
-     flex: 0 0 20vw;
+  position: absolute;
+  top: 0;
+  left: 0;
+   height: calc(20vw - 24px);
+   max-height: calc(20vw - 24px);
+  //  float: left;
+   > .ig-item {
+     flex: 0 0 calc(20vw - 24px);
+     margin-right: 24px;
    }
-   &:not(:first-child) {
+   &.feed-clone {
      position: absolute;
      top: 0;
      left: 100vw;
+     background: #fff;
    }
    .ig-item {
      overflow: hidden;

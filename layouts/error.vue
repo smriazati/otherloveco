@@ -11,7 +11,11 @@
 <script>
   export default {
     props: ['error'],
-    layout: 'home'
+    layout: 'home',
+    name: "Error",
+    mounted() {
+        console.log('ERROR', this.error)
+    }
   }
 </script>
 

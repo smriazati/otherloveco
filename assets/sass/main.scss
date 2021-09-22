@@ -1561,3 +1561,33 @@ footer {
     }
   }
 }
+
+.contact {
+  .insta-feed-parent {
+    padding-top: 45px;
+    margin-bottom: calc(20vw + 85px);
+    .text-wrapper {
+      width: 100%;
+      margin-bottom: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      h1, h2, h3 {
+        font-family: 'Reckless', serif;
+        font-size: 22px;
+        line-height: 24px;
+        margin: 0;
+      }
+      button, a {
+        text-transform: none;
+      }
+      p {
+        font-size: 22px;
+        line-height: 24px;
+      }
+    }
+  }
+}
+
+
