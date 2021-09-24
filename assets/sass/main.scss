@@ -1133,9 +1133,14 @@ textarea {
       }
       .image-wrapper {
         display: flex;
+        overflow: hidden;
+        height: 100%;
+        width: 100%;
         // align-items: center;
         > * {
           display: flex;
+          height: unset !important;
+          align-items: flex-start;
         }
       }
     }
@@ -1569,6 +1574,9 @@ footer {
   .insta-feed-parent {
     padding-top: 45px;
     margin-bottom: calc(20vw + 85px);
+    @media (max-width: 960px) {
+      margin-bottom: calc(33.33vw + 85px);
+    }
     .text-wrapper {
       width: 100%;
       margin-bottom: 40px;

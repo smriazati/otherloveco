@@ -5,5 +5,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  head () {
+    return {
+      meta: [
+        { hid: 'robots', name: 'robots', content: 'noindex' }
+      ]
+    }
+  }
+}
 </script>

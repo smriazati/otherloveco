@@ -1,12 +1,11 @@
 <template>
   <div>
-    <div  class="container page-contact" v-if="contactPage[0]">
+    <div  class="container page-contact" v-if="contactPage">
       <section class="contact-intro">
         <div class="text-wrapper">
-          <h1 v-if="contactPage[0].pageTitle">{{contactPage[0].pageTitle }}</h1>
-          <h1 v-else>Get in touch</h1>
-          <p v-if="contactPage[0].successMessage">
-            {{ contactPage[0].successMessage }}
+          <h1>Get in touch</h1>
+          <p v-if="contactPage.successMessage">
+            {{ contactPage.successMessage }}
           </p>
         </div>
       </section>
@@ -15,8 +14,8 @@
 
       </section>
       <ContactInfo 
-        :contactInfo="contactPage[0].contactInfo"
-        :landAcknowledgment="contactPage[0].landAcknowledgment" />
+        :contactInfo="contactPage.contactInfo"
+        :landAcknowledgment="contactPage.landAcknowledgment" />
       </div>
       <div class="insta-feed-parent" v-if="insta">
         <div class="text-wrapper">
@@ -33,34 +32,63 @@ import { groq } from "@nuxtjs/sanity";
 
 export default {
     async asyncData({ $sanity, $instaApi }) {
-      const query1 = groq`*[_type == "contactPage"]`;
-      const contactPage = await $sanity.fetch(query1).then((res) => res);
-      // return { contactPage };
+      const thisPage = "contactPage"
+
+      const query1 = groq`*[_type == "${thisPage}"]{
+        contactInfo,
+        successMessage,
+        landAcknowledgment
+      }`;
+      const contactPage = await $sanity.fetch(query1).then((res) => res[0]);
 
       const responses = await Promise.all([$instaApi.getFeed(15)]);
       const badResponse = responses.find((response) => !response.ok);
-      
+          const metadataQuery = groq`*[_type == "${thisPage}"]{
+        "pageMetadata": {
+          "pageTitle": pageMetadata.pageTitle,
+          "pageDesc": pageMetadata.pageDesc,
+          "ogImage": {
+            "url": pageMetadata.ogImage.asset->url
+          }
+        }
+      }`;
+      const pageMetadata = await $sanity.fetch(metadataQuery).then((res) => res[0].pageMetadata);
+
+
+
       if (badResponse) {
         const error = {
           statusCode: badResponse.status,
           message: badResponse.statusText,
         };
-        return { contactPage, error };
+        return { contactPage, error, pageMetadata };
       }
 
       return {
-        insta: responses[0].json, contactPage
+        insta: responses[0].json, contactPage, pageMetadata
       };
     },
-    data() {
-      return {
-        title: 'Contact'
-      }
-    },
-    head() {
-      return {
-        title: this.title,
-      }
-    }
+data() {
+        return {
+          name: "Home"
+        }
+      },
+      head() {
+        return {
+          title: this.pageMetadata ? (this.pageMetadata.pageTitle ? this.pageMetadata.pageTitle : this.name): this.name,
+          meta: [
+            {
+              hid: "description",
+              name: "description",
+              content: this.pageMetadata ? (this.pageMetadata.pageDesc ? this.pageMetadata.pageDesc : ""): "",
+            },
+            { 
+              hid: 'og:image', 
+              property: 'og:image', 
+              content: this.pageMetadata ? (this.pageMetadata.ogImage ? `${this.$urlFor(this.pageMetadata.ogImage.url).forceDownload().size(800).url()}` : ""): "",
+            },
+          ],
+        };
+      },
 };
 </script>

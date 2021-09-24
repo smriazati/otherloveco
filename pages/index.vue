@@ -4,32 +4,35 @@
     <div class="fixed-wrapper grid-fixed">
       <section>
         <div
-        v-if="homePage"
+          v-if="homePage"
           class="text-wrapper"
           ref="textWrapper"
         >
-          <h2 v-if="homePage[0].bannerText">
-            {{ homePage[0].bannerText }}
+          <h2 v-if="homePage.bannerText">
+            {{ homePage.bannerText }}
           </h2>
-          <p v-if="homePage[0].subText">
-            {{ homePage[0].subText }}
+          <p v-if="homePage.subText">
+            {{ homePage.subText }}
           </p>
         </div>
       </section>
     </div>
   </div>
     <section class="logo-scroller grid-fixed" v-if="homePage">
-      <div ref="scrollerWrapper" class="scroller-wrapper" v-if="homePage[0].logos">
-        <div v-for="item in homePage[0].logos" :key="item._id" class="logo">
-            <SanityImage
+      <div ref="scrollerWrapper" class="scroller-wrapper" v-if="homePage.logos">
+        <div v-for="item in homePage.logos" :key="item._id" class="logo">
+          <img
+            :src="`${$urlFor(item.url).forceDownload(item.originalFilename).size(500)}`"
+            :alt="item.alt"
+            width="500"
+          />
+            <!-- <SanityImage
                 :asset-id="item.asset._ref"
                 auto="format"
                 :alt="item.alt"
-              />
-        </div>
-                
+              /> -->
+        </div>   
       </div>
-     
     </section>
 </div>
 </template>
@@ -39,44 +42,60 @@
 import { groq } from "@nuxtjs/sanity";
 
 export default {
-  // async fetch ({store}) {
-  //     const query = groq`*[_type == "siteFooter"]`;
-  //     const query2 = groq`*[_type == "siteSettings"]`;
-  //     this.siteFooter = await this.$sanity.fetch(query).then((res) => {store.commit('siteFooter/setData', res)});
-  //     this.siteSettings = await this.$sanity.fetch(query2).then((res) => {store.commit('siteSettings/setData', res)});
-  // },
-  // async fetch() {
-  //   const query = groq`*[_type == "siteFooter"]`;
-  //   const query2 = groq`*[_type == "siteSettings"]`;
-  //   if (!this.$store.state.siteFooter.isLoaded) {
-  //     this.siteFooter = await this.$sanity.fetch(query).then((res) => this.$store.commit('siteFooter/setData', res[0]));
-  //   }
-  //   if (!this.$store.state.siteSettings.isLoaded) {
-  //     this.siteSettings = await this.$sanity.fetch(query2).then((res) => this.$store.commit('siteSettings/setData', res[0]));
-  //   }
-  // },
+
   async asyncData({ $sanity }) {
-    const query = groq`*[_type == "homePage"]`;
-    const homePage = await $sanity.fetch(query).then((res) => res);
-    return { homePage };
-  },
-  layout: "home",
-  head() {
-    return {
-      title: this.title,
-      bodyAttrs: {
-        class: this.title.toLowerCase()
+    const thisPage = "homePage"
+    const query = groq`*[_type == "${thisPage}"]{
+      bannerText,
+      subText,
+      "logos": logos[]{
+        alt,
+        asset,
+        "url": asset->url,
+        "originalFilename": asset->originalFilename
       }
-    }
+    }`;
+    const homePage = await $sanity.fetch(query).then((res) => res[0]);
+
+    const metadataQuery = groq`*[_type == "${thisPage}"]{
+      "pageMetadata": {
+        "pageTitle": pageMetadata.pageTitle,
+        "pageDesc": pageMetadata.pageDesc,
+        "ogImage": {
+          "url": pageMetadata.ogImage.asset->url
+        }
+      }
+    }`;
+    const pageMetadata = await $sanity.fetch(metadataQuery).then((res) => res[0].pageMetadata);
+
+    return { homePage, pageMetadata };
   },
+
+  layout: "home",
   data() {
     return {
-      siteFooter: [],
-      siteSettings: [],
-      title: 'Home',
+      name: "Home"
+    }
+  },
+  head() {
+    return {
+      title: this.pageMetadata ? (this.pageMetadata.pageTitle ? this.pageMetadata.pageTitle : this.name): this.name,
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content: this.pageMetadata ? (this.pageMetadata.pageDesc ? this.pageMetadata.pageDesc : ""): "",
+        },
+        { 
+          hid: 'og:image', 
+          property: 'og:image', 
+          content: this.pageMetadata ? (this.pageMetadata.ogImage ? `${this.$urlFor(this.pageMetadata.ogImage.url).forceDownload().size(800).url()}` : ""): "",
+        },
+      ],
     };
   },
   mounted() {
+    console.log(this);
     this.$nextTick(function() {
       this.onImageLoad();
     })

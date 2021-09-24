@@ -1,121 +1,118 @@
 <template>
   <div class="about-wrapper" ref="aboutWrapper">
     <div class="container container-no-grid page-about" v-if="aboutPage">
-      <section ref="fixedTop" v-if="aboutPage[0].section1" class="section1 fixed">
+      <section ref="fixedTop" v-if="aboutPage.section1" class="section1 fixed">
         <div class="fixed-content">
           <div class="text-wrapper">
-            <h2 v-if="aboutPage[0].section1.headline"> {{ aboutPage[0].section1.headline }}</h2>
-            <p v-if="aboutPage[0].section1.subheadline" class="subheadline">{{ aboutPage[0].section1.subheadline }}</p>
+            <h2 v-if="aboutPage.section1.headline"> {{ aboutPage.section1.headline }}</h2>
+            <p v-if="aboutPage.section1.subheadline" class="subheadline">{{ aboutPage.section1.subheadline }}</p>
           </div>
         </div>
       </section>
     </div>
     <div ref="container" class="container container-no-grid page-about" v-if="aboutPage">
-      <!-- <section ref="fixedTop" v-if="aboutPage[0].section1" class="section1 fixed">
-        <div class="fixed-content">
-          <div class="text-wrapper">
-            <h2 v-if="aboutPage[0].section1.headline"> {{ aboutPage[0].section1.headline }}</h2>
-            <p v-if="aboutPage[0].section1.subheadline" class="subheadline">{{ aboutPage[0].section1.subheadline }}</p>
-          </div>
-        </div>
-      </section> -->
-      <section v-if="aboutPage[0].capabilities" class="capabilities full-row">
-        <div class="image-wrapper" v-if="aboutPage[0].capabilities.image">
-            <SanityImage
-                :asset-id="aboutPage[0].capabilities.image.asset._ref"
+      <section v-if="aboutPage.capabilities" class="capabilities full-row">
+        <div class="image-wrapper" v-if="aboutPage.capabilities.image">
+            <img
+              :src="`${$urlFor(aboutPage.capabilities.image.asset._ref).size(1200)}`"
+              :alt="aboutPage.capabilities.image.alt"
+              width="1200"
+            />
+            <!-- <SanityImage
+                :asset-id="aboutPage.capabilities.image.asset._ref"
                 auto="format"
-                :alt="aboutPage[0].capabilities.image.alt"
-              />
+                :alt="aboutPage.capabilities.image.alt"
+              /> -->
           </div>
           <div class="text-wrapper">
-              <h2 v-if="aboutPage[0].capabilities.headline"> {{ aboutPage[0].capabilities.headline }}</h2>
-              <div class="main-list" v-if="aboutPage[0].capabilities.mainList">
-                <SanityContent :blocks="aboutPage[0].capabilities.mainList" />
+              <h2 v-if="aboutPage.capabilities.headline"> {{ aboutPage.capabilities.headline }}</h2>
+              <div class="main-list" v-if="aboutPage.capabilities.mainList">
+                <SanityContent :blocks="aboutPage.capabilities.mainList" />
               </div>
-              <div class="sub-list" v-if="aboutPage[0].capabilities.subList">
-                <SanityContent class="two-col" :blocks="aboutPage[0].capabilities.subList" />
+              <div class="sub-list" v-if="aboutPage.capabilities.subList">
+                <SanityContent class="two-col" :blocks="aboutPage.capabilities.subList" />
               </div>
 
           </div>
       </section>
-      <section v-if="aboutPage[0].beliefBanner" class="belief-banner full-row">
+      <section v-if="aboutPage.beliefBanner" class="belief-banner full-row">
         <div class="text-wrapper">
-          <h2 v-if="aboutPage[0].beliefBanner.title"> {{ aboutPage[0].beliefBanner.title }}</h2>
+          <h2 v-if="aboutPage.beliefBanner.title"> {{ aboutPage.beliefBanner.title }}</h2>
           <ol ref="ticker">
-            <li v-for="item in aboutPage[0].beliefBanner.beliefs" :key="item._id">{{ item }}</li>
+            <li v-for="item in aboutPage.beliefBanner.beliefs" :key="item._id">{{ item }}</li>
           </ol>
         </div>
       </section>
-      <section v-if="aboutPage[0].section2" class="section2 image-text-row image-right">
+      <section v-if="aboutPage.section2" class="section2 image-text-row image-right">
         
-        <div class="image-wrapper overflow" v-if="aboutPage[0].section2">
-          <div v-if="aboutPage[0].section2.video" class="video-wrapper">
+        <div class="image-wrapper overflow" v-if="aboutPage.section2">
+          <div v-if="aboutPage.section2.video" class="video-wrapper">
             <SanityImage
-                :asset-id="aboutPage[0].section2.video.poster.asset._ref"
+                :asset-id="aboutPage.section2.video.poster.asset._ref"
                 auto="format"
               /> 
-            <SanityFile :asset-id="aboutPage[0].section2.video.asset._ref">
+            <SanityFile :asset-id="aboutPage.section2.video.asset._ref">
               <template #default="{ src }">
                 <video :src="src" autoplay muted loop></video>
               </template>
             </SanityFile>
           </div>
-           <div v-if="aboutPage[0].section2.image">
+           <div v-if="aboutPage.section2.image">
             <SanityImage
-                :asset-id="aboutPage[0].section2.image.asset._ref"
+                :asset-id="aboutPage.section2.image.asset._ref"
                 auto="format"
-                :alt="aboutPage[0].section2.image.alt"
+                :alt="aboutPage.section2.image.alt"
               />  
            </div>
           
         </div>
         <div class="text-wrapper">
-          <h2 v-if="aboutPage[0].section2.headline"> {{ aboutPage[0].section2.headline }}</h2>
-          <div class="sub-list" v-if="aboutPage[0].section2.description">
-            <SanityContent :blocks="aboutPage[0].section2.description" />
+          <h2 v-if="aboutPage.section2.headline"> {{ aboutPage.section2.headline }}</h2>
+          <div class="sub-list" v-if="aboutPage.section2.description">
+            <SanityContent :blocks="aboutPage.section2.description" />
           </div>
         </div>
       </section>
 
-      <section v-if="aboutPage[0].section3" class="section3 image-text-row image-left">
-        <div class="image-wrapper" v-if="aboutPage[0].section3.image">
+      <section v-if="aboutPage.section3" class="section3 image-text-row image-left">
+        <div class="image-wrapper" v-if="aboutPage.section3.image">
           <SanityImage
-                :asset-id="aboutPage[0].section3.image.asset._ref"
+                :asset-id="aboutPage.section3.image.asset._ref"
                 auto="format"
-                :alt="aboutPage[0].section3.image.alt"
+                :alt="aboutPage.section3.image.alt"
 
               />
         </div>
         <div class="text-wrapper">
-          <h2 v-if="aboutPage[0].section3.headline"> {{ aboutPage[0].section3.headline }}</h2>
-          <div class="sub-list" v-if="aboutPage[0].section3.description">
-            <SanityContent :blocks="aboutPage[0].section3.description" />
+          <h2 v-if="aboutPage.section3.headline"> {{ aboutPage.section3.headline }}</h2>
+          <div class="sub-list" v-if="aboutPage.section3.description">
+            <SanityContent :blocks="aboutPage.section3.description" />
           </div>
         </div>
       </section>
 
-      <section v-if="aboutPage[0].section4" class="section4 image-text-row image-right">
-        <div class="image-wrapper overflow" v-if="aboutPage[0].section4">
-           <div v-if="aboutPage[0].section4.image1">
+      <section v-if="aboutPage.section4" class="section4 image-text-row image-right">
+        <div class="image-wrapper overflow" v-if="aboutPage.section4">
+           <div v-if="aboutPage.section4.image1">
             <SanityImage
-                :asset-id="aboutPage[0].section4.image1.asset._ref"
+                :asset-id="aboutPage.section4.image1.asset._ref"
                 auto="format"
-                :alt="aboutPage[0].section4.image1.alt"
+                :alt="aboutPage.section4.image1.alt"
               />  
            </div>
-           <div v-if="aboutPage[0].section4.image2">
+           <div v-if="aboutPage.section4.image2">
             <SanityImage
-                :asset-id="aboutPage[0].section4.image2.asset._ref"
+                :asset-id="aboutPage.section4.image2.asset._ref"
                 auto="format"
-                :alt="aboutPage[0].section4.image2.alt"
+                :alt="aboutPage.section4.image2.alt"
               />  
            </div>
           
         </div>
         <div class="text-wrapper">
-          <h2 v-if="aboutPage[0].section4.headline"> {{ aboutPage[0].section4.headline }}</h2>
-          <div class="sub-list" v-if="aboutPage[0].section4.description">
-            <SanityContent :blocks="aboutPage[0].section4.description" />
+          <h2 v-if="aboutPage.section4.headline"> {{ aboutPage.section4.headline }}</h2>
+          <div class="sub-list" v-if="aboutPage.section4.description">
+            <SanityContent :blocks="aboutPage.section4.description" />
           </div>
         </div>
       </section>
@@ -125,15 +122,15 @@
       <section class="full-row cta" ref="fixedVid">       
         <div class="bg-video-wrapper">
             <div>
-            <SanityFile :asset-id="aboutPage[0].cta.bgvideo.asset._ref">
+            <SanityFile :asset-id="aboutPage.cta.bgvideo.asset._ref">
                 <template #default="{ src }">
                 <video :src="src" autoplay muted loop></video>
                 </template>
             </SanityFile>
             </div>
         </div>         
-        <div class="text-wrapper" v-if="aboutPage[0].cta">
-          <h2 v-if="aboutPage[0].cta.text">{{ aboutPage[0].cta.text }}</h2>
+        <div class="text-wrapper" v-if="aboutPage.cta">
+          <h2 v-if="aboutPage.cta.text">{{ aboutPage.cta.text }}</h2>
           <button class="flat underlined"><nuxt-link to="/contact">Get in touch</nuxt-link></button>
         </div>
     </section>
@@ -141,7 +138,7 @@
     <!-- <section class="video-scroller-bg" ref="fixedVid">
       <div class="video-wrapper">
         <div>
-          <SanityFile :asset-id="aboutPage[0].cta.bgvideo.asset._ref">
+          <SanityFile :asset-id="aboutPage.cta.bgvideo.asset._ref">
             <template #default="{ src }">
               <video :src="src" autoplay muted loop></video>
             </template>
@@ -159,21 +156,56 @@ import { groq } from "@nuxtjs/sanity";
 
 export default {
   async asyncData({ $sanity }) {
-    const query1 = groq`*[_type == "aboutPage"]`;
-    // const query2 = groq`*[_type == "siteSettings"]`;
-    const aboutPage = await $sanity.fetch(query1).then((res) => res);
-    // const siteSettings = await $sanity.fetch(query2).then((res) => res);
+    const thisPage = "aboutPage"
+
+    const query1 = groq`*[_type == "${thisPage}"]{
+          pageMetadata,
+          pageTitle,
+          beliefBanner,
+          capabilities,
+          cta,
+          section1,
+          section2,
+          section3,
+          section4
+    }`;
+    const aboutPage = await $sanity.fetch(query1).then((res) => res[0]);
+    
+    const metadataQuery = groq`*[_type == "${thisPage}"]{
+        "pageMetadata": {
+          "pageTitle": pageMetadata.pageTitle,
+          "pageDesc": pageMetadata.pageDesc,
+          "ogImage": {
+            "url": pageMetadata.ogImage.asset->url
+          }
+        }
+      }`;
+    
+    const pageMetadata = await $sanity.fetch(metadataQuery).then((res) => res[0].pageMetadata);
+
     return { aboutPage };
   },
   data() {
     return {
-      title: 'About'
+      name: "About"
     }
   },
   head() {
     return {
-      title: this.title,
-    }
+      title: this.pageMetadata ? (this.pageMetadata.pageTitle ? this.pageMetadata.pageTitle : this.name): this.name,
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content: this.pageMetadata ? (this.pageMetadata.pageDesc ? this.pageMetadata.pageDesc : ""): "",
+        },
+        { 
+          hid: 'og:image', 
+          property: 'og:image', 
+          content: this.pageMetadata ? (this.pageMetadata.ogImage ? `${this.$urlFor(this.pageMetadata.ogImage.url).forceDownload().size(800).url()}` : ""): "",
+        },
+      ],
+    };
   },
   mounted() {
     this.setPosterImages();
@@ -259,7 +291,6 @@ export default {
                         height = height + child.offsetHeight
                     }
                 })
-                console.log(height);
                 row.style.gridTemplateRows = `${height + extra}px`;
             })
         }

@@ -47,7 +47,6 @@ export default {
       const igItemFirst = feed.querySelector('.ig-item');
       const igItemW = igItemFirst.offsetWidth;
       const igItemMargin = parseFloat(window.getComputedStyle(igItemFirst).marginRight);
-      // console.log(igItemMargin)
       const feedW = igItemW * count + igItemMargin * count;
       feed.style.width = `${feedW}px`
 
@@ -62,33 +61,30 @@ export default {
       const clone2 = wrapper.querySelector('.feed-clone-2');
 
       wrapper.style.width = `${feedW * wrapper.childElementCount}px`;
+      
       duration = 65;
-
-      // gsap.to(feed, {
-      //   x: feedW * -1 - buffer,
-      //   duration: duration,
-      //   ease: 'linear',
-      //   onComplete: () => {
-      //     feed.remove();
-      //   }
-      // })
-
+      let xOffset;
+      let delay;
+      if (window.innerWidth > 768) {
+        xOffset = '-600vw'
+        delay = duration * 1 / 2;
+      } else {
+        xOffset = '-600vw'
+        delay = duration * 5 / 6;
+      }
       if (clone1) {
-        // clone1.style.background = 'rgba(0, 255, 0, 0.8)';
         gsap.to(clone1, {
-          x: '-600vw',
+          x: xOffset,
           duration: duration,
-          // delay: duration * 3,
           repeat: repeat,
           ease: 'linear'
         })
       }
       if (clone2) {
-        // clone2.style.background = 'rgba(255, 0, 0, 0.8)';
         gsap.to(clone2, {
-          x: '-600vw',
+          x: xOffset,
           duration: duration,
-          delay: duration * 1 / 2,
+          delay: delay,
           repeat: repeat,
           ease: 'linear'
         })
@@ -116,19 +112,27 @@ export default {
   left: 0;
    height: calc(20vw - 24px);
    max-height: calc(20vw - 24px);
+    @media (max-width: 960px) {
+      height: calc(33.33vw - 6px);
+      max-height: calc(33.33vw - 6px);
+    }
   //  float: left;
    > .ig-item {
      flex: 0 0 calc(20vw - 24px);
      margin-right: 24px;
+     @media (max-width: 960px) {
+      flex: 0 0 calc(33.33vw - 6px);
+      margin-right: 6px;
+     }
    }
    &.feed-clone {
      position: absolute;
      top: 0;
      left: 100vw;
      background: #fff;
+     overflow: hidden;
    }
    .ig-item {
-     overflow: hidden;
      display: flex;
      align-items: center;
      width: 100%;

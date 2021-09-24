@@ -1,14 +1,11 @@
 <template>
   <div class="container-work container container-no-grid">
-    <section class="work-grid grid-fixed" v-if="workPage" ref="scrollerWrapper">
-      <div v-for="item in workGrid" :key="item.id" class="work-grid-item">
-          <div v-if="item.projectcover" class="image-wrapper">
-            <SanityImage
-              :asset-id="item.projectcover.asset._ref"
-              auto="format"
-              :alt="item.projectcover.alt"
-            />
-          </div>
+    <section class="work-grid grid-fixed" v-if="workGrid" ref="scrollerWrapper">
+      <div v-for="item in workGrid" :key="item._id" class="work-grid-item">
+        <div v-if="item.thumbnail">
+          <span class="visually-hidden">{{ item.projectname }}</span>
+          <img :src="$urlFor(item.thumbnail.url).forceDownload(item.thumbnail.originalFilename).size(800)" :alt="item.thumbnail.alt">
+        </div>
       </div>
     </section>
   </div>
@@ -18,33 +15,65 @@
 import { groq } from "@nuxtjs/sanity";
 export default {
   async asyncData({ $sanity }) {
-      const query1 = groq`*[_type == "workPage"]`;
-      const query2 = groq`*[_type == "projects"]`;
-      const workPage = await $sanity.fetch(query1).then((res) => res);
+    const thisPage = 'workPage'
+
+      const query1 = groq`*[_type == "${thisPage}"]`;
+      const query2 = groq`*[_type == "projects"]{  _id, projectname, "thumbnail": {
+        "url": projectcover.asset->url,
+        "originalFilename": projectcover.asset->originalFilename,
+        "alt": projectcover.alt
+      }}`;
+
+      const workGridReferences = await $sanity.fetch(query1).then((res) => res[0].workGrid);
       const projects = await $sanity.fetch(query2).then((res) => res);
 
-      return { workPage, projects };
+      const metadataQuery = groq`*[_type == "${thisPage}"]{
+        "pageMetadata": {
+          "pageTitle": pageMetadata.pageTitle,
+          "pageDesc": pageMetadata.pageDesc,
+          "ogImage": {
+            "url": pageMetadata.ogImage.asset->url
+          }
+        }
+      }`;
+      const pageMetadata = await $sanity.fetch(metadataQuery).then((res) => res[0].pageMetadata);
+
+      
+      return { workGridReferences, projects, pageMetadata };
   },
-  data() {
+
+data() {
     return {
-      title: 'Work'
+      name: "Work"
     }
   },
   head() {
     return {
-      title: this.title,
-    }
+      title: this.pageMetadata ? (this.pageMetadata.pageTitle ? this.pageMetadata.pageTitle : this.name): this.name,
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content: this.pageMetadata ? (this.pageMetadata.pageDesc ? this.pageMetadata.pageDesc : ""): "",
+        },
+        { 
+          hid: 'og:image', 
+          property: 'og:image', 
+          content: this.pageMetadata ? (this.pageMetadata.ogImage ? `${this.$urlFor(this.pageMetadata.ogImage.url).forceDownload().size(800).url()}` : ""): "",
+        },
+      ],
+    };
   },
   computed: {
     workGrid() {
-      if (!this.workPage || !this.projects) {
+      if (!this.workGridReferences || !this.projects) {
         return null
       }
-      const gridReferences = this.workPage[0].workGrid;
+      const gridReferences = this.workGridReferences;
       const projects = this.projects;
       let workGrid = [];
       gridReferences.forEach( ref => {
-        const match = projects.filter(project => project._id === ref._ref);
+        const match = projects.filter(project => project._id == ref._ref);
         workGrid.push(match[0])
       })
       return workGrid;

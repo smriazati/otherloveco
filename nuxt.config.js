@@ -35,12 +35,10 @@ export default {
 
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~/plugins/route', '~/plugins/init_gtag.client', '~/plugins/insta.js', '~/plugins/sanity-image-builder.js',
+  plugins: ['~/plugins/route', '~/plugins/insta.js', '~/plugins/sanity-image-builder.js',
 ],
-
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
-
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: ['@nuxtjs/sanity/module', '@nuxtjs/google-fonts'],
   googleFonts: {
@@ -66,27 +64,14 @@ export default {
     },
     {
       UserAgent: '*',
-      Disallow: '/demo'
-    },
-    {
-      UserAgent: '*',
-      Disallow: '/siteinprog'
-    },
-    {
-      UserAgent: '*',
-      Disallow: '/old'
+      Disallow: '/archive'
     }
   ],
   // Modules: https://go.nuxtjs.dev/config-modules
   env: {
-    gtagId: process.env.GTAG_ID,
-    igToken: process.env.INSTAGRAM_ACCESS_TOKEN,
-    igAppId: process.env.IG_APP_ID,
-    igAppSecret: process.env.IG_APP_SECRET,
-    igAppRedirect: process.env.IG_APP_REDIRECT
+    igToken: process.env.INSTAGRAM_ACCESS_TOKEN
   },
   privateRuntimeConfig: {
-    gtagId: process.env.GTAG_ID,
     igToken: process.env.INSTAGRAM_ACCESS_TOKEN
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build

@@ -2,15 +2,10 @@
 <div class="fixed-header" :class="isMenuExpanded ? 'menu-expanded' : ''">
 
   <header class="site-header">
-    <div v-if="logo" class="logo">
+    <div class="logo">
       <div class="logo-wrapper">
         <nuxt-link to="/">
-          <SanityImage
-            :asset-id="logo.asset._ref"
-            auto="format"
-            :alt="logo.alt"
-          />
-          <!-- <img src="/Otherlove-Logo-lighter.png" alt="" /> -->
+          <SiteLogo />
         </nuxt-link>
       </div>
     </div>
@@ -32,14 +27,10 @@
           <li><a href="https://www.instagram.com/otherlove.co/" target="_blank">Instagram</a></li>
           <li><a href="https://www.pinterest.com/otherloveco/" target="_blank">Pinterest</a></li>
         </ul>
-        <div v-if="submark" class="submark">
+        <div class="submark">
             <div class="image-wrapper">
                 <nuxt-link to="/">
-                <SanityImage
-                  :asset-id="submark.asset._ref"
-                  auto="format"
-                  :alt="submark.alt"
-                />
+                  <SiteSubmark />
                 </nuxt-link>
             </div>
         </div>
@@ -54,24 +45,13 @@
 
 <script>
 
-import { mapState } from 'vuex'
 
 export default {
-  // async fetch() {
-  //     const query = groq`*[_type == "siteSettings"]`;
-  //     this.siteSettings = await this.$sanity.fetch(query).then((res) => res);
-  // },
   data() {
     return {
       siteSettings: '',
       isMenuExpanded: false
     }
-  },
-  computed: {
-    ...mapState('siteSettings', {
-      logo: state => state.siteLogo,
-      submark: state => state.favicon,
-    })
   },
   mounted() {
     this.$nextTick(function () {

@@ -10,17 +10,24 @@ import { groq } from "@nuxtjs/sanity";
 
 export default {
   async fetch() {
-    const query2 = groq`*[_type == "siteSettings"]`;
     if (!this.$store.state.siteSettings.isLoaded) {
-      this.siteSettings = await this.$sanity.fetch(query2).then((res) => this.$store.commit('siteSettings/setData', res[0]));
+          const query = groq`*[_type == "siteSettings"]{
+            "favicon": {
+              "originalFilename": favicon.asset->originalFilename,
+              "url": favicon.asset->url
+            },
+            "ogImg": {
+              "url": ogImg.asset->url
+            },
+            siteDesc,
+            "siteLogo": {
+              "url": siteLogo.asset->url,
+              "originalFilename": siteLogo.asset->originalFilename
+            },
+            siteTitle
+          }`;
+          this.siteSettings = await this.$sanity.fetch(query).then((res) => this.$store.commit('siteSettings/setData', res[0]));
     }
   },
-  mounted() {
-    // const windowDim = {
-    //   height: window.innerHeight,
-    //   width: window.innerWidth,
-    // };
-    // this.$store.commit("helpful/setWindow", windowDim);
-  }
 };
 </script>

@@ -11,26 +11,35 @@ import { groq } from "@nuxtjs/sanity";
 
 export default {
   async fetch() {
-    const query = groq`*[_type == "siteFooter"]`;
-    const query2 = groq`*[_type == "siteSettings"]`;
     if (!this.$store.state.siteFooter.isLoaded) {
+      const query = groq`*[_type == "siteFooter"]{
+          footerCol1,
+          footerCol2,
+          footerCol3
+        }`
+      ;
       this.siteFooter = await this.$sanity.fetch(query).then((res) => this.$store.commit('siteFooter/setData', res[0]));
     }
     if (!this.$store.state.siteSettings.isLoaded) {
+      const query2 = groq`*[_type == "siteSettings"]{
+        "favicon": {
+          "originalFilename": favicon.asset->originalFilename,
+          "url": favicon.asset->url
+        },
+        "ogImg": {
+          "url": ogImg.asset->url
+        },
+        siteDesc,
+        "siteLogo": {
+          "url": siteLogo.asset->url,
+          "originalFilename": siteLogo.asset->originalFilename
+        },
+        siteTitle
+      }`;
       this.siteSettings = await this.$sanity.fetch(query2).then((res) => this.$store.commit('siteSettings/setData', res[0]));
     }
   },
-  mounted() {
-    const windowDim = {
-      height: window.innerHeight,
-      width: window.innerWidth,
-    };
-    // this.$store.commit("helpful/setWindow", windowDim);
-  },
   computed: {
-    bodyBg() {
-      return this.$store.state.helpful.bodyBg;
-    },
      thisRouteClass() {
       const path = this.$route.fullPath;
       let thisRouteClass;
