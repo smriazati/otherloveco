@@ -79,17 +79,17 @@ export default {
   },
   head() {
     return {
-      title: this.pageMetadata ? (this.pageMetadata.pageTitle ? this.pageMetadata.pageTitle : this.name): this.name,
+      title: this.pageMetadata ? (this.pageMetadata.pageTitle ? (this.pageMetadata.pageTitle) : (this.$store.state.siteSettings.siteTitle ? this.$store.state.siteSettings.siteTitle : '')) : (this.$store.state.siteSettings.siteTitle ? this.$store.state.siteSettings.siteTitle : ''),
       meta: [
         {
           hid: "description",
           name: "description",
-          content: this.pageMetadata ? (this.pageMetadata.pageDesc ? this.pageMetadata.pageDesc : ""): "",
+          content: this.pageMetadata ? (this.pageMetadata.pageDesc ? (this.pageMetadata.pageDesc) : (this.$store.state.siteSettings.siteDescription ? this.$store.state.siteSettings.siteDescription : '')) : (this.$store.state.siteSettings.siteDescription ? this.$store.state.siteSettings.siteDescription : '')
         },
         { 
           hid: 'og:image', 
           property: 'og:image', 
-          content: this.pageMetadata ? (this.pageMetadata.ogImage ? `${this.$urlFor(this.pageMetadata.ogImage.url).forceDownload().size(800).url()}` : ""): "",
+          content: this.pageMetadata ? (this.pageMetadata.ogImage.url ? (this.pageMetadata.ogImage.url) : (this.$store.state.siteSettings.openGraphImage ? this.$store.state.siteSettings.openGraphImage.url : '')) : (this.$store.state.siteSettings.openGraphImage ? this.$store.state.siteSettings.openGraphImage.url : '')
         },
       ],
     };
