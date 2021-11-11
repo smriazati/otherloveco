@@ -1,36 +1,42 @@
 {
     "root": true,
     "project": {
-        "name": "Otherlove"
+      "name": "Otherlove"
     },
     "api": {
-        "projectId": "21sfy6kc",
-        "dataset": "production"
+      "projectId": "21sfy6kc",
+      "dataset": "production"
     },
     "plugins": [
-        "@sanity/base",
-        "@sanity/components",
-        "@sanity/default-layout",
-        "@sanity/default-login",
-        "@sanity/desk-tool",
-        "@sanity/dashboard",
-        "dashboard-widget-netlify"
+      "@sanity/base",
+      "@sanity/components",
+      "@sanity/default-layout",
+      "@sanity/default-login",
+      "@sanity/desk-tool",
+      "@sanity/dashboard",
+      "dashboard-widget-netlify",
+      "media-library"
     ],
     "env": {
-        "development": {
-            "plugins": [
-                "@sanity/vision"
-            ]
-        }
+      "development": {
+        "plugins": [
+          "@sanity/vision"
+        ]
+      }
     },
     "parts": [
-        {
-            "name": "part:@sanity/base/schema",
-            "path": "./schemas/schema"
-        },
-        {
-            "implements": "part:@sanity/dashboard/config",
-            "path": "src/dashboardConfig"
-        }
+      {
+        "name": "part:@sanity/base/schema",
+        "path": "./schemas/schema"
+      },
+      {
+        "name": "part:@sanity/desk-tool/structure",
+        "path": "src/deskStructure"
+      },
+      {
+        "implements": "part:@sanity/dashboard/config",
+        "path": "src/dashboardConfig"
+      }
     ]
-}
+  }
+  

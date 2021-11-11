@@ -4,7 +4,14 @@
       <div v-for="item in workGrid" :key="item._id" class="work-grid-item">
         <div v-if="item.thumbnail">
           <span class="visually-hidden">{{ item.projectname }}</span>
-          <img :src="$urlFor(item.thumbnail.url).forceDownload(item.thumbnail.originalFilename).size(800)" :alt="item.thumbnail.alt">
+          <img
+            :src="
+              $urlFor(item.thumbnail.url)
+                .forceDownload(item.thumbnail.originalFilename)
+                .size(800)
+            "
+            :alt="item.thumbnail.alt"
+          />
         </div>
       </div>
     </section>
@@ -15,19 +22,21 @@
 import { groq } from "@nuxtjs/sanity";
 export default {
   async asyncData({ $sanity }) {
-    const thisPage = 'workPage'
+    const thisPage = "workPage";
 
-      const query1 = groq`*[_type == "${thisPage}"]`;
-      const query2 = groq`*[_type == "projects"]{  _id, projectname, "thumbnail": {
+    const query1 = groq`*[_type == "${thisPage}"]`;
+    const query2 = groq`*[_type == "projects"]{  _id, projectname, "thumbnail": {
         "url": projectcover.asset->url,
         "originalFilename": projectcover.asset->originalFilename,
         "alt": projectcover.alt
       }}`;
 
-      const workGridReferences = await $sanity.fetch(query1).then((res) => res[0].workGrid);
-      const projects = await $sanity.fetch(query2).then((res) => res);
+    const workGridReferences = await $sanity
+      .fetch(query1)
+      .then((res) => res[0].workGrid);
+    const projects = await $sanity.fetch(query2).then((res) => res);
 
-      const metadataQuery = groq`*[_type == "${thisPage}"]{
+    const metadataQuery = groq`*[_type == "${thisPage}"]{
         "pageMetadata": {
           "pageTitle": pageMetadata.pageTitle,
           "pageDesc": pageMetadata.pageDesc,
@@ -36,30 +45,55 @@ export default {
           }
         }
       }`;
-      const pageMetadata = await $sanity.fetch(metadataQuery).then((res) => res[0].pageMetadata);
+    const pageMetadata = await $sanity
+      .fetch(metadataQuery)
+      .then((res) => res[0].pageMetadata);
 
-      
-      return { workGridReferences, projects, pageMetadata };
+    return { workGridReferences, projects, pageMetadata };
   },
 
-data() {
+  data() {
     return {
-      name: "Work"
-    }
+      name: "Work",
+    };
   },
   head() {
     return {
-      title: this.pageMetadata ? (this.pageMetadata.pageTitle ? (this.pageMetadata.pageTitle) : (this.$store.state.siteSettings.siteTitle ? this.$store.state.siteSettings.siteTitle : '')) : (this.$store.state.siteSettings.siteTitle ? this.$store.state.siteSettings.siteTitle : ''),
+      title: this.pageMetadata
+        ? this.pageMetadata.pageTitle
+          ? this.pageMetadata.pageTitle
+          : this.$store.state.siteSettings.siteTitle
+          ? this.$store.state.siteSettings.siteTitle
+          : ""
+        : this.$store.state.siteSettings.siteTitle
+        ? this.$store.state.siteSettings.siteTitle
+        : "",
       meta: [
         {
           hid: "description",
           name: "description",
-          content: this.pageMetadata ? (this.pageMetadata.pageDesc ? (this.pageMetadata.pageDesc) : (this.$store.state.siteSettings.siteDescription ? this.$store.state.siteSettings.siteDescription : '')) : (this.$store.state.siteSettings.siteDescription ? this.$store.state.siteSettings.siteDescription : '')
+          content: this.pageMetadata
+            ? this.pageMetadata.pageDesc
+              ? this.pageMetadata.pageDesc
+              : this.$store.state.siteSettings.siteDescription
+              ? this.$store.state.siteSettings.siteDescription
+              : ""
+            : this.$store.state.siteSettings.siteDescription
+            ? this.$store.state.siteSettings.siteDescription
+            : "",
         },
-        { 
-          hid: 'og:image', 
-          property: 'og:image', 
-          content: this.pageMetadata ? (this.pageMetadata.ogImage.url ? (this.pageMetadata.ogImage.url) : (this.$store.state.siteSettings.openGraphImage ? this.$store.state.siteSettings.openGraphImage.url : '')) : (this.$store.state.siteSettings.openGraphImage ? this.$store.state.siteSettings.openGraphImage.url : '')
+        {
+          hid: "og:image",
+          property: "og:image",
+          content: this.pageMetadata
+            ? this.pageMetadata.ogImage.url
+              ? this.pageMetadata.ogImage.url
+              : this.$store.state.siteSettings.openGraphImage
+              ? this.$store.state.siteSettings.openGraphImage.url
+              : ""
+            : this.$store.state.siteSettings.openGraphImage
+            ? this.$store.state.siteSettings.openGraphImage.url
+            : "",
         },
       ],
     };
@@ -67,22 +101,22 @@ data() {
   computed: {
     workGrid() {
       if (!this.workGridReferences || !this.projects) {
-        return null
+        return null;
       }
       const gridReferences = this.workGridReferences;
       const projects = this.projects;
       let workGrid = [];
-      gridReferences.forEach( ref => {
-        const match = projects.filter(project => project._id == ref._ref);
-        workGrid.push(match[0])
-      })
+      gridReferences.forEach((ref) => {
+        const match = projects.filter((project) => project._id == ref._ref);
+        workGrid.push(match[0]);
+      });
       return workGrid;
-    }
+    },
   },
   mounted() {
-    this.$nextTick(function() {
+    this.$nextTick(function () {
       this.onImageLoad();
-    })
+    });
   },
   methods: {
     registerPlugins() {
@@ -91,56 +125,78 @@ data() {
     setTimeline(ref, index) {
       console.log(index);
       this.registerPlugins();
-        if (!gsap) {
-          console.log('error, no gsap')
-          return;
-        }
-        // console.log('setting timeline on', ref)
+      if (!gsap) {
+        console.log("error, no gsap");
+        return;
+      }
+      // console.log('setting timeline on', ref)
 
-        const tl = gsap.timeline({
-            scrollTrigger: {
-              trigger: ref,
-              // markers: true,
-              start: `top-=${ref.offsetHeight}px bottom`, 
-              end: "bottom top",
-              scrub: 0.1
-            }
-          });
-        
-         tl
-          .to(ref, {scale: 0, '-webkit-filter': 'blur(30px)', filter: 'blur(30px)', duration: 1})
-          .to(ref, {scale: 0.3, '-webkit-filter': 'blur(0px)', filter: 'blur(0px)',  duration: 2})
-          .to(ref, {scale: 1, '-webkit-filter': 'blur(0px)', filter: 'blur(0px)', duration: 6})
-          .to(ref, {'-webkit-filter': 'blur(30px)', filter: 'blur(30px)',  duration: 1})
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: ref,
+          // markers: true,
+          start: `top-=${ref.offsetHeight}px bottom`,
+          end: "bottom top",
+          scrub: 0.1,
+        },
+      });
+
+      //  tl
+      //   .to(ref, {scale: 0, '-webkit-filter': 'blur(30px)', filter: 'blur(30px)', duration: 1})
+      //   .to(ref, {scale: 0.3, '-webkit-filter': 'blur(0px)', filter: 'blur(0px)',  duration: 2})
+      //   .to(ref, {scale: 1, '-webkit-filter': 'blur(0px)', filter: 'blur(0px)', duration: 6})
+      //   .to(ref, {'-webkit-filter': 'blur(30px)', filter: 'blur(30px)',  duration: 1})
+      tl.to(ref, {
+        scale: 0,
+        // "-webkit-filter": "blur(30px)",
+        // filter: "blur(30px)",
+        duration: 1,
+      })
+        .to(ref, {
+          scale: 0.3,
+          // "-webkit-filter": "blur(0px)",
+          // filter: "blur(0px)",
+          duration: 2,
+        })
+        .to(ref, {
+          scale: 1,
+          // "-webkit-filter": "blur(0px)",
+          // filter: "blur(0px)",
+          duration: 6,
+        })
+        .to(ref, {
+          // "-webkit-filter": "blur(30px)",
+          // filter: "blur(30px)",
+          duration: 1,
+        });
     },
     onImageLoad() {
-        const imageWrapper = this.$refs.scrollerWrapper;
-        if (imageWrapper) {
-          const refs = gsap.utils.toArray(
-            imageWrapper.querySelectorAll(".work-grid-item")
-          );
-          if (refs) {
-            refs.forEach((ref, index) => {
-              const img = ref.querySelector('img');
-              if (img.complete) {
-                // console.log('img complete already', img)
+      const imageWrapper = this.$refs.scrollerWrapper;
+      if (imageWrapper) {
+        const refs = gsap.utils.toArray(
+          imageWrapper.querySelectorAll(".work-grid-item")
+        );
+        if (refs) {
+          refs.forEach((ref, index) => {
+            const img = ref.querySelector("img");
+            if (img.complete) {
+              // console.log('img complete already', img)
+              this.setTimeline(ref, index);
+            } else {
+              console.log("adding listener");
+              img.addEventListener("load", () => {
+                // console.log('img loaded success', img)
                 this.setTimeline(ref, index);
-              } else {
-                console.log('adding listener')
-                img.addEventListener('load', () => {
-                    // console.log('img loaded success', img)
-                    this.setTimeline(ref, index);
-                })
-                img.addEventListener('error', () => {
-                    console.log('error, no image loaded, no animation set')
-                })
-              }
-            });
-          }
+              });
+              img.addEventListener("error", () => {
+                console.log("error, no image loaded, no animation set");
+              });
+            }
+          });
         }
-    }
-  }
-  
+      }
+    },
+  },
 };
 </script>
 
