@@ -16,9 +16,10 @@ export default {
           footerCol1,
           footerCol2,
           footerCol3
-        }`
-      ;
-      this.siteFooter = await this.$sanity.fetch(query).then((res) => this.$store.commit('siteFooter/setData', res[0]));
+        }`;
+      this.siteFooter = await this.$sanity
+        .fetch(query)
+        .then((res) => this.$store.commit("siteFooter/setData", res[0]));
     }
     if (!this.$store.state.siteSettings.isLoaded) {
       const query2 = groq`*[_type == "siteSettings"]{
@@ -36,18 +37,24 @@ export default {
         },
         siteTitle
       }`;
-      this.siteSettings = await this.$sanity.fetch(query2).then((res) => this.$store.commit('siteSettings/setData', res[0]));
+      this.siteSettings = await this.$sanity
+        .fetch(query2)
+        .then((res) => this.$store.commit("siteSettings/setData", res[0]));
     }
   },
   computed: {
-     thisRouteClass() {
+    thisRouteClass() {
       const path = this.$route.fullPath;
       let thisRouteClass;
-        if (path === "/") {
-          thisRouteClass = "home";
+      if (path === "/") {
+        thisRouteClass = "home";
+      } else {
+        if (path.includes("/work/")) {
+          thisRouteClass = "work-page";
         } else {
           thisRouteClass = path.split("/");
         }
+      }
 
       return thisRouteClass;
     },
