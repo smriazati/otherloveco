@@ -32,7 +32,7 @@
         <div
           v-for="(item, index) in project.gallery"
           :key="index"
-          class="project-cover"
+          class="project-gallery-item"
         >
           <SanityImage :asset-id="item.asset._ref" auto="format" />
         </div>
@@ -175,5 +175,9 @@ export default {
       }
     }
   }
+}
+
+.project-gallery-item:not(last-child) {
+  padding-bottom: 75px;
 }
 </style>
