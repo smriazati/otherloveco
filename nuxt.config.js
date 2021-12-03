@@ -1,3 +1,6 @@
+import { groq } from '@nuxtjs/sanity'
+const ogImg = groq`*[_type == "siteSettings"][0]{"ogImg": ogImg.asset->url}`;
+
 // require('dotenv').config()
 export default {
   // Target: https://go.nuxtjs.dev/config-target
@@ -14,7 +17,12 @@ export default {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: 'Otherlove is a woman-owned, independent design studio specializing in visual identities, content creation, and experiences for conscious brands ready to push boundaries.' },
-      { name: 'format-detection', content: 'telephone=no' }
+      { name: 'format-detection', content: 'telephone=no' },
+      {
+        hid: 'og:image',
+        property: 'og:image',
+        content: ogImg.ogImg
+      }
     ],
     // script: [
     //   {
