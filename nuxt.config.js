@@ -21,25 +21,13 @@ export default {
       {
         hid: 'og:image',
         property: 'og:image',
-        content: ogImg.ogImg
+        content: `${ogImg.ogImg}?h=1200&w=640`
       }
     ],
-    // script: [
-    //   {
-    //     src: "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"
-    //   },
-    //   {
-    //     src: "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/ScrollTrigger.min.js"
-    //   },
-
-    // ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' },
     ]
   },
-
-  // Global CSS: https://go.nuxtjs.dev/config-css
-  // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     '~/assets/sass/main.scss'
   ],
@@ -52,12 +40,9 @@ export default {
     ],
     hoistUseStatements: true  
 },
-  // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: ['~/plugins/route', '~/plugins/insta.js', '~/plugins/sanity-image-builder.js',
 ],
-  // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
-  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: ['@nuxtjs/sanity/module', '@nuxtjs/google-fonts', 'nuxt-gsap-module'],
   googleFonts: {
     families: {
@@ -78,7 +63,6 @@ export default {
       scrollTrigger: true
     }
   },
-  // Modules: https://go.nuxtjs.dev/config-modules
   modules: ['@nuxtjs/robots', '@nuxtjs/style-resources'],
   robots: [
     {
@@ -90,14 +74,12 @@ export default {
       Disallow: '/archive'
     }
   ],
-  // Modules: https://go.nuxtjs.dev/config-modules
   env: {
     igToken: process.env.INSTAGRAM_ACCESS_TOKEN
   },
   privateRuntimeConfig: {
     igToken: process.env.INSTAGRAM_ACCESS_TOKEN
   },
-  // Build Configuration: https://go.nuxtjs.dev/config-build
   generate: { fallback: '404.html' },
   build: {
     extractCSS: true,
