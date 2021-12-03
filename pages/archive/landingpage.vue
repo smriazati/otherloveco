@@ -61,6 +61,8 @@ export default {
   },
   methods: {
     setAnimations() {
+      const gsap = this.$gsap;
+
       if (!gsap) {
         console.log("Cancelling animation, no gsap");
         return;

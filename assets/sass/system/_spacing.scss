@@ -1,0 +1,47 @@
+$spacer: 10px;
+
+$headerHeight: 150px;
+$mobile-bp: 960px;
+$nav-bp: 960px;
+
+@mixin contained {
+  width: 1280px;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (max-width: 1280px) {
+    width: 90%;
+    max-width: 90%;
+  }
+}
+
+@mixin gridBasic {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: min-content;
+  grid-gap: 10px;
+}
+
+@mixin gridFixed {
+  @include contained;
+  @include gridBasic;
+}
+
+@mixin gridFixedNested {
+  @include contained;
+  @include gridBasic;
+
+  @media (max-width: 1280px) {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+
+@mixin gridFluid {
+  width: 100%;
+  width: 100vw;
+  display: grid;
+  @include gridBasic;
+}

@@ -119,12 +119,9 @@ export default {
     });
   },
   methods: {
-    registerPlugins() {
-      gsap.registerPlugin(ScrollTrigger);
-    },
     setTimeline(ref, index) {
-      console.log(index);
-      this.registerPlugins();
+      const gsap = this.$gsap;
+
       if (!gsap) {
         console.log("error, no gsap");
         return;
@@ -172,6 +169,7 @@ export default {
     },
     onImageLoad() {
       const imageWrapper = this.$refs.scrollerWrapper;
+      const gsap = this.$gsap;
       if (imageWrapper) {
         const refs = gsap.utils.toArray(
           imageWrapper.querySelectorAll(".work-grid-item")
@@ -200,3 +198,45 @@ export default {
 };
 </script>
 
+
+<style lang="scss">
+.container-work {
+  .work-grid {
+    grid-row-gap: 50px;
+
+    .work-grid-item {
+      margin: 0;
+      overflow: hidden;
+
+      &:nth-child(3n + 1) {
+        grid-column: 1 / span 5;
+        place-self: start;
+      }
+
+      &:nth-child(3n + 2) {
+        grid-column: span 4 / 13;
+        place-self: center;
+      }
+
+      &:nth-child(3n + 3) {
+        grid-column: 6 / span 3;
+        place-self: center;
+      }
+
+      @media (max-width: $mobile-bp) {
+        grid-row-gap: 50px;
+
+        &:nth-child(even) {
+          grid-column: 5 / 13;
+          place-self: start;
+        }
+
+        &:nth-child(odd) {
+          grid-column: 2 / 10;
+          place-self: center;
+        }
+      }
+    }
+  }
+}
+</style>

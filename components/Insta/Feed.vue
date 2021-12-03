@@ -31,6 +31,7 @@ export default {
   },
   methods: {
     setAnimation() {
+      const gsap = this.$gsap;
       const feed = this.$refs.feed;
       const wrapper = this.$refs.wrapper;
       const count = this.count;

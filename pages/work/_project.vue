@@ -112,6 +112,7 @@ export default {
     setAnimation() {
       const text = this.$refs.textWrapper;
       const images = this.$refs.imagesWrapper;
+      const ScrollTrigger = this.$ScrollTrigger;
       if (!text || !images) {
         console.log("cancelling pin, no images");
         return;
@@ -135,3 +136,44 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+.work-page {
+  .container {
+    margin-top: 0;
+    padding-top: 200px;
+    padding-bottom: 100px;
+    flex: 2;
+
+    .project-page {
+      @include gridFixed();
+
+      &.work-item {
+        .image-wrapper {
+          display: flex;
+          flex-direction: column;
+          position: relative;
+          // margin-left: 50%;
+          // margin-top: -200px;
+          grid-column: 7 / 13;
+        }
+
+        .text-wrapper {
+          grid-column: 1 / 5;
+
+          .text-wrapper-inner {
+            > *:not(:last-child) {
+              margin-bottom: 10px;
+            }
+
+            h2,
+            h3 {
+              font-size: 14px;
+              text-transform: uppercase;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+</style>

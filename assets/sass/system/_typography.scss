@@ -1,0 +1,35 @@
+@font-face {
+  font-family: 'Reckless';
+  src: url('/fonts/RecklessNeue-Light.woff2') format('woff2'),
+    url('/fonts/RecklessNeue-Light.woff') format('woff');
+}
+
+$baseFontSize: 18px;
+
+@mixin fontDmSans() {
+  font-family: 'DM Sans', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+}
+
+@mixin fontDmSansUpper() {
+  font-family: 'DM Sans', sans-serif;
+  text-transform: uppercase;
+}
+
+@mixin inputStyle() {
+  @include fontDmSans;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+@mixin h2Style() {
+  @include fontDmSans;
+  font-size: 44px;
+  line-height: 55px;
+}
+
+@mixin pStyle() {
+  font-size: 14px;
+  line-height: 20px;
+}
