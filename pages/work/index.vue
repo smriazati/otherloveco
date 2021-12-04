@@ -1,30 +1,12 @@
 <template>
   <div class="container-work container container-no-grid">
     <section class="work-grid grid-fixed" v-if="workGrid" ref="scrollerWrapper">
-      <div
+      <WorkGridItem
         v-for="item in workGrid"
         :key="item._id"
         class="work-grid-item work-grid-item-wrapper"
-      >
-        <div v-if="item.thumbnail" class="work-grid-item-container">
-          <div
-            class="text-wrapper"
-            :style="`background-color: #${item.bgcolor}`"
-          >
-            <h2 class="project-title">{{ item.projectname }}</h2>
-          </div>
-          <figure class="image-wrapper">
-            <img
-              :src="
-                $urlFor(item.thumbnail.url)
-                  .forceDownload(item.thumbnail.originalFilename)
-                  .size(800)
-              "
-              :alt="item.thumbnail.alt"
-            />
-          </figure>
-        </div>
-      </div>
+        :item="item"
+      />
     </section>
   </div>
 </template>
@@ -233,36 +215,6 @@ export default {
         &:nth-child(odd) {
           grid-column: 2 / 10;
           place-self: center;
-        }
-      }
-
-      .work-grid-item-container {
-        // display: flex;
-        @include stackedDivs;
-        .text-wrapper {
-          width: 100%;
-          height: 100%;
-          z-index: 3;
-          opacity: 0;
-          transition: 0.5s ease opacity;
-          background: rgba($light, 0.95);
-          @include flexCenter;
-          padding: $spacer;
-          h2 {
-            @include fontDmSans;
-            font-size: 36px;
-            line-height: 40px;
-          }
-        }
-        .image-wrapper {
-          z-index: 2;
-          display: flex;
-        }
-
-        &:hover {
-          .text-wrapper {
-            opacity: 1;
-          }
         }
       }
     }
