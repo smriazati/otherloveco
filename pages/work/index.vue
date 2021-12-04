@@ -1,17 +1,28 @@
 <template>
   <div class="container-work container container-no-grid">
     <section class="work-grid grid-fixed" v-if="workGrid" ref="scrollerWrapper">
-      <div v-for="item in workGrid" :key="item._id" class="work-grid-item">
-        <div v-if="item.thumbnail">
-          <span class="visually-hidden">{{ item.projectname }}</span>
-          <img
-            :src="
-              $urlFor(item.thumbnail.url)
-                .forceDownload(item.thumbnail.originalFilename)
-                .size(800)
-            "
-            :alt="item.thumbnail.alt"
-          />
+      <div
+        v-for="item in workGrid"
+        :key="item._id"
+        class="work-grid-item work-grid-item-wrapper"
+      >
+        <div v-if="item.thumbnail" class="work-grid-item-container">
+          <div
+            class="text-wrapper"
+            :style="`background-color: #${item.bgcolor}`"
+          >
+            <h2 class="project-title">{{ item.projectname }}</h2>
+          </div>
+          <figure class="image-wrapper">
+            <img
+              :src="
+                $urlFor(item.thumbnail.url)
+                  .forceDownload(item.thumbnail.originalFilename)
+                  .size(800)
+              "
+              :alt="item.thumbnail.alt"
+            />
+          </figure>
         </div>
       </div>
     </section>
@@ -25,7 +36,7 @@ export default {
     const thisPage = "workPage";
 
     const query1 = groq`*[_type == "${thisPage}"]`;
-    const query2 = groq`*[_type == "projects"]{  _id, projectname, "thumbnail": {
+    const query2 = groq`*[_type == "projects"]{  _id, projectname, bgcolor, "thumbnail": {
         "url": projectcover.asset->url,
         "originalFilename": projectcover.asset->originalFilename,
         "alt": projectcover.alt
@@ -138,38 +149,26 @@ export default {
         },
       });
 
-      //  tl
-      //   .to(ref, {scale: 0, '-webkit-filter': 'blur(30px)', filter: 'blur(30px)', duration: 1})
-      //   .to(ref, {scale: 0.3, '-webkit-filter': 'blur(0px)', filter: 'blur(0px)',  duration: 2})
-      //   .to(ref, {scale: 1, '-webkit-filter': 'blur(0px)', filter: 'blur(0px)', duration: 6})
-      //   .to(ref, {'-webkit-filter': 'blur(30px)', filter: 'blur(30px)',  duration: 1})
       tl.to(ref, {
         scale: 0,
-        // "-webkit-filter": "blur(30px)",
-        // filter: "blur(30px)",
         duration: 1,
       })
         .to(ref, {
           scale: 0.3,
-          // "-webkit-filter": "blur(0px)",
-          // filter: "blur(0px)",
           duration: 2,
         })
         .to(ref, {
           scale: 1,
-          // "-webkit-filter": "blur(0px)",
-          // filter: "blur(0px)",
           duration: 6,
         })
         .to(ref, {
-          // "-webkit-filter": "blur(30px)",
-          // filter: "blur(30px)",
           duration: 1,
         });
     },
     onImageLoad() {
       const imageWrapper = this.$refs.scrollerWrapper;
       const gsap = this.$gsap;
+
       if (imageWrapper) {
         const refs = gsap.utils.toArray(
           imageWrapper.querySelectorAll(".work-grid-item")
@@ -234,6 +233,36 @@ export default {
         &:nth-child(odd) {
           grid-column: 2 / 10;
           place-self: center;
+        }
+      }
+
+      .work-grid-item-container {
+        // display: flex;
+        @include stackedDivs;
+        .text-wrapper {
+          width: 100%;
+          height: 100%;
+          z-index: 3;
+          opacity: 0;
+          transition: 0.5s ease opacity;
+          background: rgba($light, 0.95);
+          @include flexCenter;
+          padding: $spacer;
+          h2 {
+            @include fontDmSans;
+            font-size: 36px;
+            line-height: 40px;
+          }
+        }
+        .image-wrapper {
+          z-index: 2;
+          display: flex;
+        }
+
+        &:hover {
+          .text-wrapper {
+            opacity: 1;
+          }
         }
       }
     }

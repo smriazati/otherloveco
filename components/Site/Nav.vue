@@ -183,7 +183,7 @@ export default {
           line-height: 20px;
 
           a {
-            color: #fff;
+            color: $cloud;
           }
         }
       }

@@ -1,17 +1,17 @@
-@use 'system/colors.scss'as *;
-@use 'system/typography.scss'as *;
-@use 'system/spacing.scss'as *;
-@use 'system/buttons.scss'as *;
+@use 'system/_colors.scss'as *;
+@use 'system/_typography.scss'as *;
+@use 'system/_layout.scss'as *;
+@use 'system/_buttons.scss'as *;
 
 
 ::-moz-selection {
   /* Code for Firefox */
-  color: #fff;
+  color: $cloud;
   background: #000;
 }
 
 ::selection {
-  color: #fff;
+  color: $cloud;
   background: #000;
 }
 
@@ -36,6 +36,7 @@
 
 body {
   @include fontDmSans;
+  background: $cloud;
 }
 
 body.home {
@@ -94,8 +95,7 @@ nav ul {
   z-index: 134;
 }
 
-.home,
-.work {
+.home {
   .fixed-header:not(.menu-expanded) {
     mix-blend-mode: difference;
   }
@@ -444,7 +444,7 @@ button:not(.flat) {
   span {
     background: $charcoal;
     transition: .3s ease all;
-    color: #fff;
+    color: $cloud;
     border-radius: 20px;
     display: inline-block;
     padding: $spacer $spacer*2;
@@ -458,7 +458,7 @@ button:not(.flat) {
     a,
     span {
       background: lighten($charcoal, 30);
-      color: #fff;
+      color: $cloud;
     }
   }
 
@@ -468,7 +468,7 @@ button:not(.flat) {
     a,
     span {
       background: #F18E71;
-      color: #fff;
+      color: $cloud;
     }
   }
 }
@@ -590,7 +590,7 @@ button.underlined {
 
   a,
   span {
-    border-bottom: 1px solid #fff;
+    border-bottom: 1px solid $cloud;
   }
 }
 
@@ -629,7 +629,7 @@ button.underlined {
     justify-content: center;
 
     * {
-      color: #fff;
+      color: $cloud;
     }
   }
 }
@@ -685,18 +685,18 @@ button.underlined {
 
 
 
-.layout-default.work {
-  background: #000;
+// .layout-default.work {
+//   background: #000;
 
-  *,
-  a {
-    color: #fff;
-  }
+//   *,
+//   a {
+//     color: $cloud;
+//   }
 
-  header.site-header .logo img {
-    filter: grayscale(1) invert(0);
-  }
-}
+//   header.site-header .logo img {
+//     filter: grayscale(1) invert(0);
+//   }
+// }
 
 
 // fixes for pinning on about page

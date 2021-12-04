@@ -130,7 +130,7 @@ export default {
       position: absolute;
       top: 0;
       left: 100vw;
-      background: #fff;
+      background: $cloud;
       overflow: hidden;
     }
     .ig-item {

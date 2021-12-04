@@ -4,8 +4,8 @@
 export const state = () => ({
     windowHeight: null,
     windowWidth: null,
-    bodyBg: '#fff',
-    baseBg: '#fff'
+    bodyBg: '#F7F7F7',
+    baseBg: '#F7F7F7'
 })
 
 export const mutations = {

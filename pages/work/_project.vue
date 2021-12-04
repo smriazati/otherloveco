@@ -80,7 +80,7 @@ export default {
   },
   data() {
     return {
-      bgColor: "#fff",
+      bgColor: "#",
     };
   },
   mounted() {
@@ -91,7 +91,7 @@ export default {
       if (this.project?.bgcolor) {
         return `#${this.project?.bgcolor}`;
       } else {
-        return "#fff";
+        return "#F7F7F7";
       }
     },
   },
@@ -110,12 +110,12 @@ export default {
       textInner.style.paddingTop = `${
         window.innerHeight - textInner.offsetHeight * 2
       }px`;
-
+      console.log(images.offsetTop, images, textInner);
       ScrollTrigger.create({
         // trigger: images,
         pin: text,
         pinSpacing: false,
-        markers: true,
+        // markers: true,
         start: `top top+=${images.offsetTop}px`,
         end: `bottom bottom`,
       });

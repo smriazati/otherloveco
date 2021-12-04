@@ -441,7 +441,7 @@ export default {
     background: #000;
 
     * {
-      color: #fff;
+      color: $cloud;
     }
 
     .image-wrapper {
@@ -594,7 +594,7 @@ export default {
       overflow: hidden;
 
       h2 {
-        background: #fff;
+        background: $cloud;
         padding-right: 30px;
         position: relative;
         z-index: 10;
@@ -661,7 +661,7 @@ export default {
     > *,
     a,
     span {
-      color: #fff;
+      color: $cloud;
     }
 
     > .bg-video-wrapper {

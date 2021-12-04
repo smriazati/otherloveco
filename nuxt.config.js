@@ -35,7 +35,7 @@ export default {
     scss: [
       '~/assets/sass/system/_colors.scss',
       '~/assets/sass/system/_typography.scss',
-      '~/assets/sass/system/_spacing.scss',
+      '~/assets/sass/system/_layout.scss',
       '~/assets/sass/system/_buttons.scss'
     ],
     hoistUseStatements: true  

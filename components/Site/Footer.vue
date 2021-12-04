@@ -58,7 +58,7 @@ footer.site-footer {
   z-index: 13;
 
   * {
-    color: #fff;
+    color: $cloud;
   }
 
   .row {

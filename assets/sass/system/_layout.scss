@@ -45,3 +45,23 @@ $nav-bp: 960px;
   display: grid;
   @include gridBasic;
 }
+
+
+@mixin flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+@mixin stackedDivs {
+  display: grid;
+  grid-template: 1fr / 1fr;
+  place-items: center;
+
+  >* {
+    position: relative;
+    grid-column: 1 / 1;
+    grid-row: 1 / 1;
+  }
+}
