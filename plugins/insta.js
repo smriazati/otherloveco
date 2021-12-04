@@ -17,7 +17,7 @@ export default function (context, inject ) {
 
     async function unWrap(response) {
         const json = await response.json();
-        console.log(json)
+        // console.log(json)
         const { ok, status, statusText } = response
         return {
             json,

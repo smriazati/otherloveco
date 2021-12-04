@@ -25,9 +25,6 @@
         v-if="project.gallery"
         ref="imagesWrapper"
         class="image-wrapper images-padded-from-bottom"
-        :style="` margin-top: ${
-          $store.state.helpful.windowHeight / imageBuffer
-        }px`"
       >
         <div
           v-for="(item, index) in project.gallery"
@@ -84,14 +81,10 @@ export default {
   data() {
     return {
       bgColor: "#fff",
-
-      imageBuffer: 1.3,
     };
   },
   mounted() {
-    this.isMounted = true;
-    this.setBodyBg();
-    this.setAnimation();
+    this.setTextPinning();
   },
   computed: {
     compBgColor() {
@@ -103,13 +96,7 @@ export default {
     },
   },
   methods: {
-    setBodyBg() {
-      if (!this.project.bgcolor) {
-        return;
-      }
-      this.$store.commit("helpful/setBodyBg", `#${this.project.bgcolor}`);
-    },
-    setAnimation() {
+    setTextPinning() {
       const text = this.$refs.textWrapper;
       const images = this.$refs.imagesWrapper;
       const ScrollTrigger = this.$ScrollTrigger;
@@ -118,17 +105,17 @@ export default {
         return;
       }
       const textInner = text.querySelector(".text-wrapper-inner");
-      console.log(textInner.offsetHeight);
-      // console.log(pin, footer);
+      console.log(images.offsetTop);
 
       textInner.style.paddingTop = `${
-        window.innerHeight - textInner.offsetHeight * 2 - 100
+        window.innerHeight - textInner.offsetHeight * 2
       }px`;
+
       ScrollTrigger.create({
-        trigger: images,
+        // trigger: images,
         pin: text,
         pinSpacing: false,
-        // markers: true,
+        markers: true,
         start: `top top+=${images.offsetTop}px`,
         end: `bottom bottom`,
       });
@@ -173,11 +160,10 @@ export default {
           }
         }
       }
+      .project-gallery-item:not(last-child) {
+        padding-bottom: 75px;
+      }
     }
   }
-}
-
-.project-gallery-item:not(last-child) {
-  padding-bottom: 75px;
 }
 </style>
