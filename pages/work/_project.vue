@@ -84,7 +84,9 @@ export default {
     };
   },
   mounted() {
-    this.setTextPinning();
+    this.$nextTick(() => {
+      this.setTextPinning();
+    });
   },
   computed: {
     compBgColor() {
@@ -102,6 +104,10 @@ export default {
       const ScrollTrigger = this.$ScrollTrigger;
       if (!text || !images) {
         console.log("cancelling pin, no images");
+        return;
+      }
+      if (!ScrollTrigger) {
+        console.log("cancelling pin, no scroll trigger");
         return;
       }
       const textInner = text.querySelector(".text-wrapper-inner");

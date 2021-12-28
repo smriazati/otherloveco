@@ -92,6 +92,7 @@ export default {
   .image-wrapper {
     z-index: 2;
     display: flex;
+    overflow: hidden;
   }
 
   &:hover {

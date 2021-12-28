@@ -187,7 +187,6 @@ export default {
 
     .work-grid-item {
       margin: 0;
-      overflow: hidden;
 
       &:nth-child(3n + 1) {
         grid-column: 1 / span 5;
@@ -195,7 +194,7 @@ export default {
       }
 
       &:nth-child(3n + 2) {
-        grid-column: span 4 / 13;
+        grid-column: 9 / 13;
         place-self: center;
       }
 

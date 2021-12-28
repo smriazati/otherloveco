@@ -80,7 +80,10 @@ export default {
   privateRuntimeConfig: {
     igToken: process.env.INSTAGRAM_ACCESS_TOKEN
   },
-  generate: { fallback: '404.html' },
+  generate: {
+    fallback: '404.html'
+    
+   },
   build: {
     extractCSS: true,
     loaders: {
