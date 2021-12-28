@@ -31,16 +31,21 @@
           :key="index"
           class="project-gallery-item"
         >
-          <SanityImage :asset-id="item.asset._ref" auto="format" />
+          <img
+            :src="`${$urlFor(item.asset._ref).size(600)}`"
+            :alt="item.alt"
+            width="600"
+          />
         </div>
       </div>
 
       <div v-else class="image-wrapper">
         <div v-if="project.projectcover">
           <div class="project-cover">
-            <SanityImage
-              :asset-id="project.projectcover.asset._ref"
-              auto="format"
+            <img
+              :src="`${$urlFor(project.projectcover.asset._ref).size(600)}`"
+              :alt="project.projectcover.asset._ref"
+              width="600"
             />
           </div>
         </div>
@@ -111,12 +116,12 @@ export default {
         return;
       }
       const textInner = text.querySelector(".text-wrapper-inner");
-      console.log(images.offsetTop);
+      // console.log(images.offsetTop);
 
       textInner.style.paddingTop = `${
         window.innerHeight - textInner.offsetHeight * 2
       }px`;
-      console.log(images.offsetTop, images, textInner);
+      // console.log(images.offsetTop, images, textInner);
       ScrollTrigger.create({
         // trigger: images,
         pin: text,

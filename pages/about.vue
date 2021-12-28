@@ -28,11 +28,6 @@
             :alt="aboutPage.capabilities.image.alt"
             width="1200"
           />
-          <!-- <SanityImage
-                :asset-id="aboutPage.capabilities.image.asset._ref"
-                auto="format"
-                :alt="aboutPage.capabilities.image.alt"
-              /> -->
         </div>
         <div class="text-wrapper">
           <h2 v-if="aboutPage.capabilities.headline">
@@ -67,10 +62,13 @@
       >
         <div class="image-wrapper overflow" v-if="aboutPage.section2">
           <div v-if="aboutPage.section2.video" class="video-wrapper">
-            <SanityImage
-              :asset-id="aboutPage.section2.video.poster.asset._ref"
-              auto="format"
+            <img
+              :src="
+                $urlFor(aboutPage.section2.video.poster.asset._ref).size(400)
+              "
+              width="400"
             />
+
             <SanityFile :asset-id="aboutPage.section2.video.asset._ref">
               <template #default="{ src }">
                 <video :src="src" autoplay muted loop></video>
@@ -78,10 +76,10 @@
             </SanityFile>
           </div>
           <div v-if="aboutPage.section2.image">
-            <SanityImage
-              :asset-id="aboutPage.section2.image.asset._ref"
-              auto="format"
+            <img
+              :src="$urlFor(aboutPage.section2.image.asset._ref).size(400)"
               :alt="aboutPage.section2.image.alt"
+              width="400"
             />
           </div>
         </div>
@@ -100,10 +98,10 @@
         class="section3 image-text-row image-left"
       >
         <div class="image-wrapper" v-if="aboutPage.section3.image">
-          <SanityImage
-            :asset-id="aboutPage.section3.image.asset._ref"
-            auto="format"
+          <img
+            :src="$urlFor(aboutPage.section3.image.asset._ref).size(400)"
             :alt="aboutPage.section3.image.alt"
+            width="400"
           />
         </div>
         <div class="text-wrapper">
@@ -122,17 +120,17 @@
       >
         <div class="image-wrapper overflow" v-if="aboutPage.section4">
           <div v-if="aboutPage.section4.image1">
-            <SanityImage
-              :asset-id="aboutPage.section4.image1.asset._ref"
-              auto="format"
+            <img
+              :src="$urlFor(aboutPage.section4.image1.asset._ref).size(400)"
               :alt="aboutPage.section4.image1.alt"
+              width="400"
             />
           </div>
           <div v-if="aboutPage.section4.image2">
-            <SanityImage
-              :asset-id="aboutPage.section4.image2.asset._ref"
-              auto="format"
+            <img
+              :src="$urlFor(aboutPage.section4.image2.asset._ref).size(400)"
               :alt="aboutPage.section4.image2.alt"
+              width="400"
             />
           </div>
         </div>
@@ -164,19 +162,6 @@
         </button>
       </div>
     </section>
-
-    <!-- <section class="video-scroller-bg" ref="fixedVid">
-      <div class="video-wrapper">
-        <div>
-          <SanityFile :asset-id="aboutPage.cta.bgvideo.asset._ref">
-            <template #default="{ src }">
-              <video :src="src" autoplay muted loop></video>
-            </template>
-          </SanityFile>
-        </div>
-      </div>
-
-    </section> -->
   </div>
 </template>
 

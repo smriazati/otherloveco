@@ -1,7 +1,10 @@
-import { groq } from '@nuxtjs/sanity'
+import { groq } from "@nuxtjs/sanity";
 const ogImg = groq`*[_type == "siteSettings"][0]{"ogImg": ogImg.asset->url}`;
 
+import { sanity } from './plugins/sanity'
+const dynamicRouteQuery = groq`*[_type == "projects"]{'slug':slug.current}`;
 // require('dotenv').config()
+
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
@@ -40,7 +43,7 @@ export default {
     ],
     hoistUseStatements: true  
 },
-  plugins: ['~/plugins/route', '~/plugins/insta.js', '~/plugins/sanity-image-builder.js',
+  plugins: ['~/plugins/route', '~/plugins/insta.js', '~/plugins/sanity.js',
 ],
   components: true,
   buildModules: ['@nuxtjs/sanity/module', '@nuxtjs/google-fonts', 'nuxt-gsap-module'],
@@ -81,9 +84,17 @@ export default {
     igToken: process.env.INSTAGRAM_ACCESS_TOKEN
   },
   generate: {
-    fallback: '404.html'
-    
-   },
+    fallback: '404.html',
+    async routes() {
+      const projects = (await sanity.fetch(dynamicRouteQuery)) || []
+      return projects.map((project) => {
+        return {
+          route: `/work/${project.slug}/`,
+          payload: project,
+        }
+      })
+    }
+  },
   build: {
     extractCSS: true,
     loaders: {

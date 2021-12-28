@@ -31,13 +31,13 @@ export default {
   },
   methods: {
     mouseEnter(event) {
-      console.log("mouseenter");
+      // console.log("mouseenter");
       const title = this.$refs.title;
       title.style.position = "fixed";
       title.style.whitespace = "nowrap";
     },
     mouseLeave(event) {
-      console.log("mouseleave");
+      // console.log("mouseleave");
       const title = this.$refs.title;
       title.style.position = "static";
       title.style.top = "unset";

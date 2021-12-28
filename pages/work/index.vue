@@ -162,7 +162,7 @@ export default {
               // console.log('img complete already', img)
               this.setTimeline(ref, index);
             } else {
-              console.log("adding listener");
+              // console.log("adding listener");
               img.addEventListener("load", () => {
                 // console.log('img loaded success', img)
                 this.setTimeline(ref, index);
