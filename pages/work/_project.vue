@@ -3,6 +3,9 @@
     class="container container-no-grid"
     :style="`background-color: ${compBgColor}`"
   >
+    <client-only>
+      <PreviewBanner v-if="$nuxt.isPreview" />
+    </client-only>
     <section v-if="project" class="work-item project-page fixed-from-bottom">
       <div class="text-wrapper" ref="textWrapper">
         <div class="text-wrapper-inner">
