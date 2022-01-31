@@ -7,10 +7,13 @@
 <script>
 export default {
   asyncData() {
-    return { content: "Created at: " + new Date() };
+    const msg = { content: "Created at: " + new Date() };
+    console.log(msg);
+    return msg;
   },
   methods: {
     refresh() {
+      console.log("refreshing nuxt");
       this.$nuxt.refresh();
     },
   },

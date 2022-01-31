@@ -62,28 +62,33 @@
 import { groq } from "@nuxtjs/sanity";
 
 export default {
-  async asyncData({ params, redirect, $sanity }) {
-    const query = groq`*[_type == "projects"]{
+  async asyncData({ params, $sanity }) {
+    const query = groq`*[_type == "projects"  && slug.current == "${params.project}"]{
         projectcover,
-  projectname,
-  slug,
-  description,
-  category,
-  client,
-  bgcolor,
-  gallery}`;
-    const projects = await $sanity.fetch(query).then((res) => res);
+        projectname,
+        slug,
+        description,
+        category,
+        client,
+        bgcolor,
+        gallery } | order(_updatedAt desc)[0]`;
+    // console.log(query);
+    const project = await $sanity.fetch(query).then((res) => res);
+    // console.log(project);
+    return {
+      project: project,
+    };
 
-    const filteredProject = projects.find(
-      (project) => project.slug.current === params.project
-    );
-    if (filteredProject) {
-      return {
-        project: filteredProject,
-      };
-    } else {
-      // redirect("/work");
-    }
+    // const filteredProject = projects.find(
+    //   (project) => project.slug.current === params.project
+    // );
+    // if (filteredProject) {
+    //   return {
+    //     project: filteredProject,
+    //   };
+    // } else {
+    //   // redirect("/work");
+    // }
     // return projects;
   },
   data() {
