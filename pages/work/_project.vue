@@ -72,9 +72,9 @@ export default {
         client,
         bgcolor,
         gallery } | order(_updatedAt desc)[0]`;
-    // console.log(query);
+    console.log("query", query);
     const project = await $sanity.fetch(query).then((res) => res);
-    // console.log(project);
+    console.log("project", project);
     return {
       project: project,
     };
