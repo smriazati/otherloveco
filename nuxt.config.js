@@ -43,7 +43,7 @@ export default {
     ],
     hoistUseStatements: true  
 },
-  plugins: ['~/plugins/route', '~/plugins/insta.js', '~/plugins/sanity.js',
+  plugins: ['~/plugins/route', '~/plugins/insta.js', '~/plugins/sanity.js','~/plugins/preview.client.js'
 ],
   components: true,
   buildModules: ['@nuxtjs/sanity/module', '@nuxtjs/google-fonts', 'nuxt-gsap-module'],
