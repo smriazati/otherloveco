@@ -91,6 +91,11 @@ export default {
     // }
     // return projects;
   },
+  head() {
+    return {
+      title: this.project.projectname,
+    };
+  },
   data() {
     return {
       bgColor: "#",
