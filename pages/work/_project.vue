@@ -151,8 +151,10 @@ export default {
 .work-page {
   .container {
     margin-top: 0;
-    padding-top: 200px;
-    padding-bottom: 100px;
+    &:not(.container-no-margin) {
+      padding-top: 200px;
+      padding-bottom: 100px;
+    }
     flex: 2;
 
     .project-page {

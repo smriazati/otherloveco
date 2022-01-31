@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <button @click="refresh">Refresh</button>
+  <div class="container container-no-grid container-no-margin">
+    <button @click="refresh"><span>Refresh Page Data</span></button>
   </div>
 </template>
 
