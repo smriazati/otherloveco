@@ -1,19 +1,18 @@
 <template>
-    <span v-if="submark">
-        <img :src="$urlFor(submark.url).size(100)" :alt="submark.alt">
-    </span>
+  <span v-if="submark">
+    <img :src="$urlFor(submark.url).size(100)" :alt="submark.alt" />
+  </span>
 </template>
 
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 
 export default {
-    computed: {
-        ...mapState('siteSettings', {
-            submark: state => state.favicon,
-        })
-    },
-}
-
+  computed: {
+    ...mapState("siteSettings", {
+      submark: (state) => state.submark,
+    }),
+  },
+};
 </script>

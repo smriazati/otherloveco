@@ -2,6 +2,7 @@
 export const state = () => ({
     isLoaded: false,
     siteLogo: undefined,
+    submark: undefined,
     openGraphImage: undefined,
     favicon: undefined,
     appleTouchIcon: undefined,
@@ -18,5 +19,6 @@ export const mutations = {
         state.openGraphImage = payload.ogImg;
         state.favicon = payload.favicon;
         state.isLoaded = true;
+        state.submark = payload.submark;
     }
 }

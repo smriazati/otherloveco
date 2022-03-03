@@ -1,11 +1,19 @@
 import { groq } from "@nuxtjs/sanity";
-const ogImg = groq`*[_type == "siteSettings"][0]{"ogImg": ogImg.asset->url}`;
-
 import { sanity } from './plugins/sanity'
+const query = groq`*[_type == "siteSettings"][0]{
+  "favicon": favicon.image.asset->url,
+  "ogImg": {
+       "url": ogImg.image.asset->url,
+       "alt": ogImg.image.alt
+   }
+}`;
 const dynamicRouteQuery = groq`*[_type == "projects"]{'slug':slug.current}`;
 // require('dotenv').config()
 
-export default {
+export default async () => {
+  const siteSettings = await sanity.fetch(query);
+console.log(siteSettings);
+return {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
 
@@ -24,11 +32,12 @@ export default {
       {
         hid: 'og:image',
         property: 'og:image',
-        content: `${ogImg.ogImg}?h=1200&w=640`
-      }
+        content: `${siteSettings?.ogImg?.url}?h=1200&w=640`
+      },
+      { hid: 'og:image:alt', property: 'og:image:alt',  content: `${siteSettings?.ogImg?.alt}`}
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' },
+      { rel: 'icon', type: 'image/x-icon', href: `${siteSettings?.favicon}` },
     ]
   },
   css: [
@@ -101,4 +110,4 @@ export default {
       limit: 0,
     }
   },
-}
+}}

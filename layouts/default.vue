@@ -23,19 +23,21 @@ export default {
     }
     if (!this.$store.state.siteSettings.isLoaded) {
       const query2 = groq`*[_type == "siteSettings"]{
-        "favicon": {
-          "originalFilename": favicon.asset->originalFilename,
-          "url": favicon.asset->url
-        },
-        "ogImg": {
-          "url": ogImg.asset->url
-        },
         siteDesc,
-        "siteLogo": {
-          "url": siteLogo.asset->url,
-          "originalFilename": siteLogo.asset->originalFilename
-        },
-        siteTitle
+        siteTitle,
+          "favicon": favicon.image.asset->url,
+  "siteLogo": {
+        "url": siteLogo.image.asset->url,
+        "alt": siteLogo.image.alt
+  },
+  "submark": {
+        "url": submark.image.asset->url,
+        "alt": submark.image.alt
+  },
+   "ogImg": {
+        "url": ogImg.image.asset->url,
+        "alt": ogImg.image.alt
+    }
       }`;
       this.siteSettings = await this.$sanity
         .fetch(query2)
