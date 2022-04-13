@@ -12,7 +12,7 @@ const dynamicRouteQuery = groq`*[_type == "projects"]{'slug':slug.current}`;
 
 export default async () => {
   const siteSettings = await sanity.fetch(query);
-console.log(siteSettings);
+// console.log(siteSettings);
 return {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',

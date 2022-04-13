@@ -20,27 +20,31 @@
       v-if="aboutPage"
     >
       <section v-if="aboutPage.capabilities" class="capabilities full-row">
-        <div class="image-wrapper" v-if="aboutPage.capabilities.image">
-          <img
-            :src="`${$urlFor(aboutPage.capabilities.image.asset._ref).size(
-              1200
-            )}`"
-            :alt="aboutPage.capabilities.image.alt"
-            width="1200"
-          />
-        </div>
-        <div class="text-wrapper">
-          <h2 v-if="aboutPage.capabilities.headline">
-            {{ aboutPage.capabilities.headline }}
-          </h2>
-          <div class="main-list" v-if="aboutPage.capabilities.mainList">
-            <SanityContent :blocks="aboutPage.capabilities.mainList" />
+        <div class="grid-fixed">
+          <div class="image-wrapper">
+            <div v-if="aboutPage.capabilities.image.asset">
+              <img
+                :src="`${$urlFor(aboutPage.capabilities.image.asset._ref).size(
+                  1200
+                )}`"
+                :alt="aboutPage.capabilities.image.alt"
+                width="1200"
+              />
+            </div>
           </div>
-          <div class="sub-list" v-if="aboutPage.capabilities.subList">
-            <SanityContent
-              class="two-col"
-              :blocks="aboutPage.capabilities.subList"
-            />
+          <div class="text-wrapper">
+            <h2 v-if="aboutPage.capabilities.headline">
+              {{ aboutPage.capabilities.headline }}
+            </h2>
+            <div class="main-list" v-if="aboutPage.capabilities.mainList">
+              <SanityContent :blocks="aboutPage.capabilities.mainList" />
+            </div>
+            <div class="sub-list" v-if="aboutPage.capabilities.subList">
+              <SanityContent
+                class="two-col"
+                :blocks="aboutPage.capabilities.subList"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -449,9 +453,14 @@ export default {
       }
     }
 
-    .text-wrapper {
-      padding: 50px;
+    .image-wrapper + .text-wrapper {
+      padding-left: 50px;
+      padding-right: 50px;
+    }
 
+    .text-wrapper {
+      padding-top: 50px;
+      padding-bottom: 50px;
       > *:not(:last-child) {
         margin-bottom: 50px;
       }
