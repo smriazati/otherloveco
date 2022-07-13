@@ -38,6 +38,9 @@ return {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: `${siteSettings?.favicon}` },
+    ],
+    script: [
+      { hid: 'plausible', src: 'https://plausible.io/js/plausible.js', defer: true, "data-domain":"otherlove.co" }
     ]
   },
   css: [
